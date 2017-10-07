@@ -32,28 +32,75 @@
         <ul class="nav navbar-nav navbar-right">
             <li>
                 <a href="#">
-                    <span class="glyphicon glyphicon-user"></span>
-                    Sign Up
-
-
-
-
+                    <span class="glyphicon glyphicon-user"></span>Sign Up
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <span class="glyphicon glyphicon-log-in"></span>
-                    Login
-
-
-
-
+                    <span class="glyphicon glyphicon-log-in"></span>Login
                 </a>
             </li>
         </ul>
     </div>
 </nav>
 <div class="container">
+
+    <div class="row">
+        <div class="col-sm-12 col-md-10 col-md-offset-1">
+            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-timeFilter">
+                        <input type="radio" name="options" checked>2015
+                    </label>
+                    <label class="btn btn-timeFilter">
+                        <input type="radio" name="options" autocomplete="off">2016
+                    </label>
+                    <label class="btn btn-timeFilter active">
+                        <input type="radio" name="options" autocomplete="off">2017
+                    </label>
+                </div>
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-timeFilter active">
+                        <input type="radio" name="options" autocomplete="off" checked>None
+                    </label>
+                    <label class="btn btn-timeFilter">
+                        <input type="radio" name="options" autocomplete="off" checked>Jan
+                    </label>
+                    <label class="btn btn-timeFilter">
+                        <input type="radio" name="options" autocomplete="off">Fev
+                    </label>
+                    <label class="btn btn-timeFilter">
+                        <input type="radio" name="options" autocomplete="off">Mar
+                    </label>
+                    <label class="btn btn-timeFilter">
+                        <input type="radio" name="options" autocomplete="off" checked>Apr
+                    </label>
+                    <label class="btn btn-timeFilter">
+                        <input type="radio" name="options" autocomplete="off">Jun
+                    </label>
+                    <label class="btn btn-timeFilter">
+                        <input type="radio" name="options" autocomplete="off">Jul
+                    </label>
+                    <label class="btn btn-timeFilter">
+                        <input type="radio" name="options" autocomplete="off" checked>Aug
+                    </label>
+                    <label class="btn btn-timeFilter">
+                        <input type="radio" name="options" autocomplete="off">Set
+                    </label>
+                    <label class="btn btn-timeFilter">
+                        <input type="radio" name="options" autocomplete="off">Oct
+                    </label>
+                    <label class="btn btn-timeFilter">
+                        <input type="radio" name="options" autocomplete="off" checked>Nov
+                    </label>
+                    <label class="btn btn-timeFilter">
+                        <input type="radio" name="options" autocomplete="off">Dec
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr/>
 
     <div class="row">
 
@@ -80,32 +127,31 @@
             <div id="stock-available"></div>
             <a href="#" style="display:block; text-align:center; color: #d09b1c">More details</a>
         </div>
-
     </div>
 
     <div class="row">
-	   <div class="col-sm-3">
+        <div class="col-sm-3">
             <div id="inventory-value"></div>
             <a href="#" style="display:block; text-align:center; color: #d09b1c">More details</a>
         </div>
 
-        
         <div class="col-sm-9">
             <div id="inventory-days"></div>
             <a href="#" style="display:block; text-align:center; color: #d09b1c">More details</a>
         </div>
-
-
     </div>
 
 </div>
+
 <footer>
     <h5 style="color: #FFFFFF">© 2017 Copyright: 360º Dashboard Company</h5>
 </footer>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="../javascript/inventory.js"></script>
+
 </body>
 </html>

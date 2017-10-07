@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     Highcharts.chart('sales-by-product', {
         chart: {
             type: 'area'
