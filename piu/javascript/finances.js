@@ -7,7 +7,7 @@ $(document).ready(function(){
         },
 
         subtitle: {
-            text: 'Assets and Liabilities'
+            text: 'Equity, Assets and Liabilities'
         },
 
         yAxis: {
@@ -29,6 +29,9 @@ $(document).ready(function(){
         },
 
         series: [{
+            name: 'Equity',
+            data: [23344, 25544, 20343, 40344, 60344, 90000, 111034, 114455]
+        }, {
             name: 'Assets',
             data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
         }, {
