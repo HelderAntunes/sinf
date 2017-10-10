@@ -131,6 +131,14 @@ fieldset[disabled] .btn-timeFilter.active {
     background-color: #000000;
 }
 
+.dropdown-btn,
+.dropdown-btn:hover,
+.dropdown-btn:active,
+.dropdown-btn:visited,
+.dropdown-btn:focus{
+    background-color: #8A6D3B;
+}
+
 footer {
     background-color: #56400b;
     left: 0;
