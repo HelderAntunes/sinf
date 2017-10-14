@@ -73,7 +73,7 @@ $(document).ready(function () {
             text: 'Inventory Value'
         },
         subtitle: {
-            text: 'by product'
+            text: 'by Category'
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -81,7 +81,7 @@ $(document).ready(function () {
         plotOptions: {
             pie: {
                 dataLabels: {
-                    enabled: true,
+                    enabled: false,
                     distance: -30,
                     style: {
                         fontWeight: 'bold',
@@ -90,18 +90,20 @@ $(document).ready(function () {
                 },
                 startAngle: -180,
                 endAngle: 180,
+                showInLegend: true,
                 center: ['50%', '50%']
             }
         },
         series: [{
             type: 'pie',
-            name: 'Browser share',
+            name: 'Inventory Value Percentage',
             innerSize: '50%',
             data: [
-                ['Product A', 10.38],
-                ['Product B', 56.33],
-                ['Product C', 24.03],
-                ['Product D', 4.77]
+                ['Category 1', 10.34],
+                ['Category 2', 46.33],
+                ['Category 3', 24.03],
+                ['Category 4', 4.77],
+                ['Category 5', 10.04]
             ]
         }]
     });
