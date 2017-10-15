@@ -1,58 +1,9 @@
 $(document).ready(function () {
 
-    // Build the chart
-    Highcharts.chart('purchases-by-product-category', {
-        chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false,
-            type: 'pie'
-        },
-        title: {
-            text: 'Purchases by product category'
-        },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: false
-                },
-                showInLegend: true
-            }
-        },
-        series: [{
-            name: 'Categories',
-            colorByPoint: true,
-            data: [
-                {
-                    name: 'Plants',
-                    y: 60
-                },
-                {
-                    name: 'Chairs',
-                    y: 20
-                },
-                {
-                    name: 'Windows',
-                    y: 13.02
-                },
-                {
-                    name: 'Tables',
-                    y: 7.07,
-                    sliced: true,
-                    selected: true
-                }]
-        }]
-    });
-
     Highcharts.chart('total-purchases', {
 
         title: {
-            text: 'Total purchases'
+            text: 'Purchases'
         },
 
         yAxis: {
