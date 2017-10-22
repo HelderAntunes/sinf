@@ -1,5 +1,4 @@
 var fs = require('fs'); 
-var parseString = require('xml2js').parseString;
 var jSmart = require('jsmart'); 
 var express = require('express');
 
@@ -71,15 +70,4 @@ app.get('/purchases', function (req, res) {
 var server = app.listen(8081, function () {
    var port = server.address().port;
    console.log("Listening at port %s", port)
-});
-
-// SAF-T xml -> jason object
-fs.readFile('../assets/SAFT_DEMOSINF_01-01-2016_31-12-2016.xml', function(err, data) {
-    parseString(data, function (err, result) {
-        result = result['AuditFile']['Header'];
-        fs.writeFile('saft_in_json.js', JSON.stringify(result, null, 2), function (err) {
-            if (err) throw err;
-            console.log('SAF-T xml parsed.');
-        });
-    });
 });
