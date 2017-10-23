@@ -78,6 +78,73 @@ namespace PrimaveraIntegration.Lib_Primavera
                 return null;
         }
 
+        public static List<Model.Purchase> GetAllPurchases(string initial, string final, string supplier)
+        {
+            //Initialize containers
+            StdBELista objList;
+            StdBELista objListLin;
+            List<Model.Purchase> purchaseList = new List<Model.Purchase>();
+            Model.Purchase purchase;
+            Model.PurchaseItem purchaseItem;
+
+            string query = "SELECT Id, DataDoc, DataVencimento, Entidade, Nome, NumDoc, Observacoes, TotalMerc From CabecCompras where TipoDoc='VGR'";
+            if (initial != null)
+                query += "and DataDoc>='" + initial +"'";
+            if (final != null)
+                query += "and DataDoc<='" + final + "'";
+            if (supplier != null)
+                query += "and Entidade='" + supplier + "'";
+            Console.WriteLine(query);
+
+            if (PriEngine.InitializeCompany(PrimaveraIntegration.Properties.Settings.Default.Company.Trim(), PrimaveraIntegration.Properties.Settings.Default.User.Trim(), PrimaveraIntegration.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                //Select rows from CabecCompras
+                objList = PriEngine.Engine.Consulta(query);
+
+                //For every CabecCompras
+                while (!objList.NoFim())
+                {
+                    purchase = new Model.Purchase();
+
+                    purchase.Id = objList.Valor("Id");
+                    purchase.DocumentDate = objList.Valor("DataDoc");
+                    purchase.PaymentDate = objList.Valor("DataVencimento");
+                    purchase.Entity = objList.Valor("Entidade");
+                    purchase.EntityName = objList.Valor("Nome");
+                    purchase.DocumentNumber = objList.Valor("NumDoc");
+                    purchase.Notes = objList.Valor("Observacoes");
+                    purchase.TotalValue = objList.Valor("TotalMerc");
+                    purchase.Items = new List<Model.PurchaseItem>();
+
+                    //Select rows from LinhasCompras
+                    objListLin = PriEngine.Engine.Consulta("SELECT Id, Artigo, Descricao, Quantidade, Unidade, PrecUnit, TotalILiquido, PrecoLiquido from LinhasCompras where IdCabecCompras='" + purchase.Id + "' order By NumLinha");
+
+                    while (!objListLin.NoFim())
+                    {
+                        purchaseItem = new Model.PurchaseItem();
+                        purchaseItem.Id = objListLin.Valor("Id");
+                        purchaseItem.Product = objListLin.Valor("Artigo");
+                        purchaseItem.Description = objListLin.Valor("Descricao");
+                        purchaseItem.Quantity = objListLin.Valor("Quantidade");
+                        purchaseItem.UnitPrice = objListLin.Valor("PrecUnit");
+                        //purchaseItem.Value = objListLin.Valor("TotalILiquido");
+                        purchaseItem.Value = objListLin.Valor("PrecoLiquido");
+                        purchase.Items.Add(purchaseItem);
+
+                        objListLin.Seguinte();
+                    }
+                    purchaseList.Add(purchase);
+                    objList.Seguinte();
+
+                }
+
+                return purchaseList;
+            }
+            else
+                return null;
+        }
+
+
         # endregion
 
 

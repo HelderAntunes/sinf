@@ -24,20 +24,22 @@ namespace PrimaveraIntegration.Controllers
             return Lib_Primavera.PriIntegration.GetAllPurchases(year.ToString(), null);
         }
 
+        // GET api/purchases/date/{year}/{month}
         public IEnumerable<Lib_Primavera.Model.Purchase> GetPurchases(int year, int month)
         {
             return Lib_Primavera.PriIntegration.GetAllPurchases(year.ToString(), month.ToString());
         }
 
-        /*public Lib_Primavera.Model.Purchase Get(int id)
+        // GET api/purchases?initial={yyyy-mm-dd}&final={yyyy-mm-dd}
+        public IEnumerable<Lib_Primavera.Model.Purchase> GetPurchases(DateTime initial, DateTime final)
         {
-            var product = Lib_Primavera.PriIntegration.GetAllPurchases(null, null).FirstOrDefault((p) => p.Id == id.ToString());
-            if (product == null)
-            {
-                throw new HttpResponseException(
-                  Request.CreateResponse(HttpStatusCode.NotFound));
-            }
-            return product;
-        }*/
+            return Lib_Primavera.PriIntegration.GetAllPurchases(initial.ToString("yyyy-MM-dd"), final.ToString("yyyy-MM-dd"), null);
+        }
+
+        // GET api/purchases?initial={yyyy-mm-dd}&final={yyyy-mm-dd}&supplier={supplier}
+        public IEnumerable<Lib_Primavera.Model.Purchase> GetPurchases(DateTime initial, DateTime final, string supplier)
+        {
+            return Lib_Primavera.PriIntegration.GetAllPurchases(initial.ToString("yyyy-MM-dd"), final.ToString("yyyy-MM-dd"), supplier);
+        }
     }
 }
