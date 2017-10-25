@@ -1,48 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Sales Dashboard </title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">360º Company Dashboard</a>
-        </div>
-        <ul class="nav navbar-nav">
-            <li>
-                <a href="main">Dashboard</a>
-            </li>
-            <li class="active">
-                <a href="sales">Sales</a>
-            </li>
-            <li>
-                <a href="purchases">Purchases</a>
-            </li>
-            <li>
-                <a href="inventory">Inventory</a>
-            </li>
-            <li>
-                <a href="finances">Finances</a>
-            </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a href="#">
-                    <span class="glyphicon glyphicon-user"></span>Sign Up
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <span class="glyphicon glyphicon-log-in"></span>Login
-                </a>
-            </li>
-        </ul>
-    </div>
-</nav>
 <div class="container">
     <div class="row">
         <div class="col-sm-12 col-md-10 col-md-offset-1">
@@ -106,11 +61,17 @@
                     <ul class="list-group">
                         <li class="list-group-item">
                             <h4>Total Sales</h4>
-                            <h3>154 175 €</h3>
+                            <h3>{$totalSales} €</h3>
                         </li>
                         <li class="list-group-item">
-                            <h4>Growth</h4>
-                            <h3>12.4 %</h3>
+                            <h4 data-period-interval="{$period}">
+                                {if $period == 'year'}
+                                    Sales per month
+                                {else}
+                                    Sales per day
+                                {/if}
+                            </h4>
+                            <h3>{$salesPerPeriod}</h3>
                         </li>
                     </ul>
                 </div>
@@ -148,6 +109,20 @@
                             <td>Other</td>
                             <td>10 189 €</td>
                         </tr>
+                        <!-- {foreach $costumerNames as $name => $code}
+                            <p style='color:{$code}'>{$code@index}: {$name}</p>
+                            <tr>
+                                <td>{$name}</td>
+                                <td>20 323 €</td>
+                            </tr>
+                        {/foreach}
+                        {for $i=0 to $costumerNames|count-1}
+                            <p style='color:{$colorCodes[$i]}'>{$i}: {$colorNames[$i]}</p>
+                            <tr>
+                                    <td>{$name}</td>
+                                    <td>20 323 €</td>
+                                </tr>
+                        {/for} -->
                         </tbody>
                     </table>
                 </div>
@@ -156,13 +131,9 @@
         </div>
     </div>
 </div>
-<footer>
-    <h5 style="color: #FFFFFF">© 2017 Copyright: 360º Dashboard Company</h5>
-</footer>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="../javascript/sales.js"></script>
-</body>
-</html>
