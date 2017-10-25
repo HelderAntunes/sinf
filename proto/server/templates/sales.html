@@ -87,46 +87,26 @@
                 <div class="col-sm-12">
                     <table class="table">
                         <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Sales</th>
-                        </tr>
+                            <tr>
+                                <th>Name</th>
+                                <th>Sales</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Continente</td>
-                            <td>91 323 €</td>
-                        </tr>
-                        <tr>
-                            <td>Jerónimo Martins</td>
-                            <td>32 340 €</td>
-                        </tr>
-                        <tr>
-                            <td>Costumer C</td>
-                            <td>20 323 €</td>
-                        </tr>
-                        <tr>
-                            <td>Other</td>
-                            <td>10 189 €</td>
-                        </tr>
-                        <!-- {foreach $costumerNames as $name => $code}
-                            <p style='color:{$code}'>{$code@index}: {$name}</p>
+                        {foreach $costumerNames as $name => $code}
                             <tr>
-                                <td>{$name}</td>
-                                <td>20 323 €</td>
+                                <td>{$costumerNames[$code@index]}</td>
+                                <td>{$costumerSales[$code@index]} €</td>
                             </tr>
+                        {foreachelse}
+                            No costumers.
                         {/foreach}
-                        {for $i=0 to $costumerNames|count-1}
-                            <p style='color:{$colorCodes[$i]}'>{$i}: {$colorNames[$i]}</p>
-                            <tr>
-                                    <td>{$name}</td>
-                                    <td>20 323 €</td>
-                                </tr>
-                        {/for} -->
                         </tbody>
                     </table>
                 </div>
             </div>
+            
+            
             <a href="#" style="display:block; text-align:center; color: #d09b1c">More Details</a>
         </div>
     </div>
