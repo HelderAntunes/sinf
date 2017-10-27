@@ -3,7 +3,7 @@ var parseString = require('xml2js').parseString;
 
 // DB connection, more in: https://github.com/vitaly-t/pg-promise
 var pgp = require('pg-promise')(options);
-var connectionString = 'pg://postgres:123456@localhost:5432/puppies';
+var connectionString = 'pg://postgres:123456@localhost:5432/sinf_db';
 var db = pgp(connectionString);
 
 var promise = require('bluebird');
@@ -15,8 +15,8 @@ var options = {
 fs.readFile('../assets/SAFT_DEMOSINF_01-01-2016_31-12-2016.xml', function(err, data) {
     parseString(data, function (err, result) {
         //result = getSalesInvoices(result);        
-        result = getCostumers(result);
-        writeCostumersInDB(result);
+        result = getCustomers(result);
+        writeCustomersInDB(result);
         fs.writeFile('saft_in_json.js', JSON.stringify(result, null, 2), function (err) {
             if (err) throw err;
             console.log('SAF-T xml parsed.');
@@ -24,7 +24,7 @@ fs.readFile('../assets/SAFT_DEMOSINF_01-01-2016_31-12-2016.xml', function(err, d
     });
 });
 
-function getCostumers(saftParsed) {
+function getCustomers(saftParsed) {
     return saftParsed['AuditFile']['MasterFiles'][0]['Customer'];
 }
 
@@ -32,28 +32,28 @@ function getSalesInvoices(saftParsed) {
     return saftParsed['AuditFile']['SourceDocuments'][0]['SalesInvoices'][0]['Invoice'];
 }
 
-function writeCostumersInDB(costumersJSON) {
-    for (var i = 0; i < costumersJSON.length; i++) {
-        var costumer = costumersJSON[i];
+function writeCustomersInDB(customersJSON) {
+    for (var i = 0; i < customersJSON.length; i++) {
+        var customer = customersJSON[i];
        
-        var CostumerID_ = getValueOfAttribute(costumer.CustomerID);
-        var AccountID_ = getValueOfAttribute(costumer.AccountID);
-        var CustomerTaxID_ = getValueOfAttribute(costumer.CustomerTaxID);
-        var CompanyName_ = getValueOfAttribute(costumer.CompanyName);
-        var Telephone_ = getValueOfAttribute(costumer.Telephone);
-        var Fax_ = getValueOfAttribute(costumer.Fax);
+        var CustomerID = getValueOfAttribute(customer.CustomerID);
+        var AccountID = getValueOfAttribute(customer.AccountID);
+        var CustomerTaxID = getValueOfAttribute(customer.CustomerTaxID);
+        var CompanyName = getValueOfAttribute(customer.CompanyName);
+        var Telephone = getValueOfAttribute(customer.Telephone);
+        var Fax = getValueOfAttribute(customer.Fax);
         
-        console.log(CostumerID + " " + AccountID + " " + CustomerTaxID + " " + CustomerTaxID + " " + CompanyName + " " + Telephone + " " + Fax);
+        console.log(CustomerID + " " + AccountID + " " + CustomerTaxID + " " + CustomerTaxID + " " + CompanyName + " " + Telephone + " " + Fax);
 
-        db.none('INSERT INTO customer(CustomerID, AccountID, CustomerTaxID, CompanyName, Telephone, Fax)' +
-                ' VALUES(${CustomerID}, ${AccountID}, ${CustomerTaxID}, ${CompanyName}, ${Telephone}, ${Fax})', {
-            CustomerID: CostumerID_,
-            AccountID: AccountID_,  
-            CustomerTaxID: CustomerTaxID_,  
-            CompanyName: CompanyName_,  
-            Telephone: Telephone_,  
-            Fax: Fax_,  
-        })
+        db.none('INSERT INTO public.customer(customer_id, account_id, customer_tax_id, company_name, telephone, fax)' +
+                ' VALUES(${customer_id}, ${account_id}, ${customer_tax_id}, ${company_name}, ${telephone}, ${fax})', {
+            customer_id: CustomerID,
+            account_id: AccountID,  
+            customer_tax_id: CustomerTaxID,  
+            company_name: CompanyName,  
+            telephone: Telephone,  
+            fax: Fax,  
+        });
 
     }
 }
@@ -63,11 +63,7 @@ function getValueOfAttribute(attr) {
     else return null;
 }
 
-
-
-
-
-// add query functions
+// TEST
 function getAllPuppies(req, res, next) {
     db.any('select * from pups')
       .then(function (data) {
@@ -82,4 +78,5 @@ function getAllPuppies(req, res, next) {
         return next(err);
       });
 }
+// TEST
 
