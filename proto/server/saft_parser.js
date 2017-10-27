@@ -3,10 +3,10 @@ var parseString = require('xml2js').parseString;
 
 fs.readFile('../assets/SAFT_DEMOSINF_01-01-2016_31-12-2016.xml', function(err, data) {
     parseString(data, function (err, result) {
-        //result = getSalesInvoices(result);
+        result = getSalesInvoices(result);
         //result = getCostumers(result);
         //result = getPurchaseOrders(result);
-        result = getTotalClientDebt(result); //returns int
+        //result = getTotalClientDebt(result); //returns int
         fs.writeFile('saft_in_json.js', JSON.stringify(result, null, 2), function (err) {
             if (err) throw err;
             console.log('SAF-T xml parsed.');
