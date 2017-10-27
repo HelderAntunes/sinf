@@ -2,6 +2,9 @@ var fs = require('fs');
 var jSmart = require('jsmart'); 
 var express = require('express');
 
+// PAGES
+var sales = require('./pages/sales');
+
 var app = express();
 
 app.use(express.static(__dirname + '/public')); // css and javascript files are public files
@@ -28,13 +31,7 @@ app.get('/main', function (req, res) {
 });
 
 app.get('/sales', function (req, res) {
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    
-    var tpl = fs.readFileSync('./templates/sales.html', {encoding: 'utf-8'});
-    var compiledTemplate = new jSmart(tpl);
-    var output = compiledTemplate.fetch();
-    
-    res.end(output);
+    sales.getSales(req, res);
 });
 
 app.get('/finances', function (req, res) {
