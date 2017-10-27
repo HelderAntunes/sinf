@@ -24,7 +24,7 @@ namespace PrimaveraIntegration.Lib_Primavera
             Model.Purchase purchase;
             Model.PurchaseItem purchaseItem;
 
-            string query = "SELECT Id, DataDoc, DataVencimento, Entidade, Nome, NumDoc, Observacoes, TotalMerc From CabecCompras where TipoDoc='VGR'";
+            string query = "SELECT Id, DataDoc, DataVencimento, Entidade, Nome, NumDoc, Observacoes, TotalMerc, TipoDoc From CabecCompras where (TipoDoc='VNC' or TipoDoc like 'VF_') order by DataDoc";
             if (year != null)
                 query += "and year(DataDoc)=" + year;
             if (month != null)
@@ -47,7 +47,8 @@ namespace PrimaveraIntegration.Lib_Primavera
                     purchase.EntityName = objList.Valor("Nome");
                     purchase.DocumentNumber = objList.Valor("NumDoc");
                     purchase.Notes = objList.Valor("Observacoes");
-                    purchase.TotalValue = objList.Valor("TotalMerc");
+                    purchase.TotalValue = objList.Valor("TotalMerc") * (-1);
+                    purchase.DocumentType = objList.Valor("TipoDoc");
                     purchase.Items = new List<Model.PurchaseItem>();
 
                     //Select rows from LinhasCompras
@@ -60,9 +61,9 @@ namespace PrimaveraIntegration.Lib_Primavera
                         purchaseItem.Product = objListLin.Valor("Artigo");
                         purchaseItem.Description = objListLin.Valor("Descricao");
                         purchaseItem.Quantity = objListLin.Valor("Quantidade");
-                        purchaseItem.UnitPrice = objListLin.Valor("PrecUnit");
+                        purchaseItem.UnitPrice = objListLin.Valor("PrecUnit") *(-1);
                         //purchaseItem.Value = objListLin.Valor("TotalILiquido");
-                        purchaseItem.Value = objListLin.Valor("PrecoLiquido");
+                        purchaseItem.Value = objListLin.Valor("PrecoLiquido") * (-1);
                         purchase.Items.Add(purchaseItem);
 
                         objListLin.Seguinte();

@@ -1,4 +1,4 @@
-var fs = require('fs'); 
+var fs = require('fs');
 var parseString = require('xml2js').parseString;
 
 // DB connection, more in: https://github.com/vitaly-t/pg-promise
@@ -14,9 +14,9 @@ var options = {
 
 fs.readFile('../assets/SAFT_DEMOSINF_01-01-2016_31-12-2016.xml', function(err, data) {
     parseString(data, function (err, result) {
-        //result = getSalesInvoices(result);        
-        result = getCustomers(result);
-        writeCustomersInDB(result);
+        result = getSalesInvoices(result);        
+        //result = getCustomers(result);
+        //writeCustomersInDB(result);
         fs.writeFile('saft_in_json.js', JSON.stringify(result, null, 2), function (err) {
             if (err) throw err;
             console.log('SAF-T xml parsed.');
@@ -80,3 +80,33 @@ function getAllPuppies(req, res, next) {
 }
 // TEST
 
+
+//encomendas
+function getPurchaseOrders(saftParsed) {
+    //ir buscar work docs
+    workingDoc = saftParsed['AuditFile']['SourceDocuments'][0]['WorkingDocuments'][0]['WorkDocument'];
+    docType = workingDoc[0]['WorkType'][0];
+
+    //verificar que e encomenda e adicionar a array ret
+    var ret = new Array();
+    if(docType == "NE"){
+        ret.push(workingDoc);
+        //console.log("ne: " + JSON.stringify(workingDoc, null, 2));
+    }
+
+    return ret;
+}
+
+//divida total
+function getTotalClientDebt(SaftParsed){
+    //preencher array com todas as invoices
+    invoices = getSalesInvoices(SaftParsed);
+
+    //preencher ret com dividaTotal
+    ret = 0;
+    for (var i = 0, len = invoices.length; i < len; i++) {
+        ret +=  parseInt(invoices[i]["Line"][0]["CreditAmount"][0]);
+    }
+
+    return ret;
+}
