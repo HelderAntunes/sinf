@@ -57,6 +57,12 @@ namespace PrimaveraIntegration.Lib_Primavera.Model
             set;
         }
 
+        public string DocumentType
+        {
+            get;
+            set;
+        }
+
         public List<Model.PurchaseItem> Items
         {
             get;
