@@ -59,6 +59,14 @@ app.get('/purchases', function (req, res) {
     purchases.getPurchases(req, res);
 });
 
+// TEST
+var db = require('./queries');
+
+app.get('/puppies', function (req, res) {
+    db.getAllPuppies(req, res);
+});
+// TEST
+
 var server = app.listen(8081, function () {
    var port = server.address().port;
    console.log("Listening at port %s", port)
