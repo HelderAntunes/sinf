@@ -4,6 +4,7 @@ var express = require('express');
 
 // PAGES
 var sales = require('./pages/sales');
+var purchases = require('./pages/purchases');
 
 var app = express();
 
@@ -55,13 +56,7 @@ app.get('/inventory', function (req, res) {
 });
 
 app.get('/purchases', function (req, res) {
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    
-    var tpl = fs.readFileSync('./templates/purchases.html', {encoding: 'utf-8'});
-    var compiledTemplate = new jSmart(tpl);
-    var output = compiledTemplate.fetch();
-    
-    res.end(output);
+    purchases.getPurchases(req, res);
 });
 
 var server = app.listen(8081, function () {
