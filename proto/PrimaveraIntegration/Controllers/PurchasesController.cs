@@ -13,9 +13,20 @@ namespace PrimaveraIntegration.Controllers
     public class PurchasesController : ApiController
     {
         // GET api/purchases   
-        public IEnumerable<Lib_Primavera.Model.Purchase> GetPurchases()
+        public IEnumerable<Lib_Primavera.Model.Purchase> GetPurchases(String id)
         {
-            return Lib_Primavera.PriIntegration.GetAllPurchases(null, null);
+            if (id == "groupByDate")
+            {
+                return Lib_Primavera.PriIntegration.GetAllPurchasesGroupedByDate(null, null);
+            }
+            if (id == "groupBySupplier")
+            {
+                return Lib_Primavera.PriIntegration.GetAllPurchasesGroupedBySupplier(null, null);
+            }
+            else
+            {
+                return Lib_Primavera.PriIntegration.GetAllPurchases(null, null);
+            }
         }
 
         // GET api/purchases/date/{year}

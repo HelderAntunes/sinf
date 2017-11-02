@@ -62,7 +62,7 @@
                     <ul class="list-group">
                         <li class="list-group-item">
                             <h4>Total Purchases</h4>
-                            <h3>{$totalPurchases} €</h3>
+                            <h3 id="total-purchases-value">{$totalPurchases} €</h3>
                         </li>
                         <li class="list-group-item">
                             <h4>Growth</h4>
@@ -90,15 +90,15 @@
                             <th>Sales</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        {foreach $costumerNames as $name => $code}
+                        <tbody id="supplier-purchases">
+                        <!--{foreach $costumerNames as $name => $code}
                             <tr>
                                 <td>{$costumerNames[$code@index]}</td>
                                 <td>{$costumerSales[$code@index]} €</td>
                             </tr>
                         {foreachelse}
-                            No costumers.
-                        {/foreach}
+                            No suppliers.
+                        {/foreach}-->
                         </tbody>
                     </table>
                 </div>

@@ -15,8 +15,8 @@ exports.getPurchases = function (req, res) {
     var outputPurchases = compiledTemplate.fetch({
         totalPurchases: utils.formatNumber(154175),
         growth: '12.4',
-        costumerNames: ['Continente', 'Jerónimo Martins', 'Costumer C', 'Other'],
-        costumerSales: [utils.formatNumber(91323), utils.formatNumber(32340), utils.formatNumber(20323), utils.formatNumber(10189)],
+        //costumerNames: ['Continente', 'Jerónimo Martins', 'Costumer C', 'Other'],
+        //costumerSales: [utils.formatNumber(91323), utils.formatNumber(32340), utils.formatNumber(20323), utils.formatNumber(10189)],
     });
     
     var footerTpl = fs.readFileSync('./templates/common/footer.html', {encoding: 'utf-8'});

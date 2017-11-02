@@ -1,4 +1,4 @@
-var promise = require('bluebird');
+/*var promise = require('bluebird');
 
 var options = {
   // Initialization Options
@@ -27,4 +27,4 @@ function getAllPuppies(req, res, next) {
 
 module.exports = {
   getAllPuppies: getAllPuppies,
-};
+};*/

@@ -79,6 +79,85 @@ namespace PrimaveraIntegration.Lib_Primavera
                 return null;
         }
 
+        public static List<Model.Purchase> GetAllPurchasesGroupedByDate(string year, string month)
+        {
+            //Initialize containers
+            StdBELista objList;
+            List<Model.Purchase> purchaseList = new List<Model.Purchase>();
+            Model.Purchase purchase;
+
+            string query = "SELECT DataDoc, SUM(TotalMerc) AS Total From CabecCompras where (TipoDoc='VNC' or TipoDoc like 'VF_')";
+            if (year != null)
+                query += " and year(DataDoc)=" + year;
+            if (month != null)
+                query += " and month(DataDoc)=" + month;
+
+            query += " GROUP BY DataDoc order by DataDoc";
+
+            if (PriEngine.InitializeCompany(PrimaveraIntegration.Properties.Settings.Default.Company.Trim(), PrimaveraIntegration.Properties.Settings.Default.User.Trim(), PrimaveraIntegration.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                //Select rows from CabecCompras
+                objList = PriEngine.Engine.Consulta(query);
+
+                //For every CabecCompras
+                while (!objList.NoFim())
+                {
+                    purchase = new Model.Purchase();
+
+                    purchase.DocumentDate = objList.Valor("DataDoc");
+                    purchase.TotalValue = objList.Valor("Total") * (-1);
+
+                    purchaseList.Add(purchase);
+                    objList.Seguinte();
+
+                }
+
+                return purchaseList;
+            }
+            else
+                return null;
+        }
+
+        public static List<Model.Purchase> GetAllPurchasesGroupedBySupplier(string year, string month)
+        {
+            //Initialize containers
+            StdBELista objList;
+            List<Model.Purchase> purchaseList = new List<Model.Purchase>();
+            Model.Purchase purchase;
+
+            string query = "SELECT Entidade, Nome, SUM(TotalMerc) AS Total From CabecCompras where (TipoDoc='VNC' or TipoDoc like 'VF_')";
+            if (year != null)
+                query += " and year(DataDoc)=" + year;
+            if (month != null)
+                query += " and month(DataDoc)=" + month;
+
+            query += " GROUP BY Entidade, Nome order by Total";
+
+            if (PriEngine.InitializeCompany(PrimaveraIntegration.Properties.Settings.Default.Company.Trim(), PrimaveraIntegration.Properties.Settings.Default.User.Trim(), PrimaveraIntegration.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                //Select rows from CabecCompras
+                objList = PriEngine.Engine.Consulta(query);
+
+                //For every CabecCompras
+                while (!objList.NoFim())
+                {
+                    purchase = new Model.Purchase();
+
+                    purchase.Entity = objList.Valor("Entidade");
+                    purchase.EntityName = objList.Valor("Nome");
+                    purchase.TotalValue = objList.Valor("Total") * (-1);
+
+                    purchaseList.Add(purchase);
+                    objList.Seguinte();
+
+                }
+
+                return purchaseList;
+            }
+            else
+                return null;
+        }
+
         public static List<Model.Purchase> GetAllPurchases(string initial, string final, string supplier)
         {
             //Initialize containers
