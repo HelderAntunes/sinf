@@ -1,8 +1,24 @@
+this.year = 2017;
+this.month = null;
+
 var formatNumber = function (x) {
-    var parts = x.toString().split(".");
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-    return parts.join(".");
+    return x.toFixed(2);
 }
+
+var chooseYear = function (year) {
+   $('.dropdown-toggle').text(year);
+   $('.dropdown-toggle').append(' <span class="caret"></span></button>');
+
+   this.year = year;
+
+   console.log(this.month + "/" + this.year);
+}
+
+var chooseMonth = function (month) {
+    this.month = month;
+ 
+    console.log(this.month + "/" + this.year);
+ }
 
 var createGraph = function (dates, purchasesTotal) {
     Highcharts.chart('total-purchases', {
@@ -27,18 +43,14 @@ var createGraph = function (dates, purchasesTotal) {
                     verticalAlign: 'middle'
                 },
         
-                plotOptions: {
-                    line: {
-                        dataLabels: {
-                            enabled: true
-                        },
-                    }
-                },
-        
                 series: [{
                     name: 'Purchases',
                     data: purchasesTotal
                 }],
+
+                tooltip: {
+                    pointFormat: "{point.y:,.2f} €"
+                },
         
                 responsive: {
                     rules: [{
@@ -59,13 +71,19 @@ var createGraph = function (dates, purchasesTotal) {
 }
 
 $(document).ready(function () {
+    $('input[type=radio][name=options]').change(function() {
+        chooseMonth(this.value);
+    });
+
     $.getJSON('http://localhost:49822/api/Purchases/groupBySupplier/', function(data) {
         var total = 0;
         
         for (i in data) {
             var purchase = data[i];
-        
-            $('#supplier-purchases').append('<tr><td>'+ purchase.EntityName + '</td><td>' + formatNumber(purchase.TotalValue) + ' €</td></tr>');
+
+            if(i < 3){
+                $('#supplier-purchases').append('<tr><td>'+ purchase.EntityName + '</td><td>' + formatNumber(purchase.TotalValue) + '€</td></tr>');
+            }
 
             total += purchase.TotalValue;
         }
