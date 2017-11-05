@@ -7,11 +7,8 @@
                     <span class="caret"></span></button>
                 <ul class="dropdown-menu">
                     {foreach $years as $year => $code}
-                        <li><a href="#" onclick="chooseYear(this.text); return false;">2017</a></li>
+                        <li><a href="#" onclick="chooseYear(this.text)">{$code}</a></li>
                     {/foreach}
-                    <li><a href="#" onclick="chooseYear(this.text); return false;">2017</a></li>
-                    <li><a href="#" onclick="chooseYear(this.text); return false;">2016</a></li>
-                    <li><a href="#" onclick="chooseYear(this.text); return false;">2015</a></li>
                 </ul>
             </div>
             <div class="btn-group" data-toggle="buttons">

@@ -11,13 +11,17 @@ var chooseYear = function (year) {
 
    this.year = year;
 
-   console.log(this.month + "/" + this.year);
+   updateData();
 }
 
 var chooseMonth = function (month) {
-    this.month = month;
- 
-    console.log(this.month + "/" + this.year);
+    if(month != 'null'){
+        this.month = month;
+    }else{
+        this.month = null;
+    }
+
+    updateData();
  }
 
 var createGraph = function (dates, purchasesTotal) {
@@ -70,28 +74,39 @@ var createGraph = function (dates, purchasesTotal) {
             });
 }
 
-$(document).ready(function () {
-    $('input[type=radio][name=options]').change(function() {
-        chooseMonth(this.value);
-    });
+var updateData = function () {
+    var groupBySupplierURL = 'http://localhost:49822/api/Purchases/groupBySupplier?year='+ this.year;
+    var groupByDateURL = 'http://localhost:49822/api/Purchases/groupByDate?year=' + this.year;
 
-    $.getJSON('http://localhost:49822/api/Purchases/groupBySupplier/', function(data) {
+    if(this.month!=null){
+        groupBySupplierURL += '&month=' + this.month;
+        groupByDateURL += '&month=' + this.month;
+    }
+
+    $.getJSON(groupBySupplierURL, function(data) {
         var total = 0;
-        
-        for (i in data) {
-            var purchase = data[i];
 
-            if(i < 3){
-                $('#supplier-purchases').append('<tr><td>'+ purchase.EntityName + '</td><td>' + formatNumber(purchase.TotalValue) + '€</td></tr>');
+        if(data.length == 0){
+            $('#supplier-purchases').html('<p>No Suppliers<p>');
+        }
+        else{
+            $('#supplier-purchases').html('');
+            
+            for (i in data) {
+                var purchase = data[i];
+
+                if(i < 3){
+                    $('#supplier-purchases').append('<tr><td>'+ purchase.EntityName + '</td><td>' + formatNumber(purchase.TotalValue) + '€</td></tr>');
+                }
+
+                total += purchase.TotalValue;
             }
-
-            total += purchase.TotalValue;
         }
 
         $('#total-purchases-value').html(formatNumber(total) +' €');
     });
 
-    $.getJSON('http://localhost:49822/api/Purchases/groupByDate/', function(data) {
+    $.getJSON(groupByDateURL, function(data) {
         var dates = [];
         var purchasesTotal = [];
         var total = 0;
@@ -106,4 +121,12 @@ $(document).ready(function () {
         }
         createGraph(dates, purchasesTotal);
     });
+}
+
+$(document).ready(function () {
+    $('input[type=radio][name=options]').change(function() {
+        chooseMonth(this.value);
+    });
+
+    updateData();
 });
