@@ -1,6 +1,8 @@
 var fs = require('fs'); 
 var jSmart = require('jsmart'); 
 var express = require('express');
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/test');
 
 // PAGES
 var sales = require('./pages/sales');
@@ -32,6 +34,7 @@ app.get('/main', function (req, res) {
 });
 
 app.get('/sales', function (req, res) {
+    console.log("sales!!");
     sales.getSales(req, res);
 });
 
@@ -58,14 +61,6 @@ app.get('/inventory', function (req, res) {
 app.get('/purchases', function (req, res) {
     purchases.getPurchases(req, res);
 });
-
-// TEST
-var db = require('./queries');
-
-app.get('/puppies', function (req, res) {
-    db.getAllPuppies(req, res);
-});
-// TEST
 
 var server = app.listen(8081, function () {
    var port = server.address().port;
