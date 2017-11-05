@@ -7,6 +7,7 @@ mongoose.connect('mongodb://localhost/test');
 var Customer = require('./database/Customer');
 var Sales = require('./database/Sales');
 
+
 fs.readFile('../assets/SAFT_DEMOSINF_01-01-2016_31-12-2016.xml', function(err, data) {
     parseString(data, function (err, result) {
         //result = getSalesInvoices(result);

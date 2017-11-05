@@ -1,26 +1,22 @@
 var fs = require('fs'); 
 var jSmart = require('jsmart'); 
 var express = require('express');
+
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test');
+
 
 // PAGES
 var sales = require('./pages/sales');
 var purchases = require('./pages/purchases');
 
 var app = express();
+var addr = 'http://localhost:8081/';
 
 app.use(express.static(__dirname + '/public')); // css and javascript files are public files
 
 app.get('/', function (req, res) {
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    
-    var tpl = fs.readFileSync('./templates/demo.html', {encoding: 'utf-8'});
-    var compiledTemplate = new jSmart(tpl);
-    var output = compiledTemplate.fetch({name: 'SINF'});
-    
-    console.log(output);
-    res.end(output);
+    res.redirect(addr + 'main');
 });
 
 app.get('/main', function (req, res) {
@@ -34,7 +30,6 @@ app.get('/main', function (req, res) {
 });
 
 app.get('/sales', function (req, res) {
-    console.log("sales!!");
     sales.getSales(req, res);
 });
 
