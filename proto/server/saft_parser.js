@@ -1,16 +1,19 @@
 var fs = require('fs');
 var parseString = require('xml2js').parseString;
+
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test');
+
 var Customer = require('./database/Customer');
 var Sales = require('./database/Sales');
 
 fs.readFile('../assets/SAFT_DEMOSINF_01-01-2016_31-12-2016.xml', function(err, data) {
     parseString(data, function (err, result) {
-        result = getSalesInvoices(result);
-        writeSalesInvoices(result);       
-        //result = getCustomers(result);
-        //writeCustomers(result);
+        //result = getSalesInvoices(result);
+        //writeSalesInvoices(result);       
+        result = getCustomers(result);
+        writeCustomers(result);
+       
         fs.writeFile('saft_in_json.js', JSON.stringify(result, null, 2), function (err) {
             if (err) throw err;
             console.log('SAF-T xml parsed.');
@@ -32,7 +35,12 @@ function getValueOfAttribute(attr) {
 }
 
 function writeCustomers(customersJSON) {
-
+    // FOR TEST
+        /*Customer.find(function (err, customers) {
+            if (err) return console.error(err);
+            console.log(customers);
+        });*/
+    
     Customer.remove({ }, function (err) {
         if (err) return handleError(err);
 
@@ -48,70 +56,70 @@ function writeCustomers(customersJSON) {
                 fax: getValueOfAttribute(customer.Fax), 
             });
         
-            customer_doc.save();
+            customer_doc.save(function (err) { if (err) console.log(err);});
         }
-    
-        Customer.find(function (err, customers) {
-            if (err) return console.error(err);
-            console.log(customers);
-        });
-
     });
 }
 
 function writeSalesInvoices(SalesInvoicesJSON) {
-    Sales.SalesInvoices.find(function (err, saleInvoices) {
+    // FOR TEST
+    /*Sales.SalesInvoices.find(function (err, saleInvoices) {
         if (err) return console.error(err);
         console.log(JSON.stringify(saleInvoices, null, 2));
     });
-    return;
-    Sales.Line.remove({}, function (err){
+    return;*/
+
+    Sales.Line.remove({}, function (err) {
         if (err) return handleError(err);
 
-        Sales.SalesInvoices.remove({ }, function (err) {
+        Sales.SalesInvoices.remove({}, function (err) {
             if (err) return handleError(err);
-
-            for (var i = 0; i < SalesInvoicesJSON.length; i++) {
-                var saleInvoice = SalesInvoicesJSON[i];
-
-                var saleInvoice_doc = new Sales.SalesInvoices({ 
-                    InvoiceNo:  getValueOfAttribute(saleInvoice.InvoiceNo),
-                    InvoiceStatus: getValueOfAttribute(saleInvoice.DocumentStatus[0].InvoiceStatus),  
-                    InvoiceStatusDate: getValueOfAttribute(saleInvoice.DocumentStatus[0].InvoiceStatusDate),  
-                    InvoiceDate: getValueOfAttribute(saleInvoice.InvoiceDate),  
-                    InvoiceType: getValueOfAttribute(saleInvoice.InvoiceType),  
-                    CustomerID: getValueOfAttribute(saleInvoice.CustomerID),
-                    Lines: [{}], 
-                    TaxPayable: getValueOfAttribute(saleInvoice.DocumentTotals[0].TaxPayable),
-                    NetTotal: getValueOfAttribute(saleInvoice.DocumentTotals[0].NetTotal),
-                    GrossTotal: getValueOfAttribute(saleInvoice.DocumentTotals[0].GrossTotal),
-                });
-
-                for (var j = 0; j < saleInvoice.Line.length; j++) {
-                    var line = saleInvoice.Line[j];
-                    saleInvoice_doc.Lines.push({
-                        lineNumber: line.LineNumber,
-                        productCode: line.ProductCode,
-                        productDescprition: line.ProductDescription,
-                        quantity: line.Quantity,
-                        unitOfMeasure: line.UnitOfMeasure,
-                        unitPrice: line.UnitPrice[0],
-                        creditAmount: line.CreditAmount != null ? line.CreditAmount[0]:null,
-                        debitAmount: line.DebitAmount != null ? line.DebitAmount[0]:null,
-                        taxType: line.Tax[0].TaxType,
-                        taxPercentage: line.Tax[0].TaxPercentage[0], 
-                    });
-                    
-                }
             
-                saleInvoice_doc.save(function (err) {
-                    if (err) console.log(err);
-                });
-            }
+            saveSalesInvoices(SalesInvoicesJSON);
         });
     });
-    console.log('666');
+}
 
+function saveSalesInvoices(SalesInvoicesJSON) {
+    for (var i = 0; i < SalesInvoicesJSON.length; i++) {
+        var saleInvoiceJSON = SalesInvoicesJSON[i];
+        var saleInvoice_doc = getSaleInvoiceDoc(saleInvoiceJSON);
+
+        for (var j = 0; j < saleInvoiceJSON.Line.length; j++) 
+            saleInvoice_doc.Lines.push(getLineOfSaleInvoice(saleInvoiceJSON.Line[j]));
+    
+        saleInvoice_doc.save(function (err) { if (err) console.log(err);});
+    }
+}
+
+function getSaleInvoiceDoc(saleInvoiceJSON) {
+    return new Sales.SalesInvoices({ 
+        InvoiceNo:  getValueOfAttribute(saleInvoiceJSON.InvoiceNo),
+        InvoiceStatus: getValueOfAttribute(saleInvoiceJSON.DocumentStatus[0].InvoiceStatus),  
+        InvoiceStatusDate: getValueOfAttribute(saleInvoiceJSON.DocumentStatus[0].InvoiceStatusDate),  
+        InvoiceDate: getValueOfAttribute(saleInvoiceJSON.InvoiceDate),  
+        InvoiceType: getValueOfAttribute(saleInvoiceJSON.InvoiceType),  
+        CustomerID: getValueOfAttribute(saleInvoiceJSON.CustomerID),
+        Lines: [{}], 
+        TaxPayable: getValueOfAttribute(saleInvoiceJSON.DocumentTotals[0].TaxPayable),
+        NetTotal: getValueOfAttribute(saleInvoiceJSON.DocumentTotals[0].NetTotal),
+        GrossTotal: getValueOfAttribute(saleInvoiceJSON.DocumentTotals[0].GrossTotal),
+    });
+}
+
+function getLineOfSaleInvoice(lineJSON) {
+    return {
+        lineNumber: lineJSON.LineNumber,
+        productCode: lineJSON.ProductCode,
+        productDescprition: lineJSON.ProductDescription,
+        quantity: lineJSON.Quantity,
+        unitOfMeasure: lineJSON.UnitOfMeasure,
+        unitPrice: lineJSON.UnitPrice[0],
+        creditAmount: lineJSON.CreditAmount != null ? lineJSON.CreditAmount[0]:null,
+        debitAmount: lineJSON.DebitAmount != null ? lineJSON.DebitAmount[0]:null,
+        taxType: lineJSON.Tax[0].TaxType,
+        taxPercentage: lineJSON.Tax[0].TaxPercentage[0], 
+    };
 }
 
 //encomendas

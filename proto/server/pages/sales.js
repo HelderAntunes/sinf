@@ -1,43 +1,78 @@
 var fs = require('fs'); 
 var jSmart = require('jsmart'); 
 var utils = require('../utils');
+
 var Customer = require('../database/Customer');
+var Sales = require('../database/Sales');
 
 exports.getSales = function (req, res) {
     
     Customer.find({}, function(err, customers) {
         if (err) throw err;
-        var customersNames = getCustomersNames(customers);
-        console.log(customersNames);
 
-        res.writeHead(200, {'Content-Type': 'text/html'});
+        Sales.SalesInvoices.find({}, function(err, salesInvoices) {
+
+            customers = setCustomerSales(customers, salesInvoices);
+            customers.sort(compareCustomersBySalesDec);
+
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            
+            var headerTpl = fs.readFileSync('./templates/common/header.html', {encoding: 'utf-8'});
+            var compiledTemplate = new jSmart(headerTpl);
+            var outputHeader = compiledTemplate.fetch({ title: 'Sales Dashboard'});
         
-        var headerTpl = fs.readFileSync('./templates/common/header.html', {encoding: 'utf-8'});
-        var compiledTemplate = new jSmart(headerTpl);
-        var outputHeader = compiledTemplate.fetch({ title: 'Sales Dashboard'});
-    
-        var salesTpl = fs.readFileSync('./templates/sales.html', {encoding: 'utf-8'});
-        compiledTemplate = new jSmart(salesTpl);
-        var outputSales = compiledTemplate.fetch({
-            totalSales: utils.formatNumber(154175),
-            period: 'year',
-            salesPerPeriod: utils.formatNumber(25),
-            costumerNames: ['Continente', 'Jerónimo Martins', 'Costumer C', 'Other'],
-            costumerSales: [utils.formatNumber(91323), utils.formatNumber(32340), utils.formatNumber(20323), utils.formatNumber(10189)],
+            var salesTpl = fs.readFileSync('./templates/sales.html', {encoding: 'utf-8'});
+            compiledTemplate = new jSmart(salesTpl);
+            var outputSales = compiledTemplate.fetch({
+                totalSales: utils.formatNumber(154175),
+                period: 'year',
+                salesPerPeriod: utils.formatNumber(25),
+                costumerNames: getTopCustomersNames(customers, 5),
+                costumerSales: getTopCustomersSales(customers, 5),
+            });
+            
+            var footerTpl = fs.readFileSync('./templates/common/footer.html', {encoding: 'utf-8'});
+            compiledTemplate = new jSmart(footerTpl);
+            var outputFooter = compiledTemplate.fetch();
+            
+            res.end(outputHeader + outputSales + outputFooter);
+
         });
         
-        var footerTpl = fs.readFileSync('./templates/common/footer.html', {encoding: 'utf-8'});
-        compiledTemplate = new jSmart(footerTpl);
-        var outputFooter = compiledTemplate.fetch();
-        
-        res.end(outputHeader + outputSales + outputFooter);
     });
 
 }
 
-function getCustomersNames(customers) {
+function getTopCustomersNames(customers, topSize) {
     var customersNames = [];
-    for (var i = 0; i < customers.length && i < 5; i++) 
+    for (var i = 0; i < customers.length && i < topSize; i++) 
         customersNames.push(customers[i].company_name);
     return customersNames;
+}
+
+function getTopCustomersSales(customers, topSize) {
+    var customersSales = [];
+    for (var i = 0; i < customers.length && i < topSize; i++) 
+        customersSales.push(Math.round(customers[i].sales));
+    return customersSales;
+}
+
+// TODO: precalculate this in saft_parser, it is too bad.
+function setCustomerSales(customers, salesInvoices) {
+    for (var i = 0; i < customers.length; i++) 
+    for (var j = 0; j < salesInvoices.length; j++) 
+        if (salesInvoices[j].CustomerID == customers[i].customer_id) {
+            if (customers[i]['sales'] == null) customers[i]['sales'] = salesInvoices[j]['NetTotal'];
+            else customers[i]['sales'] += salesInvoices[j]['NetTotal'];
+            //console.log(customers[i]);
+        }
+
+    return customers;
+}
+
+// decreasing order
+function compareCustomersBySalesDec(a,b) {
+  if (a.sales < b.sales) return 1;
+  if (a.sales > b.sales) return -1;
+  return 0;
 }
