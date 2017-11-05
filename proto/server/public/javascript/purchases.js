@@ -1,8 +1,28 @@
+this.year = 2017;
+this.month = null;
+
 var formatNumber = function (x) {
-    var parts = x.toString().split(".");
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-    return parts.join(".");
+    return x.toFixed(2);
 }
+
+var chooseYear = function (year) {
+   $('.dropdown-toggle').text(year);
+   $('.dropdown-toggle').append(' <span class="caret"></span></button>');
+
+   this.year = year;
+
+   updateData();
+}
+
+var chooseMonth = function (month) {
+    if(month != 'null'){
+        this.month = month;
+    }else{
+        this.month = null;
+    }
+
+    updateData();
+ }
 
 var createGraph = function (dates, purchasesTotal) {
     Highcharts.chart('total-purchases', {
@@ -27,18 +47,14 @@ var createGraph = function (dates, purchasesTotal) {
                     verticalAlign: 'middle'
                 },
         
-                plotOptions: {
-                    line: {
-                        dataLabels: {
-                            enabled: true
-                        },
-                    }
-                },
-        
                 series: [{
                     name: 'Purchases',
                     data: purchasesTotal
                 }],
+
+                tooltip: {
+                    pointFormat: "{point.y:,.2f} €"
+                },
         
                 responsive: {
                     rules: [{
@@ -58,22 +74,39 @@ var createGraph = function (dates, purchasesTotal) {
             });
 }
 
-$(document).ready(function () {
-    $.getJSON('http://localhost:49822/api/Purchases/groupBySupplier/', function(data) {
-        var total = 0;
-        
-        for (i in data) {
-            var purchase = data[i];
-        
-            $('#supplier-purchases').append('<tr><td>'+ purchase.EntityName + '</td><td>' + formatNumber(purchase.TotalValue) + ' €</td></tr>');
+var updateData = function () {
+    var groupBySupplierURL = 'http://localhost:49822/api/Purchases/groupBySupplier?year='+ this.year;
+    var groupByDateURL = 'http://localhost:49822/api/Purchases/groupByDate?year=' + this.year;
 
-            total += purchase.TotalValue;
+    if(this.month!=null){
+        groupBySupplierURL += '&month=' + this.month;
+        groupByDateURL += '&month=' + this.month;
+    }
+
+    $.getJSON(groupBySupplierURL, function(data) {
+        var total = 0;
+
+        if(data.length == 0){
+            $('#supplier-purchases').html('<p>No Suppliers<p>');
+        }
+        else{
+            $('#supplier-purchases').html('');
+            
+            for (i in data) {
+                var purchase = data[i];
+
+                if(i < 3){
+                    $('#supplier-purchases').append('<tr><td>'+ purchase.EntityName + '</td><td>' + formatNumber(purchase.TotalValue) + '€</td></tr>');
+                }
+
+                total += purchase.TotalValue;
+            }
         }
 
         $('#total-purchases-value').html(formatNumber(total) +' €');
     });
 
-    $.getJSON('http://localhost:49822/api/Purchases/groupByDate/', function(data) {
+    $.getJSON(groupByDateURL, function(data) {
         var dates = [];
         var purchasesTotal = [];
         var total = 0;
@@ -88,4 +121,12 @@ $(document).ready(function () {
         }
         createGraph(dates, purchasesTotal);
     });
+}
+
+$(document).ready(function () {
+    $('input[type=radio][name=options]').change(function() {
+        chooseMonth(this.value);
+    });
+
+    updateData();
 });

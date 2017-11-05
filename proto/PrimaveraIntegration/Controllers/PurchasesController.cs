@@ -13,20 +13,54 @@ namespace PrimaveraIntegration.Controllers
     public class PurchasesController : ApiController
     {
         // GET api/purchases   
+        public IEnumerable<Lib_Primavera.Model.Purchase> GetPurchases()
+        {
+            return Lib_Primavera.PriIntegration.GetAllPurchases(null, null);
+        }
+        
+        // GET api/purchases   
         public IEnumerable<Lib_Primavera.Model.Purchase> GetPurchases(String id)
+        {
+            if (id == "groupByDate"){
+                return Lib_Primavera.PriIntegration.GetAllPurchasesGroupedByDate(null, null);
+            }
+            if (id == "groupBySupplier"){
+                return Lib_Primavera.PriIntegration.GetAllPurchasesGroupedBySupplier(null, null);
+            }
+            else{
+                return Lib_Primavera.PriIntegration.GetAllPurchases(null, null);
+            }
+        }
+
+        // GET api/purchases/id?year={year}
+        public IEnumerable<Lib_Primavera.Model.Purchase> GetPurchases(String id, int year)
         {
             if (id == "groupByDate")
             {
-                return Lib_Primavera.PriIntegration.GetAllPurchasesGroupedByDate(null, null);
+                return Lib_Primavera.PriIntegration.GetAllPurchasesGroupedByDate(year.ToString(), null);
             }
             if (id == "groupBySupplier")
             {
-                return Lib_Primavera.PriIntegration.GetAllPurchasesGroupedBySupplier(null, null);
+                return Lib_Primavera.PriIntegration.GetAllPurchasesGroupedBySupplier(year.ToString(), null);
             }
             else
             {
-                return Lib_Primavera.PriIntegration.GetAllPurchases(null, null);
+                return Lib_Primavera.PriIntegration.GetAllPurchases(year.ToString(), null);
             }
+        }
+
+        // GET api/purchases/id?year={year}&month={month}
+        public IEnumerable<Lib_Primavera.Model.Purchase> GetPurchases(String id, int year, int month)
+        {
+            if (id == "groupByDate"){
+                return Lib_Primavera.PriIntegration.GetAllPurchasesGroupedByDate(year.ToString(), month.ToString());
+            }
+            if (id == "groupBySupplier"){
+                return Lib_Primavera.PriIntegration.GetAllPurchasesGroupedBySupplier(year.ToString(), month.ToString());
+            }
+            else{
+                return Lib_Primavera.PriIntegration.GetAllPurchases(year.ToString(), month.ToString());
+            } 
         }
 
         // GET api/purchases/date/{year}

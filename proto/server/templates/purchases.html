@@ -6,47 +6,50 @@
                 <button class="btn btn-timeFilter dropdown-toggle" type="button" data-toggle="dropdown">2017
                     <span class="caret"></span></button>
                 <ul class="dropdown-menu">
-                    <li><a href="#">2017</a></li>
-                    <li><a href="#">2016</a></li>
-                    <li><a href="#">2015</a></li>
+                    {foreach $years as $year => $code}
+                        <li><a href="#" onclick="chooseYear(this.text)">{$code}</a></li>
+                    {/foreach}
                 </ul>
             </div>
             <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-timeFilter active">
-                        <input type="radio" name="options" autocomplete="off" checked>None
+                        <input type="radio" name="options" value="null" autocomplete="off" checked>None
                     </label>
                     <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off" checked>Jan
+                        <input type="radio" name="options" value="1" autocomplete="off">Jan
                     </label>
                     <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off">Fev
+                        <input type="radio" name="options" value="2" autocomplete="off">Fev
                     </label>
                     <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off">Mar
+                        <input type="radio" name="options" value="3" autocomplete="off">Mar
                     </label>
                     <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off" checked>Apr
+                        <input type="radio" name="options" value="4" autocomplete="off">Apr
                     </label>
                     <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off">Jun
+                        <input type="radio" name="options" value="5" autocomplete="off">May
                     </label>
                     <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off">Jul
+                        <input type="radio" name="options" value="6" autocomplete="off">Jun
                     </label>
                     <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off" checked>Aug
+                        <input type="radio" name="options" value="7" autocomplete="off">Jul
                     </label>
                     <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off">Set
+                        <input type="radio" name="options" value="8" autocomplete="off">Aug
                     </label>
                     <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off">Oct
+                        <input type="radio" name="options" value="9" autocomplete="off">Set
                     </label>
                     <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off" checked>Nov
+                        <input type="radio" name="options" value="10" autocomplete="off">Oct
                     </label>
                     <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off">Dec
+                        <input type="radio" name="options" value="11" autocomplete="off" checked>Nov
+                    </label>
+                    <label class="btn btn-timeFilter">
+                        <input type="radio" name="options" value="12" autocomplete="off">Dec
                     </label>
                 </div>
             </div>
@@ -91,14 +94,6 @@
                         </tr>
                         </thead>
                         <tbody id="supplier-purchases">
-                        <!--{foreach $costumerNames as $name => $code}
-                            <tr>
-                                <td>{$costumerNames[$code@index]}</td>
-                                <td>{$costumerSales[$code@index]} €</td>
-                            </tr>
-                        {foreachelse}
-                            No suppliers.
-                        {/foreach}-->
                         </tbody>
                     </table>
                 </div>
