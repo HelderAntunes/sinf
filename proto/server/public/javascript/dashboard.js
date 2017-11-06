@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    $('#dashboard-tab').addClass('active');
+
     // Build the chart
     Highcharts.chart('sales-by-product', {
         chart: {

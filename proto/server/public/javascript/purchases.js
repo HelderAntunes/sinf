@@ -124,6 +124,7 @@ var updateData = function () {
 }
 
 $(document).ready(function () {
+    $('#purchases-tab').addClass('active');
     $('input[type=radio][name=options]').change(function() {
         chooseMonth(this.value);
     });

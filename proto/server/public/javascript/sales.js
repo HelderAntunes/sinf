@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    $('#sales-tab').addClass('active');
+
     /*$.ajax({
         url: address + "getSalesByYear",
         type: "GET",

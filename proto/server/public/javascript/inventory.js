@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+  $('#inventory-tab').addClass('active');
+
   Highcharts.chart('stock-available', {
       title: {
           text: 'Stock history'
