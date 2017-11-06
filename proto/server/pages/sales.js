@@ -1,6 +1,5 @@
 var fs = require('fs'); 
 var jSmart = require('jsmart'); 
-var moment = require('moment');
 var utils = require('../utils');
 
 var Customer = require('../database/Customer');
@@ -25,7 +24,7 @@ exports.getSales = function (req, res) {
             var salesTpl = fs.readFileSync('./templates/sales.html', {encoding: 'utf-8'});
             compiledTemplate = new jSmart(salesTpl);
             var outputSales = compiledTemplate.fetch({
-                totalSales: utils.formatNumber(getTotalSales(salesInvoices)),
+                totalSales: getTotalSales(salesInvoices),
                 period: 'year',
                 salesPerPeriod: utils.formatNumber(25),
                 costumerNames: getTopCustomersNames(customers, 5),
@@ -44,34 +43,11 @@ exports.getSales = function (req, res) {
 
 }
 
-/*
-Sales.SalesInvoices.find({
-  InvoiceDate: {
-    $gte: dataRange.start,
-    $lt: dataRange.end
-  }}, function (err, saleInvoices) {
-    if (err) return console.error(err);
-    console.log(JSON.stringify(saleInvoices, null, 2));
-});*/
-
-function getMonthDateRange(year, month) {
-    var startDate = moment([year, month - 1]);
-    var endDate = moment(startDate).endOf('month');
-    return { start: startDate.toDate(), end: endDate.toDate() };
-}
-
-function getYearDateRange(year) {
-    var startDate = moment([year]);
-    var endDate = moment(startDate).endOf('year');
-    return { start: startDate.toDate(), end: endDate.toDate() };
-}
-
-
 function getTotalSales(salesInvoices) {
     var totalSales = 0;
     for (var i = 0; i < salesInvoices.length; i++) 
         totalSales += salesInvoices[i]['GrossTotal'];
-    return Math.round(totalSales);
+    return utils.formatNumber(Math.round(totalSales));
 }
 
 function getTopCustomersNames(customers, topSize) {
@@ -84,7 +60,7 @@ function getTopCustomersNames(customers, topSize) {
 function getTopCustomersSales(customers, topSize) {
     var customersSales = [];
     for (var i = 0; i < customers.length && i < topSize; i++) 
-        customersSales.push(Math.round(customers[i].sales));
+        customersSales.push(utils.formatNumber(Math.round(customers[i].sales)));
     return customersSales;
 }
 

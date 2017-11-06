@@ -1,10 +1,10 @@
 var fs = require('fs'); 
 var jSmart = require('jsmart'); 
 var express = require('express');
+var utils = require('./utils');
 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test');
-
 
 // PAGES
 var sales = require('./pages/sales');
@@ -13,6 +13,7 @@ var purchases = require('./pages/purchases');
 var app = express();
 var addr = 'http://localhost:8081/';
 
+app.set('json spaces', 2);
 app.use(express.static(__dirname + '/public')); // css and javascript files are public files
 
 app.get('/', function (req, res) {
@@ -55,6 +56,38 @@ app.get('/inventory', function (req, res) {
 
 app.get('/purchases', function (req, res) {
     purchases.getPurchases(req, res);
+});
+
+app.get('/getSalesByMonth', function(req, res) {
+    var month = req.query.month, year = req.query.year;
+    var dataRange = utils.getMonthDateRange(year, month);
+    var Sales = require('./database/Sales');
+
+    Sales.SalesInvoices.find({
+        InvoiceDate: {
+            $gte: dataRange.start,
+            $lt: dataRange.end }}, 
+        function (err, salesInvoices) {
+            if (err) return console.error(err);
+            res.json(salesInvoices);
+        }
+    );
+});
+
+app.get('/getSalesByYear', function(req, res) {
+    var year = req.query.year;
+    var dataRange = utils.getYearDateRange(year);
+    var Sales = require('./database/Sales');
+
+    Sales.SalesInvoices.find({
+        InvoiceDate: {
+            $gte: dataRange.start,
+            $lt: dataRange.end }}, 
+        function (err, salesInvoices) {
+            if (err) return console.error(err);
+            res.json(salesInvoices);
+        }
+    );
 });
 
 var server = app.listen(8081, function () {
