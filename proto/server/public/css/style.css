@@ -187,3 +187,32 @@ body{
     color: white;
     padding: 10px 20px;
 }
+
+.tabled div{
+    overflow:hidden;
+}
+
+.tabled .head{
+    border-top: solid 1px black;
+    font-weight: bolder;
+    border-radius: 10px 10px 0 0;
+    background-color: #56400b;
+    color: white;
+}
+
+.tabled .mainrow{
+    border-top: solid 1px black;
+    font-weight: bolder;
+
+}
+
+.tabled .subrow{
+    border-top: solid 1px grey;
+    font-weight: normal;
+    background: #CCCCCC;
+}
+
+.tabled .subrow:first-child{
+    font-weight: bolder;
+
+}
