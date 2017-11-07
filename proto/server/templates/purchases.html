@@ -1,55 +1,21 @@
-<div class="container">
+<div class="container" ng-app="purchases_app" ng-controller="purchases_controller">
 
     <div class="row">
         <div class="col-sm-12 col-md-10 col-md-offset-1">
             <div class="btn-group dropdown">
-                <button class="btn btn-timeFilter dropdown-toggle" type="button" data-toggle="dropdown">2017
+                <button class="btn btn-timeFilter dropdown-toggle" type="button" data-toggle="dropdown">[[chosenYear]]
                     <span class="caret"></span></button>
                 <ul class="dropdown-menu">
-                    {foreach $years as $year => $code}
-                        <li><a href="#" onclick="chooseYear(this.text)">{$code}</a></li>
-                    {/foreach}
+                    <li ng-repeat="year in years"><a href="" ng-click="chooseYear(year)">[[year]]</a></li>
                 </ul>
             </div>
             <div class="btn-group" data-toggle="buttons">
+
                     <label class="btn btn-timeFilter active">
-                        <input type="radio" name="options" value="null" autocomplete="off" checked>None
+                        <input type="radio" name="options" ng-model="chosenMonth" ng-value="null" ng-change='chooseMonth(value)' autocomplete="off" checked>None
                     </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" value="1" autocomplete="off">Jan
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" value="2" autocomplete="off">Fev
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" value="3" autocomplete="off">Mar
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" value="4" autocomplete="off">Apr
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" value="5" autocomplete="off">May
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" value="6" autocomplete="off">Jun
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" value="7" autocomplete="off">Jul
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" value="8" autocomplete="off">Aug
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" value="9" autocomplete="off">Set
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" value="10" autocomplete="off">Oct
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" value="11" autocomplete="off" checked>Nov
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" value="12" autocomplete="off">Dec
+                    <label ng-repeat="month in months" class="btn btn-timeFilter">
+                        <input type="radio" name="options" ng-model="chosenMonth" ng-value="[[month.value]]" ng-change='chooseMonth()' autocomplete="off">[[month.name]]
                     </label>
                 </div>
             </div>
@@ -65,11 +31,11 @@
                     <ul class="list-group">
                         <li class="list-group-item">
                             <h4>Total Purchases</h4>
-                            <h3 id="total-purchases-value">{$totalPurchases} €</h3>
+                            <h3 id="total-purchases-value">[[total | currency:"€"]]</h3>
                         </li>
                         <li class="list-group-item">
                             <h4>Growth</h4>
-                            <h3>{$growth} %</h3>
+                            <h3>[[growth | percentage:2]]</h3>
                         </li>
                     </ul>
                 </div>
@@ -94,6 +60,7 @@
                         </tr>
                         </thead>
                         <tbody id="supplier-purchases">
+                            <tr ng-repeat="purchase in purchases"><td>[[purchase.EntityName]]</td><td>[[purchase.TotalValue | number:2]] €</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -111,4 +78,5 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <script src="../javascript/purchases.js"></script>
