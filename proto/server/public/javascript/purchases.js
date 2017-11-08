@@ -162,7 +162,7 @@ app.controller('purchases_controller', function($scope, $http) {
         updateData($scope, $http);
     };
 
-    $scope.chooseMonth = function(){
+    $scope.debug = function(){
         console.log($scope.chosenYear + '/' + $scope.chosenMonth);
     };
 
