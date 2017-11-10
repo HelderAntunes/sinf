@@ -11,7 +11,8 @@
                         </ul>
                     </div>
                     <div class="btn-group mr-2" role="group" aria-label="Month Group">
-                        <button ng-repeat="month in months" type="button" class="btn btn-timeFilter ng-cloak" ng-click="chooseMonth(month.value)">[[month.name]]</button>
+                        <button type="button" class="btn btn-timeFilter month-selector active" ng-click="chooseMonth(null)">None</button>
+                        <button ng-repeat="month in months" type="button" class="btn btn-timeFilter ng-cloak month-selector" ng-click="chooseMonth(month.value)">[[month.name]]</button>
                     </div>
                 <!--div class="btn-group" data-toggle="buttons" role="group" aria-label="Month Group">
                     <label ng-repeat="month in months" class="btn btn-timeFilter">

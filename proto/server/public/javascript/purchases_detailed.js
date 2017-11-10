@@ -20,11 +20,10 @@ app.controller('purchases_detailed_controller', function($scope, $http) {
     for(var i = 2015; i <= today.getFullYear(); i++){
         $scope.years.push(i);
     }
-    $scope.months = [{value: null, name: 'None'},{value: 1, name: 'Jan'},{value: 2, name: 'Feb'},{value: 3, name: 'Mar'},{value: 4, name: 'Apr'},{value: 5, name: 'May'},{value: 6, name: 'Jun'},
+    $scope.months = [{value: 1, name: 'Jan'},{value: 2, name: 'Feb'},{value: 3, name: 'Mar'},{value: 4, name: 'Apr'},{value: 5, name: 'May'},{value: 6, name: 'Jun'},
     {value: 7, name: 'Jul'},{value: 8, name: 'Aug'},{value: 9, name: 'Sep'},{value: 10, name: 'Oct'},{value: 11, name: 'Nov'},{value: 12, name: 'Dec'}];
     
     $scope.purchases = [];
-
 
     //Functions
     $scope.chooseYear = function(year){
@@ -32,6 +31,9 @@ app.controller('purchases_detailed_controller', function($scope, $http) {
         updateData($scope, $http);
     };
     $scope.chooseMonth = function(month){
+        $('.month-selector').removeClass('active');
+        event.target.className += ' active';
+
         $scope.chosenMonth = month;
         updateData($scope, $http);
     };
