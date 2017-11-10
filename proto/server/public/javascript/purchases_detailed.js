@@ -3,6 +3,12 @@ var app = angular.module('purchases_detailed_app', []).config(['$interpolateProv
     $interpolateProvider.endSymbol(']]');
   }]);
 
+  app.filter('euro', ['$filter', function ($filter) {
+    return function (input) {
+      return $filter('number')(input * 100, 2) + '€';
+    };
+  }]);
+
 app.controller('purchases_detailed_controller', function($scope, $http) {
     //init vars
     var today = new Date();

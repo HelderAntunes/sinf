@@ -33,7 +33,7 @@
                     <ul class="list-group">
                         <li class="list-group-item">
                             <h4>Total Purchases</h4>
-                            <h3 id="total-purchases-value" class="ng-cloak">[[total | currency:"€"]]</h3>
+                            <h3 id="total-purchases-value" class="ng-cloak">[[total | euro]]</h3>
                         </li>
                         <li class="list-group-item">
                             <h4>Growth</h4>
@@ -50,18 +50,18 @@
         </div>
 
         <div class="col-sm-3">
-            <h4 class="text-center" style="color: #8a6d3b">Suppliers</h4>
+            <h4 class="text-center" style="color: #8a6d3b">Top 3 Suppliers</h4>
             <div class="row text-center">
                 <div class="col-sm-12">
                     <table class="table">
                         <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Sales</th>
+                            <th>Purchases</th>
                         </tr>
                         </thead>
                         <tbody id="supplier-purchases">
-                            <tr class="ng-cloak" ng-repeat="purchase in purchases"><td>[[purchase.EntityName]]</td><td>[[purchase.TotalValue | currency:'€']]</td></tr>
+                            <tr class="ng-cloak" ng-repeat="purchase in purchases"><td>[[purchase.EntityName]]</td><td>[[purchase.TotalValue | euro]]</td></tr>
                         </tbody>
                     </table>
                 </div>

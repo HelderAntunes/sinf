@@ -31,7 +31,7 @@
                 <div class="row-fluid mainrow" data-toggle="collapse" ng-attr-data-target="#collapse[[$index]]">
                     <div class="col-xs-8">[[purchase.EntityName]]</div>
                     <div class="col-xs-2">[[dateFormat(purchase.DocumentDate)]]</div>
-                    <div class="col-xs-2">[[purchase.TotalValue]] €</div>
+                    <div class="currency col-xs-2">[[purchase.TotalValue | euro]]</div>
                 </div>
                 <div ng-attr-id="collapse[[$index]]" class="col-xs-12 row-fluid collapse">
                     <div class="article subrow">
@@ -42,7 +42,7 @@
                     <div class="article subrow" ng-repeat="article in purchase.Items">
                         <div class="col-xs-8">[[article.Description]]</div>
                         <div class="col-xs-2">[[article.Quantity * -1]]</div>
-                        <div class="col-xs-2">[[article.UnitPrice]] €</div>
+                        <div class="currency col-xs-2">[[article.UnitPrice | euro]]</div>
                     </div>
                 </div>
             </div>    
