@@ -151,21 +151,36 @@ var app = angular.module('purchases_app', []).config(['$interpolateProvider', fu
     };
   }]);
 
-app.controller('purchases_controller', function($scope, $http) {
-    $scope.chosenYear = 2017;
-    $scope.chosenMonth = null;
-    $scope.years = [2015,2016,2017,2018];
-    $scope.months = [{value: null, name: 'None'},{value: 1, name: 'Jan'},{value: 2, name: 'Feb'},{value: 3, name: 'Mar'},{value: 4, name: 'Apr'},{value: 5, name: 'May'},{value: 6, name: 'Jun'},
-    {value: 7, name: 'Jul'},{value: 8, name: 'Aug'},{value: 9, name: 'Sep'},{value: 10, name: 'Oct'},{value: 11, name: 'Nov'},{value: 12, name: 'Dec'}];
+  app.filter('euro', ['$filter', function ($filter) {
+    return function (input) {
+      return $filter('number')(input * 100, 2) + '€';
+    };
+  }]);
 
+app.controller('purchases_controller', function($scope, $http) {
+    //init vars
+    var today = new Date();
+    
+    $scope.chosenYear = today.getFullYear();
+    $scope.chosenMonth = null;
+        
+    $scope.years = [];
+    for(var i = 2015; i <= today.getFullYear(); i++){
+           $scope.years.push(i);
+    }
+    $scope.months = [{value: 1, name: 'Jan'},{value: 2, name: 'Feb'},{value: 3, name: 'Mar'},{value: 4, name: 'Apr'},{value: 5, name: 'May'},{value: 6, name: 'Jun'},
+    {value: 7, name: 'Jul'},{value: 8, name: 'Aug'},{value: 9, name: 'Sep'},{value: 10, name: 'Oct'},{value: 11, name: 'Nov'},{value: 12, name: 'Dec'}];
+        
     $scope.chooseYear = function(year){
         $scope.chosenYear = year;        
         updateData($scope, $http);
     };
 
     $scope.chooseMonth = function(month){
+        $('.month-selector').removeClass('active');
+        event.target.className += ' active';
+
         $scope.chosenMonth = month;
-        console.log($scope.chosenYear + '/' + $scope.chosenMonth);
         updateData($scope, $http);
     };
 

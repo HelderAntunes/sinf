@@ -13,7 +13,11 @@ namespace PrimaveraIntegration.Lib_Primavera
     public class PriIntegration
     {
 
+
+
         # region Purchase
+
+        private static string validDocumentSQL = "(TipoDoc='VNC' or TipoDoc like 'VF_' or TipoDoc='VVD') and TipoDoc!='VFS' ";
 
         public static List<Model.Purchase> GetAllPurchases(string year, string month)
         {
@@ -24,12 +28,11 @@ namespace PrimaveraIntegration.Lib_Primavera
             Model.Purchase purchase;
             Model.PurchaseItem purchaseItem;
 
-            string query = "SELECT Id, DataDoc, DataVencimento, Entidade, Nome, NumDoc, Observacoes, TotalMerc, TipoDoc From CabecCompras where (TipoDoc='VNC' or TipoDoc like 'VF_')";
+            string query = "SELECT Id, DataDoc, DataVencimento, Entidade, Nome, NumDoc, Observacoes, TotalMerc, TipoDoc, Serie From CabecCompras where " + validDocumentSQL;
             if (year != null)
                 query += " and year(DataDoc)=" + year;
             if (month != null)
                 query += " and month(DataDoc)=" + month;
-
             query += " order by DataDoc";
             if (PriEngine.InitializeCompany(PrimaveraIntegration.Properties.Settings.Default.Company.Trim(), PrimaveraIntegration.Properties.Settings.Default.User.Trim(), PrimaveraIntegration.Properties.Settings.Default.Password.Trim()) == true)
             {
@@ -50,6 +53,7 @@ namespace PrimaveraIntegration.Lib_Primavera
                     purchase.Notes = objList.Valor("Observacoes");
                     purchase.TotalValue = objList.Valor("TotalMerc") * (-1);
                     purchase.DocumentType = objList.Valor("TipoDoc");
+                    purchase.DocumentSeries = objList.Valor("Serie");
                     purchase.Items = new List<Model.PurchaseItem>();
 
                     //Select rows from LinhasCompras
@@ -87,7 +91,7 @@ namespace PrimaveraIntegration.Lib_Primavera
             List<Model.Purchase> purchaseList = new List<Model.Purchase>();
             Model.Purchase purchase;
 
-            string query = "SELECT DataDoc, SUM(TotalMerc) AS Total From CabecCompras where (TipoDoc='VNC' or TipoDoc like 'VF_')";
+            string query = "SELECT DataDoc, SUM(TotalMerc) AS Total From CabecCompras where " + validDocumentSQL;
             if (year != null)
                 query += " and year(DataDoc)=" + year;
             if (month != null)
@@ -126,7 +130,7 @@ namespace PrimaveraIntegration.Lib_Primavera
             List<Model.Purchase> purchaseList = new List<Model.Purchase>();
             Model.Purchase purchase;
 
-            string query = "SELECT Entidade, Nome, SUM(TotalMerc) AS Total From CabecCompras where (TipoDoc='VNC' or TipoDoc like 'VF_')";
+            string query = "SELECT Entidade, Nome, SUM(TotalMerc) AS Total From CabecCompras where " + validDocumentSQL;
             if (year != null)
                 query += " and year(DataDoc)=" + year;
             if (month != null)
@@ -168,13 +172,14 @@ namespace PrimaveraIntegration.Lib_Primavera
             Model.Purchase purchase;
             Model.PurchaseItem purchaseItem;
 
-            string query = "SELECT Id, DataDoc, DataVencimento, Entidade, Nome, NumDoc, Observacoes, TotalMerc From CabecCompras where TipoDoc='VGR'";
+            string query = "SELECT Id, DataDoc, DataVencimento, Entidade, Nome, NumDoc, Observacoes, TotalMerc, TipoDoc, Serie From CabecCompras where " + validDocumentSQL;
             if (initial != null)
-                query += "and DataDoc>='" + initial +"'";
+                query += " and DataDoc>='" + initial +"'";
             if (final != null)
-                query += "and DataDoc<='" + final + "'";
+                query += " and DataDoc<='" + final + "'";
             if (supplier != null)
-                query += "and Entidade='" + supplier + "'";
+                query += " and Entidade='" + supplier + "'";
+            query += " order by DataDoc";
             Console.WriteLine(query);
 
             if (PriEngine.InitializeCompany(PrimaveraIntegration.Properties.Settings.Default.Company.Trim(), PrimaveraIntegration.Properties.Settings.Default.User.Trim(), PrimaveraIntegration.Properties.Settings.Default.Password.Trim()) == true)
@@ -195,6 +200,8 @@ namespace PrimaveraIntegration.Lib_Primavera
                     purchase.DocumentNumber = objList.Valor("NumDoc");
                     purchase.Notes = objList.Valor("Observacoes");
                     purchase.TotalValue = objList.Valor("TotalMerc");
+                    purchase.DocumentType = objList.Valor("TipoDoc");
+                    purchase.DocumentSeries = objList.Valor("Serie");
                     purchase.Items = new List<Model.PurchaseItem>();
 
                     //Select rows from LinhasCompras
