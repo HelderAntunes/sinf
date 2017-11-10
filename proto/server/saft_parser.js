@@ -7,18 +7,14 @@ mongoose.connect('mongodb://localhost/test');
 var Customer = require('./database/Customer');
 var Sales = require('./database/Sales');
 
-
 fs.readFile('../assets/SAFT_DEMOSINF_01-01-2016_31-12-2016.xml', function(err, data) {
     parseString(data, function (err, result) {
-        //result = getSalesInvoices(result);
-        //writeSalesInvoices(result);       
-        result = getCustomers(result);
-        writeCustomers(result);
-       
-        fs.writeFile('saft_in_json.js', JSON.stringify(result, null, 2), function (err) {
+        writeCustomers(getCustomers(result));
+        writeSalesInvoices(getSalesInvoices(result));       
+        /*fs.writeFile('saft_in_json.js', JSON.stringify(result, null, 2), function (err) {
             if (err) throw err;
             console.log('SAF-T xml parsed.');
-        });
+        });*/
     });
 });
 
@@ -71,12 +67,14 @@ function writeSalesInvoices(SalesInvoicesJSON) {
     return;*/
 
     Sales.Line.remove({}, function (err) {
+
         if (err) return handleError(err);
 
         Sales.SalesInvoices.remove({}, function (err) {
+
             if (err) return handleError(err);
-            
-            saveSalesInvoices(SalesInvoicesJSON);
+            else saveSalesInvoices(SalesInvoicesJSON);
+
         });
     });
 }
@@ -85,7 +83,7 @@ function saveSalesInvoices(SalesInvoicesJSON) {
     for (var i = 0; i < SalesInvoicesJSON.length; i++) {
         var saleInvoiceJSON = SalesInvoicesJSON[i];
         var saleInvoice_doc = getSaleInvoiceDoc(saleInvoiceJSON);
-
+        
         for (var j = 0; j < saleInvoiceJSON.Line.length; j++) 
             saleInvoice_doc.Lines.push(getLineOfSaleInvoice(saleInvoiceJSON.Line[j]));
     

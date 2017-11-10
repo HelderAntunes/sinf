@@ -63,8 +63,11 @@ app.get('/purchases_detailed', function (req, res) {
 });
 
 app.get('/getSalesByMonth', function(req, res) {
+
     var month = req.query.month, year = req.query.year;
+    console.log(month + " " + year);
     var dataRange = utils.getMonthDateRange(year, month);
+    console.log(dataRange);
     var Sales = require('./database/Sales');
 
     Sales.SalesInvoices.find({
@@ -82,21 +85,17 @@ app.get('/getSalesByYear', function(req, res) {
     var year = req.query.year;
     var dataRange = utils.getYearDateRange(year);
     var Sales = require('./database/Sales');
+
+    Sales.SalesInvoices.find({
+        InvoiceDate: {
+            $gte: dataRange.start,
+            $lt: dataRange.end }}, 
+        function (err, salesInvoices) {
+            if (err) return console.error(err);
+            res.json(salesInvoices);
+        }
+    );
 });
-
-// TEST
-var db = require('./queries');
-
-Sales.SalesInvoices.find({
-    InvoiceDate: {
-        $gte: dataRange.start,
-        $lt: dataRange.end }}, 
-    function (err, salesInvoices) {
-        if (err) return console.error(err);
-        res.json(salesInvoices);
-    }
-);
-
 
 var server = app.listen(8081, function () {
    var port = server.address().port;

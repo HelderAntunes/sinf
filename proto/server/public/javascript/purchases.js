@@ -1,3 +1,5 @@
+$('#purchases-tab').addClass('active');
+
 var createGraph = function (dates, purchasesTotal) {
     Highcharts.chart('total-purchases', {
         
@@ -133,7 +135,6 @@ var updateGrowth = function($scope, $http){
 }
 
 var updateData= function($scope, $http){
-
     updateSuppliers($scope, $http);
     updateGraph($scope, $http);
     updateGrowth($scope, $http);

@@ -1,53 +1,17 @@
-<div class="container">
+<div class="container" ng-app="sales_app" ng-controller="sales_controller">
     <div class="row">
         <div class="col-sm-12 col-md-10 col-md-offset-1">
-            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                <div class="btn-group dropdown">
-                    <button class="btn btn-timeFilter dropdown-toggle" type="button" data-toggle="dropdown">2017
+            
+            <div class="btn-toolbar" role="toolbar" aria-label="Filter Toolbar">
+                <div class="btn-group dropdown" role="group" aria-label="Year group">
+                    <button class="btn btn-timeFilter dropdown-toggle" type="button" data-toggle="dropdown">[[chosenYear]]
                         <span class="caret"></span></button>
                     <ul class="dropdown-menu">
-                        <li><a href="#">2017</a></li>
-                        <li><a href="#">2016</a></li>
-                        <li><a href="#">2015</a></li>
+                        <li ng-repeat="year in years"><a href="" ng-click="chooseYear(year)">[[year]]</a></li>
                     </ul>
                 </div>
-                <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-timeFilter active">
-                        <input type="radio" name="options" autocomplete="off" checked>None
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off" checked>Jan
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off">Fev
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off">Mar
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off" checked>Apr
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off">Jun
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off">Jul
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off" checked>Aug
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off">Set
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off">Oct
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off" checked>Nov
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off">Dec
-                    </label>
+                <div class="btn-group mr-2" role="group" aria-label="Month Group">
+                  <button ng-repeat="month in months" type="button" class="btn btn-timeFilter" ng-click="chooseMonth(month.value)">[[month.name]]</button>
                 </div>
             </div>
         </div>
@@ -118,4 +82,5 @@
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <script src="../javascript/sales.js"></script>
