@@ -4,14 +4,14 @@
         <div class="col-sm-12 col-md-10 col-md-offset-1">
             <div class="btn-toolbar" role="toolbar" aria-label="Filter Toolbar">
                 <div class="btn-group dropdown" role="group" aria-label="Year group">
-                    <button class="btn btn-timeFilter dropdown-toggle" type="button" data-toggle="dropdown">[[chosenYear]]
+                    <button class="btn btn-timeFilter dropdown-toggle ng-cloak" type="button" data-toggle="dropdown">[[chosenYear]]
                         <span class="caret"></span></button>
                     <ul class="dropdown-menu">
                         <li ng-repeat="year in years"><a href="" ng-click="chooseYear(year)">[[year]]</a></li>
                     </ul>
                 </div>
                 <div class="btn-group mr-2" role="group" aria-label="Month Group">
-                    <button ng-repeat="month in months" type="button" class="btn btn-timeFilter" ng-click="chooseMonth(month.value)">[[month.name]]</button>
+                    <button ng-repeat="month in months" type="button" class="btn btn-timeFilter ng-cloak" ng-click="chooseMonth(month.value)">[[month.name]]</button>
                 </div>
             </div>
         </div>
