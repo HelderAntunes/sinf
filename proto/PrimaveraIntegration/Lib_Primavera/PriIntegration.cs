@@ -24,12 +24,13 @@ namespace PrimaveraIntegration.Lib_Primavera
             Model.Purchase purchase;
             Model.PurchaseItem purchaseItem;
 
-            string query = "SELECT Id, DataDoc, DataVencimento, Entidade, Nome, NumDoc, Observacoes, TotalMerc, TipoDoc From CabecCompras where (TipoDoc='VNC' or TipoDoc like 'VF_') order by DataDoc";
+            string query = "SELECT Id, DataDoc, DataVencimento, Entidade, Nome, NumDoc, Observacoes, TotalMerc, TipoDoc From CabecCompras where (TipoDoc='VNC' or TipoDoc like 'VF_')";
             if (year != null)
-                query += "and year(DataDoc)=" + year;
+                query += " and year(DataDoc)=" + year;
             if (month != null)
-                query += "and month(DataDoc)=" + month;
+                query += " and month(DataDoc)=" + month;
 
+            query += " order by DataDoc";
             if (PriEngine.InitializeCompany(PrimaveraIntegration.Properties.Settings.Default.Company.Trim(), PrimaveraIntegration.Properties.Settings.Default.User.Trim(), PrimaveraIntegration.Properties.Settings.Default.Password.Trim()) == true)
             {
                 //Select rows from CabecCompras
