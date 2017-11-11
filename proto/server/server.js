@@ -63,11 +63,8 @@ app.get('/purchases_detailed', function (req, res) {
 });
 
 app.get('/getSalesByMonth', function(req, res) {
-
     var month = req.query.month, year = req.query.year;
-    console.log(month + " " + year);
     var dataRange = utils.getMonthDateRange(year, month);
-    console.log(dataRange);
     var Sales = require('./database/Sales');
 
     Sales.SalesInvoices.find({

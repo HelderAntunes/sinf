@@ -18,6 +18,7 @@
     </div>
     <hr/>
     <div class="row">
+
         <div class="col-sm-3">
             <h4 class="text-center" style="color: #8a6d3b">Overview</h4>
             <div class="row text-center">
@@ -25,17 +26,13 @@
                     <ul class="list-group">
                         <li class="list-group-item">
                             <h4>Total Sales</h4>
-                            <h3>{$totalSales} €</h3>
+                            <h3 id="total-purchases-value" class="ng-cloak">[[totalSales | euro]]</h3>
                         </li>
                         <li class="list-group-item">
-                            <h4 data-period-interval="{$period}">
-                                {if $period == 'year'}
-                                    Sales per month
-                                {else}
-                                    Sales per day
-                                {/if}
+                            <h4 data-period-interval="{$period}" class="ng-cloak">
+                                [[periodType]]
                             </h4>
-                            <h3>{$salesPerPeriod}</h3>
+                            <h3 class="ng-cloak">[[salesPerPeriod]]</h3>
                         </li>
                     </ul>
                 </div>
