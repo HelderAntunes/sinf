@@ -1,3 +1,5 @@
+$('#purchases-tab').addClass('active');
+
 var createGraph = function (dates, purchasesTotal) {
     Highcharts.chart('total-purchases', {
         
@@ -91,7 +93,7 @@ var updateGraph = function($scope, $http){
 
         for (i in success.data) {
             var purchase = success.data[i];
-            var date = new Date(purchase.DocumentDate)
+            var date = new Date(purchase.DocumentDate);
 
             dates.push(date.toLocaleDateString());
             purchasesTotal.push(purchase.TotalValue);
@@ -137,7 +139,6 @@ var updateGrowth = function($scope, $http){
 }
 
 var updateData= function($scope, $http){
-
     //Blur container and show spinner
     $('#loader').show();
     $('.container').addClass('blur');
