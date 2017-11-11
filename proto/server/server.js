@@ -9,6 +9,7 @@ mongoose.connect('mongodb://localhost/test');
 // PAGES
 var sales = require('./pages/sales');
 var purchases = require('./pages/purchases');
+var main = require('./pages/main');
 
 var app = express();
 var addr = 'http://localhost:8081/';
@@ -21,13 +22,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/main', function (req, res) {
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    
-    var tpl = fs.readFileSync('./templates/main.html', {encoding: 'utf-8'});
-    var compiledTemplate = new jSmart(tpl);
-    var output = compiledTemplate.fetch();
-    
-    res.end(output);
+    main.getMain(req, res);
 });
 
 app.get('/sales', function (req, res) {

@@ -5,7 +5,7 @@ var app = angular.module('purchases_detailed_app', []).config(['$interpolateProv
 
   app.filter('euro', ['$filter', function ($filter) {
     return function (input) {
-      return $filter('number')(input * 100, 2) + '€';
+      return $filter('number')(input, 2) + '€';
     };
   }]);
 

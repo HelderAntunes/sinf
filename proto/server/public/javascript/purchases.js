@@ -161,7 +161,7 @@ var app = angular.module('purchases_app', []).config(['$interpolateProvider', fu
 
   app.filter('euro', ['$filter', function ($filter) {
     return function (input) {
-      return $filter('number')(input * 100, 2) + '€';
+      return $filter('number')(input, 2) + '€';
     };
   }]);
 
