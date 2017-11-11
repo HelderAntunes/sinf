@@ -70,8 +70,8 @@ var updateSuppliers = function ($scope, $http) {
 
             $scope.total += purchase.TotalValue;
         }
-
-        //console.log($scope);
+        
+        updateGrowth($scope, $http);
     },function (error){
         $scope.contents = [{heading:"Error",description:"Could not load json   data"}];
         //console.log($scope);
@@ -98,11 +98,8 @@ var updateGraph = function($scope, $http){
         }
 
         createGraph(dates, purchasesTotal);
-
-        //console.log($scope);
     },function (error){
         $scope.contents = [{heading:"Error",description:"Could not load json data"}];
-        //console.log($scope);
     });
 }
 
@@ -122,21 +119,32 @@ var updateGrowth = function($scope, $http){
             
             totalLastYear += purchase.TotalValue;
         }
-
-        $scope.growth = (($scope.total - totalLastYear)/totalLastYear);
-
-        //console.log($scope);
+        console.log(success.data.length);
+        
+        if(success.data.length != 0){
+            $scope.growth = (($scope.total - totalLastYear)/totalLastYear);
+        }
+        else{
+            $scope.growth = null;
+        }
+            
+        //Unblur container and hide spinner
+        $('#loader').hide();
+        $('.container').removeClass('blur');
     },function (error){
         $scope.contents = [{heading:"Error",description:"Could not load json data"}];
-        //console.log($scope);
     });
 }
 
 var updateData= function($scope, $http){
 
+    //Blur container and show spinner
+    $('#loader').show();
+    $('.container').addClass('blur');
+
     updateSuppliers($scope, $http);
     updateGraph($scope, $http);
-    updateGrowth($scope, $http);
+    updateGrowth($scope, $http); 
 }
 
 var app = angular.module('purchases_app', []).config(['$interpolateProvider', function ($interpolateProvider) {

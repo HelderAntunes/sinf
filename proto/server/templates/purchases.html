@@ -1,4 +1,6 @@
-<div class="container" ng-app="purchases_app" ng-controller="purchases_controller">
+<div id="loader"></div>
+
+<div class="container blur" ng-app="purchases_app" ng-controller="purchases_controller">
 
     <div class="row">
             <div class="col-sm-12 col-md-10 col-md-offset-1">
@@ -38,7 +40,8 @@
                         </li>
                         <li class="list-group-item">
                             <h4>Growth</h4>
-                            <h3 class="ng-cloak">[[growth | percentage:2]]</h3>
+                            <h3 class="ng-cloak" ng-if="growth != null">[[growth | percentage:2]]</h3>
+                            <h3 class="ng-cloak" ng-if="growth == null">No sufficient data</h3>
                         </li>
                     </ul>
                 </div>
@@ -62,7 +65,8 @@
                         </tr>
                         </thead>
                         <tbody id="supplier-purchases">
-                            <tr class="ng-cloak" ng-repeat="purchase in purchases"><td>[[purchase.EntityName]]</td><td>[[purchase.TotalValue | euro]]</td></tr>
+                            <tr class="ng-cloak" ng-repeat="purchase in purchases"><td>[[purchase.EntityName]]</td><td class="currency">[[purchase.TotalValue | euro]]</td></tr>
+                            <tr class="ng-cloak" ng-if="purchases.length == 0"><td colspan="2">No Suppliers</td></tr>
                         </tbody>
                     </table>
                 </div>
