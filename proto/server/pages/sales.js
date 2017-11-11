@@ -12,8 +12,8 @@ exports.getSales = function (req, res) {
 
         Sales.SalesInvoices.find({}, function(err, salesInvoices) {
 
-            customers = setCustomerSales(customers, salesInvoices);
-            customers.sort(compareCustomersBySalesDec);
+            customers = utils.setCustomerSales(customers, salesInvoices);
+            customers.sort(utils.compareCustomersBySalesDec);
 
             res.writeHead(200, {'Content-Type': 'text/html'});
             
@@ -64,22 +64,3 @@ function getTopCustomersSales(customers, topSize) {
     return customersSales;
 }
 
-// TODO: precalculate this in saft_parser, it is too bad.
-function setCustomerSales(customers, salesInvoices) {
-    for (var i = 0; i < customers.length; i++) 
-    for (var j = 0; j < salesInvoices.length; j++) 
-        if (salesInvoices[j].CustomerID == customers[i].customer_id) {
-            if (customers[i]['sales'] == null) customers[i]['sales'] = salesInvoices[j]['GrossTotal'];
-            else customers[i]['sales'] += salesInvoices[j]['GrossTotal'];
-            //console.log(customers[i]);
-        }
-
-    return customers;
-}
-
-// decreasing order
-function compareCustomersBySalesDec(a,b) {
-  if (a.sales < b.sales) return 1;
-  if (a.sales > b.sales) return -1;
-  return 0;
-}

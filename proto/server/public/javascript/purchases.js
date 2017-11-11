@@ -93,7 +93,7 @@ var updateGraph = function($scope, $http){
 
         for (i in success.data) {
             var purchase = success.data[i];
-            var date = new Date(purchase.DocumentDate)
+            var date = new Date(purchase.DocumentDate);
 
             dates.push(date.toLocaleDateString());
             purchasesTotal.push(purchase.TotalValue);

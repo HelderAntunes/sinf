@@ -32,7 +32,7 @@
                         </li>
                         <li class="list-group-item">
                             <h4 class="ng-cloak">[[periodType]]</h4>
-                            <h3 class="ng-cloak">[[salesPerPeriod]]</h3>
+                            <h3 class="ng-cloak">[[salesPerPeriod | euro]]</h3>
                         </li>
                     </ul>
                 </div>
@@ -55,15 +55,8 @@
                                 <th>Sales</th>
                             </tr>
                         </thead>
-                        <tbody>
-                        {foreach $costumerNames as $name => $code}
-                            <tr>
-                                <td>{$costumerNames[$code@index]}</td>
-                                <td>{$costumerSales[$code@index]} €</td>
-                            </tr>
-                        {foreachelse}
-                            No costumers.
-                        {/foreach}
+                        <tbody id="customers-sales">
+                            <tr class="ng-cloak" ng-repeat="customer in customers"><td>[[customer.company_name]]</td><td>[[customer.sales | euro]]</td></tr>
                         </tbody>
                     </table>
                 </div>

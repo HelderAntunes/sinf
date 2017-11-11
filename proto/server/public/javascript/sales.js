@@ -13,7 +13,7 @@ app.filter('percentage', ['$filter', function ($filter) {
 
 app.filter('euro', ['$filter', function ($filter) {
     return function (input) {
-        return $filter('number')(input * 100, 2) + '€';
+        return $filter('number')(input, 2) + ' €';
     };
 }]);
 
@@ -26,7 +26,7 @@ app.controller('sales_controller', function($scope, $http) {
 
     $scope.chooseYear = function(year){
         $scope.chosenYear = year;        
-        updateData($scope, getSalesCallback);
+        updateData($scope, $http);
     };
 
     $scope.chooseMonth = function(month){
@@ -34,67 +34,51 @@ app.controller('sales_controller', function($scope, $http) {
         updateData($scope, $http);
     };
 
-    updateData($scope, getSalesCallback);
+    updateData($scope, $http);
 });
 
-var updateData = function($scope, getSalesCallback) {
+var updateData = function($scope, $http) {
+    var requestUrl = address;
+    if ($scope.chosenMonth) 
+        requestUrl += 'getSalesByMonth?year=' + $scope.chosenYear + '&month=' + $scope.chosenMonth;
+    else 
+        requestUrl += 'getSalesByYear?year=' + $scope.chosenYear;
 
-    if ($scope.chosenMonth != null) {
-        $.ajax({
-            url: address + "getSalesByMonth",
-            type: "GET",
-            dataType: "json",
-            data: {"year": $scope.chosenYear, 'month': $scope.chosenMonth},
-            success: function(data) {
-                getSalesCallback($scope, data);
-            },
-            error: function(error) {
-                console.log("Error: " + error);
-            }
-        });
-    }
-    else {
-        $.ajax({
-            url: address + "getSalesByYear",
-            type: "GET",
-            dataType: "json",
-            data: {"year": $scope.chosenYear},
-            success: function(data) {
-                getSalesCallback($scope, data);
-            },
-            error: function(error) {
-                console.log("Error: " + error);
-            }
-        });
-    }
-
+    $http.get(requestUrl).then(
+        function (success) {
+            updateDataCallback($scope, $http, success.data);
+        },
+        function (error){
+            $scope.contents = [{heading:"Error",description:"Could not load json data"}];
+        }
+    );
 }
 
-var getSalesCallback = function($scope, data) {
+var updateDataCallback = function($scope, $http, data) {
     updateOverview($scope, data);
     updateChart($scope, data);
-    //updateSuppliers($scope, $http);
+    updateSuppliers($scope, $http, data);
 } 
 
 var updateOverview = function($scope, data) {
     $scope.totalSales = 0;
-    for (sale in data) $scope.totalSales += sale.NetTotal;
+    for (i in data) $scope.totalSales += data[i].NetTotal;
 
     $scope.salesPerPeriod = 0;
     if ($scope.chosenMonth == null) {
-        $scope.periodType = 'Sales per year';
+        $scope.periodType = 'Sales per month';
         $scope.salesPerPeriod = $scope.totalSales / 12;
     }
     else {
-        $scope.periodType = 'Sales per month';
-        var days = daysInMonth($scope.chooseYear, $scope.chosenMonth);
+        $scope.periodType = 'Sales per day';
+        var days = daysInMonth($scope.chosenYear, $scope.chosenMonth);
         $scope.salesPerPeriod = $scope.totalSales / days;
     }
 }
 
 var updateChart = function($scope, data) {
-    if ($scope.chosenMonth == null) updateChartYear(data, $scope.chosenYear);
-    else updateChartMonth(data, $scope.chosenYear, $scope.chosenMonth);
+    if ($scope.chosenMonth) updateChartMonth(data, $scope.chosenYear, $scope.chosenMonth);
+    else updateChartYear(data, $scope.chosenYear);
 }
 
 var updateChartYear = function(data, year) {
@@ -102,8 +86,7 @@ var updateChartYear = function(data, year) {
 
     for (var i = 0; i < data.length; i++) {
         var ammount = data[i].GrossTotal;
-        var InvoiceDate = data[i].InvoiceDate;
-        var month = moment(InvoiceDate).month();
+        var month = moment(data[i].InvoiceDate).month();
         yearSales[month] += ammount;
     }
 
@@ -139,12 +122,11 @@ var updateChartYear = function(data, year) {
 
 var updateChartMonth = function(data, year, month) {
     var numDaysOfMonth = daysInMonth(year, month);
-    var monthSales = Array.apply(null, Array(numDaysOfMonth)).map(Number.prototype.valueOf,0);
+    var monthSales = Array.apply(null, Array(numDaysOfMonth)).map(Number.prototype.valueOf,0); // init array to zero
 
     for (var i = 0; i < data.length; i++) {
         var ammount = data[i].GrossTotal;
-        var InvoiceDate = data[i].InvoiceDate;
-        var day = moment(InvoiceDate).day();
+        var day = moment(data[i].InvoiceDate).day();
         monthSales[day] += ammount;
     }
 
@@ -178,7 +160,23 @@ var updateChartMonth = function(data, year, month) {
     });
 }
 
-//Month is 1 based
+var updateSuppliers = function ($scope, $http) {
+    var url = address + 'getCustomers?year=' + $scope.chosenYear;
+    if ($scope.chosenMonth ) url += '&month=' + $scope.chosenMonth;
+
+    $http.get(url).then(function (success) {
+        $scope.customers = [];
+        for (var i = 0; i < success.data.length && i < 5; i++) {
+            if (success.data[i].sales <= 0.1) break;
+            $scope.customers.push(success.data[i]);
+        }
+    }
+    , function (error) {
+        $scope.contents = [{heading:"Error",description:"Could not load json   data"}];
+    });
+}
+
+
 var daysInMonth = function(year, month) {
     return new Date(year, month, 0).getDate();
 }
@@ -192,36 +190,4 @@ var getArrayWithDays = function(numDays) {
 var getMonthName = function(index) {
     var monthNames = [null, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     return monthNames[index]; 
-}
-
-var updateSuppliers = function ($scope, $http) {
-    $scope.purchases = [];
-    $scope.total = 0;
-
-    var url = address + 'getSalesByMonth?year=' + $scope.chosenYear;
-
-    if ($scope.chosenMonth != null) {
-
-        url += 'getSalesByMonth?year=' + $scope.chosenYear + '&month=' + $scope.chosenMonth;
-    }
-
-
-    $http.get(url).then(function (success){
-        $scope.purchases= [];
-
-        for (i in success.data) {
-            var purchase = success.data[i];
-
-            if(i < 3){
-                $scope.purchases.push(purchase);
-            }
-
-            $scope.total += purchase.TotalValue;
-        }
-
-        //console.log($scope);
-    },function (error){
-        $scope.contents = [{heading:"Error",description:"Could not load json   data"}];
-        //console.log($scope);
-    });
 }
