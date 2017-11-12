@@ -7,15 +7,16 @@ mongoose.connect('mongodb://localhost/test');
 var Customer = require('./database/Customer');
 var Sales = require('./database/Sales');
 var Account = require('./database/Account');
+var Transaction = require('./database/Transaction');
 
 fs.readFile('../assets/SAFT_DEMOSINF_01-01-2016_31-12-2016.xml', function(err, data) {
     parseString(data, function (err, result) {
         writeCustomers(getCustomers(result));
         writeSalesInvoices(getSalesInvoices(result)); 
         writeAccounts(getAccounts(result)); 
+        writeTransactions(getTransactions(result));
           
-
-        /*var test = getAccounts(result);   
+        /* var test = getTransactions(result);   
         fs.writeFile('saft_in_json.js', JSON.stringify(test, null, 2), function (err) {
             if (err) throw err;
             console.log('SAF-T xml parsed.');
@@ -33,6 +34,19 @@ function getSalesInvoices(saftParsed) {
 
 function getAccounts(saftParsed) {
     return saftParsed['AuditFile']['MasterFiles'][0]['GeneralLedgerAccounts'][0]['Account'];
+}
+
+function getTransactions(saftParsed) {
+    var transactions = [];
+    var journals = saftParsed['AuditFile']['GeneralLedgerEntries'][0]['Journal'];
+
+    for (var i = 0; i < journals.length; i++) {
+        var journal = journals[i];
+        var journalTransactions = journal['Transaction'];
+        
+        if (journalTransactions) transactions = transactions.concat(journalTransactions);
+    }
+    return transactions;
 }
 
 function writeCustomers(customersJSON) {
@@ -128,6 +142,72 @@ function writeAccounts(accountsJSON) {
         
             account_doc.save(function (err) { if (err) console.log(err);});
         }
+    });
+}
+
+function writeTransactions(transactionsJSON) {
+    Transaction.DebitLine.remove({}, function (err) {
+        if (err) return handleError(err);
+
+        Transaction.CreditLine.remove({}, function (err) {
+            if (err) return handleError(err);
+
+            Transaction.Transaction.remove({}, function (err) {
+                if (err) return handleError(err);
+                else saveTransactions(transactionsJSON);
+            });
+        });
+    });
+}
+
+function saveTransactions(transactionsJSON) {
+    for (var i = 0; i < transactionsJSON.length; i++) {
+        var transactionJSON = transactionsJSON[i];
+        var transaction_doc = getTransactionDoc(transactionJSON);
+        
+        for (var j = 0; j < transactionJSON.Lines[0].DebitLine.length; j++) 
+            transaction_doc.DebitLines.push(getDebitLineTransaction(transactionJSON.Lines[0].DebitLine[j]));
+        for (var j = 0; j < transactionJSON.Lines[0].CreditLine.length; j++) 
+            transaction_doc.CreditLines.push(getCreditLineTransaction(transactionJSON.Lines[0].CreditLine[j]));
+        
+        transaction_doc.save(function (err) { if (err) console.log(err);});
+    }
+}
+
+function getTransactionDoc(transactionJSON) {
+    return new Transaction.Transaction({ 
+        TransactionID:  getValueOfAttribute(transactionJSON.TransactionID),
+        Period:  getValueOfAttribute(transactionJSON.Period),
+        TransactionDate:  getValueOfAttribute(transactionJSON.TransactionDate),
+        SourceID:  getValueOfAttribute(transactionJSON.SourceID),
+        Description:  getValueOfAttribute(transactionJSON.Description),
+        DocArchivalNumber:  getValueOfAttribute(transactionJSON.DocArchivalNumber),
+        TransactionType:  getValueOfAttribute(transactionJSON.TransactionType),
+        GLPostingDate:  getValueOfAttribute(transactionJSON.GLPostingDate),
+        DebitLines: [{}],
+        CreditLines: [{}],   
+    });
+}
+
+function getDebitLineTransaction(debitLineJSON) {
+    return new Transaction.DebitLine({
+        RecordID:  getValueOfAttribute(debitLineJSON.RecordID),
+        AccountID:  getValueOfAttribute(debitLineJSON.AccountID),
+        SourceDocumentID:  getValueOfAttribute(debitLineJSON.SourceDocumentID),
+        SystemEntryDate:  getValueOfAttribute(debitLineJSON.SystemEntryDate),
+        Description:  getValueOfAttribute(debitLineJSON.Description),
+        DebitAmount:  getValueOfAttribute(debitLineJSON.DebitAmount),
+    });   
+}
+
+function getCreditLineTransaction(creditLineJSON) {
+    return new Transaction.CreditLine({
+        RecordID:  getValueOfAttribute(creditLineJSON.RecordID),
+        AccountID:  getValueOfAttribute(creditLineJSON.AccountID),
+        SourceDocumentID:  getValueOfAttribute(creditLineJSON.SourceDocumentID),
+        SystemEntryDate:  getValueOfAttribute(creditLineJSON.SystemEntryDate),
+        Description:  getValueOfAttribute(creditLineJSON.Description),
+        CreditAmount:  getValueOfAttribute(creditLineJSON.CreditAmount),
     });
 }
 

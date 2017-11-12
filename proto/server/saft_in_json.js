@@ -1,2714 +1,3374 @@
 [
   {
-    "AccountID": [
-      "11"
+    "TransactionID": [
+      "2016-01-31 00021 10001"
     ],
-    "AccountDescription": [
-      "Caixa"
-    ],
-    "OpeningDebitBalance": [
-      "17665.92"
-    ],
-    "OpeningCreditBalance": [
-      "8842.92"
-    ],
-    "ClosingDebitBalance": [
-      "19363.29"
-    ],
-    "ClosingCreditBalance": [
-      "9402.92"
-    ],
-    "GroupingCategory": [
-      "GR"
-    ]
-  },
-  {
-    "AccountID": [
-      "111"
-    ],
-    "AccountDescription": [
-      "Caixa Fixo"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "8842.92"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "9402.92"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "11"
-    ],
-    "TaxonomyCode": [
+    "Period": [
       "1"
+    ],
+    "TransactionDate": [
+      "2016-01-31"
+    ],
+    "SourceID": [
+      "miguel.cordeiro"
+    ],
+    "Description": [
+      "Caixa A - Pagamentos"
+    ],
+    "DocArchivalNumber": [
+      "10001"
+    ],
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-09-14"
+    ],
+    "Lines": [
+      {
+        "CreditLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "111"
+            ],
+            "SourceDocumentID": [
+              "211 2009/1"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "Caixa A - Pagamentos"
+            ],
+            "CreditAmount": [
+              "560.00"
+            ]
+          }
+        ],
+        "DebitLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "6221222"
+            ],
+            "SourceDocumentID": [
+              "211 2009/1"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "Caixa A - Pagamentos"
+            ],
+            "DebitAmount": [
+              "560.00"
+            ]
+          }
+        ]
+      }
     ]
   },
   {
-    "AccountID": [
-      "112"
+    "TransactionID": [
+      "2016-01-16 00031 10002"
     ],
-    "AccountDescription": [
-      "Caixa Recebimentos"
-    ],
-    "OpeningDebitBalance": [
-      "17665.92"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "19363.29"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "11"
-    ],
-    "TaxonomyCode": [
+    "Period": [
       "1"
+    ],
+    "TransactionDate": [
+      "2016-01-16"
+    ],
+    "SourceID": [
+      "eugenio.veiga"
+    ],
+    "Description": [
+      "RE N.�2/2"
+    ],
+    "DocArchivalNumber": [
+      "10002"
+    ],
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-09-14"
+    ],
+    "Lines": [
+      {
+        "DebitLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "112"
+            ],
+            "SourceDocumentID": [
+              "RE 2/2"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "RE N� 5/A"
+            ],
+            "DebitAmount": [
+              "352.10"
+            ]
+          }
+        ],
+        "CreditLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "21111001"
+            ],
+            "SourceDocumentID": [
+              "RE 2/2"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "RE N� 5/A"
+            ],
+            "CreditAmount": [
+              "352.10"
+            ]
+          }
+        ]
+      }
     ]
   },
   {
-    "AccountID": [
-      "12"
+    "TransactionID": [
+      "2016-01-30 00031 10001"
     ],
-    "AccountDescription": [
-      "Dep�sitos � Ordem"
+    "Period": [
+      "1"
     ],
-    "OpeningDebitBalance": [
-      "8592.92"
+    "TransactionDate": [
+      "2016-01-30"
     ],
-    "OpeningCreditBalance": [
-      "0.00"
+    "SourceID": [
+      "eugenio.veiga"
     ],
-    "ClosingDebitBalance": [
-      "8592.92"
+    "Description": [
+      "RE N.�1/2"
     ],
-    "ClosingCreditBalance": [
-      "1000.00"
+    "DocArchivalNumber": [
+      "10001"
     ],
-    "GroupingCategory": [
-      "GR"
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-09-14"
+    ],
+    "Lines": [
+      {
+        "DebitLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "112"
+            ],
+            "SourceDocumentID": [
+              "RE 2/1"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "RE N� 4/A"
+            ],
+            "DebitAmount": [
+              "850.57"
+            ]
+          }
+        ],
+        "CreditLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "21111001"
+            ],
+            "SourceDocumentID": [
+              "RE 2/1"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "RE N� 4/A"
+            ],
+            "CreditAmount": [
+              "850.57"
+            ]
+          }
+        ]
+      }
     ]
   },
   {
-    "AccountID": [
-      "1201"
+    "TransactionID": [
+      "2016-03-25 00031 30001"
     ],
-    "AccountDescription": [
-      "Banco......."
+    "Period": [
+      "3"
     ],
-    "OpeningDebitBalance": [
-      "8592.92"
+    "TransactionDate": [
+      "2016-03-25"
     ],
-    "OpeningCreditBalance": [
-      "0.00"
+    "SourceID": [
+      "lucia.ribeiro"
     ],
-    "ClosingDebitBalance": [
-      "8592.92"
+    "Description": [
+      "RE N.�6/A"
     ],
-    "ClosingCreditBalance": [
-      "1000.00"
+    "DocArchivalNumber": [
+      "30001"
     ],
-    "GroupingCategory": [
-      "GM"
+    "TransactionType": [
+      "N"
     ],
-    "GroupingCode": [
-      "12"
+    "GLPostingDate": [
+      "2016-09-14"
     ],
-    "TaxonomyCode": [
+    "Lines": [
+      {
+        "DebitLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "112"
+            ],
+            "SourceDocumentID": [
+              "RE A/6"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "RE N� 6/A"
+            ],
+            "DebitAmount": [
+              "123.42"
+            ]
+          }
+        ],
+        "CreditLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "21111001"
+            ],
+            "SourceDocumentID": [
+              "RE A/6"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "RE N� 6/A"
+            ],
+            "CreditAmount": [
+              "123.42"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "TransactionID": [
+      "2016-06-12 00031 60002"
+    ],
+    "Period": [
+      "6"
+    ],
+    "TransactionDate": [
+      "2016-06-12"
+    ],
+    "SourceID": [
+      "lucia.ribeiro"
+    ],
+    "Description": [
+      "MOV N.�21/2"
+    ],
+    "DocArchivalNumber": [
+      "60002"
+    ],
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-09-14"
+    ],
+    "Lines": [
+      {
+        "CreditLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "1201"
+            ],
+            "SourceDocumentID": [
+              "MOV 2/21"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "MOV N� 40/A"
+            ],
+            "CreditAmount": [
+              "1000.00"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "TransactionID": [
+      "2016-01-29 00041 10002"
+    ],
+    "Period": [
+      "1"
+    ],
+    "TransactionDate": [
+      "2016-01-29"
+    ],
+    "SourceID": [
+      "lucia.ribeiro"
+    ],
+    "Description": [
+      "VFA N.�9/A"
+    ],
+    "DocArchivalNumber": [
+      "10002"
+    ],
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-09-14"
+    ],
+    "Lines": [
+      {
+        "CreditLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "22111002"
+            ],
+            "SourceDocumentID": [
+              "VFA A/9"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFA N� 9/A"
+            ],
+            "CreditAmount": [
+              "6693.81"
+            ]
+          }
+        ],
+        "DebitLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "24321132111"
+            ],
+            "SourceDocumentID": [
+              "VFA A/9"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFA N� 9/A"
+            ],
+            "DebitAmount": [
+              "252.00"
+            ]
+          },
+          {
+            "RecordID": [
+              "3"
+            ],
+            "AccountID": [
+              "24321132111"
+            ],
+            "SourceDocumentID": [
+              "VFA A/9"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFA N� 9/A"
+            ],
+            "DebitAmount": [
+              "909.75"
+            ]
+          },
+          {
+            "RecordID": [
+              "4"
+            ],
+            "AccountID": [
+              "3121"
+            ],
+            "SourceDocumentID": [
+              "VFA A/9"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFA N� 9/A"
+            ],
+            "DebitAmount": [
+              "1200.00"
+            ]
+          },
+          {
+            "RecordID": [
+              "5"
+            ],
+            "AccountID": [
+              "3121"
+            ],
+            "SourceDocumentID": [
+              "VFA A/9"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFA N� 9/A"
+            ],
+            "DebitAmount": [
+              "4332.06"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "TransactionID": [
+      "2016-01-30 00041 10003"
+    ],
+    "Period": [
+      "1"
+    ],
+    "TransactionDate": [
+      "2016-01-30"
+    ],
+    "SourceID": [
+      "Administrador"
+    ],
+    "Description": [
+      "VFA N.�3/A"
+    ],
+    "DocArchivalNumber": [
+      "10003"
+    ],
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-09-14"
+    ],
+    "Lines": [
+      {
+        "CreditLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "22111001"
+            ],
+            "SourceDocumentID": [
+              "VFA A/3"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFA N� 10/A"
+            ],
+            "CreditAmount": [
+              "10324.67"
+            ]
+          }
+        ],
+        "DebitLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "24321132111"
+            ],
+            "SourceDocumentID": [
+              "VFA A/3"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFA N� 10/A"
+            ],
+            "DebitAmount": [
+              "1791.97"
+            ]
+          },
+          {
+            "RecordID": [
+              "3"
+            ],
+            "AccountID": [
+              "3121"
+            ],
+            "SourceDocumentID": [
+              "VFA A/3"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFA N� 10/A"
+            ],
+            "DebitAmount": [
+              "8532.70"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "TransactionID": [
+      "2016-02-22 00041 20001"
+    ],
+    "Period": [
       "2"
+    ],
+    "TransactionDate": [
+      "2016-02-22"
+    ],
+    "SourceID": [
+      "lucia.ribeiro"
+    ],
+    "Description": [
+      "VFP N.�1/A"
+    ],
+    "DocArchivalNumber": [
+      "20001"
+    ],
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-09-14"
+    ],
+    "Lines": [
+      {
+        "CreditLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "22111001"
+            ],
+            "SourceDocumentID": [
+              "VFP A/1"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFP N� 1/A"
+            ],
+            "CreditAmount": [
+              "4613.58"
+            ]
+          },
+          {
+            "RecordID": [
+              "4"
+            ],
+            "AccountID": [
+              "31961"
+            ],
+            "SourceDocumentID": [
+              "VFP A/1"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFP N� 1/A"
+            ],
+            "CreditAmount": [
+              "3812.88"
+            ]
+          },
+          {
+            "RecordID": [
+              "7"
+            ],
+            "AccountID": [
+              "9131"
+            ],
+            "SourceDocumentID": [
+              "VFP A/1"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFP N� 1/A"
+            ],
+            "CreditAmount": [
+              "3812.88"
+            ]
+          }
+        ],
+        "DebitLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "24321132111"
+            ],
+            "SourceDocumentID": [
+              "VFP A/1"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFP N� 1/A"
+            ],
+            "DebitAmount": [
+              "800.70"
+            ]
+          },
+          {
+            "RecordID": [
+              "3"
+            ],
+            "AccountID": [
+              "31611"
+            ],
+            "SourceDocumentID": [
+              "VFP A/1"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFP N� 1/A"
+            ],
+            "DebitAmount": [
+              "3812.88"
+            ]
+          },
+          {
+            "RecordID": [
+              "5"
+            ],
+            "AccountID": [
+              "3612"
+            ],
+            "SourceDocumentID": [
+              "VFP A/1"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFP N� 1/A"
+            ],
+            "DebitAmount": [
+              "3812.88"
+            ]
+          },
+          {
+            "RecordID": [
+              "6"
+            ],
+            "AccountID": [
+              "936"
+            ],
+            "SourceDocumentID": [
+              "VFP A/1"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFP N� 1/A"
+            ],
+            "DebitAmount": [
+              "3812.88"
+            ]
+          }
+        ]
+      }
     ]
   },
   {
-    "AccountID": [
-      "21"
+    "TransactionID": [
+      "2016-04-24 00041 40001"
     ],
-    "AccountDescription": [
-      "Clientes"
+    "Period": [
+      "4"
     ],
-    "OpeningDebitBalance": [
-      "2509.91"
+    "TransactionDate": [
+      "2016-04-24"
     ],
-    "OpeningCreditBalance": [
-      "12220.03"
+    "SourceID": [
+      "lucia.ribeiro"
     ],
-    "ClosingDebitBalance": [
-      "41273.28"
+    "Description": [
+      "VFA N.�6/2"
     ],
-    "ClosingCreditBalance": [
-      "13546.12"
+    "DocArchivalNumber": [
+      "40001"
     ],
-    "GroupingCategory": [
-      "GR"
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-09-14"
+    ],
+    "Lines": [
+      {
+        "CreditLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "22111001"
+            ],
+            "SourceDocumentID": [
+              "VFA 2/6"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFA N� 13/A"
+            ],
+            "CreditAmount": [
+              "523.02"
+            ]
+          }
+        ],
+        "DebitLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "24321132111"
+            ],
+            "SourceDocumentID": [
+              "VFA 2/6"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFA N� 13/A"
+            ],
+            "DebitAmount": [
+              "90.77"
+            ]
+          },
+          {
+            "RecordID": [
+              "3"
+            ],
+            "AccountID": [
+              "3121"
+            ],
+            "SourceDocumentID": [
+              "VFA 2/6"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFA N� 13/A"
+            ],
+            "DebitAmount": [
+              "432.25"
+            ]
+          }
+        ]
+      }
     ]
   },
   {
-    "AccountID": [
-      "211"
+    "TransactionID": [
+      "2016-04-30 00041 40002"
     ],
-    "AccountDescription": [
-      "Clientes - c/c"
+    "Period": [
+      "4"
     ],
-    "OpeningDebitBalance": [
-      "1333.54"
+    "TransactionDate": [
+      "2016-04-30"
     ],
-    "OpeningCreditBalance": [
-      "3384.43"
+    "SourceID": [
+      "Administrador"
     ],
-    "ClosingDebitBalance": [
-      "40096.91"
+    "Description": [
+      "VNC N.�2/A"
     ],
-    "ClosingCreditBalance": [
-      "4710.52"
+    "DocArchivalNumber": [
+      "40002"
     ],
-    "GroupingCategory": [
-      "GA"
+    "TransactionType": [
+      "N"
     ],
-    "GroupingCode": [
-      "21"
+    "GLPostingDate": [
+      "2016-09-14"
+    ],
+    "Lines": [
+      {
+        "DebitLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "22111001"
+            ],
+            "SourceDocumentID": [
+              "VNC A/2"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "+VNC N� 2/A+"
+            ],
+            "DebitAmount": [
+              "523.02"
+            ]
+          }
+        ],
+        "CreditLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "24321132111"
+            ],
+            "SourceDocumentID": [
+              "VNC A/2"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "+VNC N� 2/A+"
+            ],
+            "CreditAmount": [
+              "90.77"
+            ]
+          },
+          {
+            "RecordID": [
+              "3"
+            ],
+            "AccountID": [
+              "3121"
+            ],
+            "SourceDocumentID": [
+              "VNC A/2"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "+VNC N� 2/A+"
+            ],
+            "CreditAmount": [
+              "432.25"
+            ]
+          }
+        ]
+      }
     ]
   },
   {
-    "AccountID": [
-      "2111"
+    "TransactionID": [
+      "2016-05-22 00041 50001"
     ],
-    "AccountDescription": [
-      "Clientes - c/c - M. Nacional"
+    "Period": [
+      "5"
     ],
-    "OpeningDebitBalance": [
-      "0.00"
+    "TransactionDate": [
+      "2016-05-22"
     ],
-    "OpeningCreditBalance": [
-      "3384.43"
+    "SourceID": [
+      "Administrador"
     ],
-    "ClosingDebitBalance": [
-      "25420.66"
+    "Description": [
+      "VFA N.�14/A"
     ],
-    "ClosingCreditBalance": [
-      "4710.52"
+    "DocArchivalNumber": [
+      "50001"
     ],
-    "GroupingCategory": [
-      "GA"
+    "TransactionType": [
+      "N"
     ],
-    "GroupingCode": [
-      "211"
+    "GLPostingDate": [
+      "2016-09-14"
+    ],
+    "Lines": [
+      {
+        "DebitLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "24321132111"
+            ],
+            "SourceDocumentID": [
+              "VFA A/14"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFA N� 14/A"
+            ],
+            "DebitAmount": [
+              "764.40"
+            ]
+          },
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "3121"
+            ],
+            "SourceDocumentID": [
+              "VFA A/14"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFA N� 14/A"
+            ],
+            "DebitAmount": [
+              "3640.00"
+            ]
+          }
+        ],
+        "CreditLine": [
+          {
+            "RecordID": [
+              "3"
+            ],
+            "AccountID": [
+              "22111001"
+            ],
+            "SourceDocumentID": [
+              "VFA A/14"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFA N� 14/A"
+            ],
+            "CreditAmount": [
+              "4404.40"
+            ]
+          }
+        ]
+      }
     ]
   },
   {
-    "AccountID": [
-      "21111001"
+    "TransactionID": [
+      "2016-06-27 00041 60001"
     ],
-    "AccountDescription": [
-      "Sofrio, Lda"
+    "Period": [
+      "6"
     ],
-    "OpeningDebitBalance": [
-      "0.00"
+    "TransactionDate": [
+      "2016-06-27"
     ],
-    "OpeningCreditBalance": [
-      "3384.43"
+    "SourceID": [
+      "Administrador"
     ],
-    "ClosingDebitBalance": [
-      "12765.32"
+    "Description": [
+      "VFA N.�15/A"
     ],
-    "ClosingCreditBalance": [
-      "4710.52"
+    "DocArchivalNumber": [
+      "60001"
     ],
-    "GroupingCategory": [
-      "GM"
+    "TransactionType": [
+      "N"
     ],
-    "GroupingCode": [
-      "2111"
+    "GLPostingDate": [
+      "2016-09-14"
     ],
-    "TaxonomyCode": [
+    "Lines": [
+      {
+        "DebitLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "24321132011"
+            ],
+            "SourceDocumentID": [
+              "VFA A/15"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFA N� 15/A"
+            ],
+            "DebitAmount": [
+              "29.93"
+            ]
+          },
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "3121"
+            ],
+            "SourceDocumentID": [
+              "VFA A/15"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFA N� 15/A"
+            ],
+            "DebitAmount": [
+              "149.64"
+            ]
+          }
+        ],
+        "CreditLine": [
+          {
+            "RecordID": [
+              "3"
+            ],
+            "AccountID": [
+              "22111001"
+            ],
+            "SourceDocumentID": [
+              "VFA A/15"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFA N� 15/A"
+            ],
+            "CreditAmount": [
+              "179.57"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "TransactionID": [
+      "2016-10-06 00041 100001"
+    ],
+    "Period": [
       "10"
+    ],
+    "TransactionDate": [
+      "2016-10-06"
+    ],
+    "SourceID": [
+      "user"
+    ],
+    "Description": [
+      "VFA N� 1/2016"
+    ],
+    "DocArchivalNumber": [
+      "100001"
+    ],
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-10-06"
+    ],
+    "Lines": [
+      {
+        "CreditLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "22111003"
+            ],
+            "SourceDocumentID": [
+              "VFA 2016/1"
+            ],
+            "SystemEntryDate": [
+              "2016-10-06T17:42:28"
+            ],
+            "Description": [
+              "VFA N� 1/2016"
+            ],
+            "CreditAmount": [
+              "4184.78"
+            ]
+          }
+        ],
+        "DebitLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "24321132011"
+            ],
+            "SourceDocumentID": [
+              "VFA 2016/1"
+            ],
+            "SystemEntryDate": [
+              "2016-10-06T17:42:28"
+            ],
+            "Description": [
+              "VFA N� 1/2016"
+            ],
+            "DebitAmount": [
+              "697.46"
+            ]
+          },
+          {
+            "RecordID": [
+              "3"
+            ],
+            "AccountID": [
+              "3121"
+            ],
+            "SourceDocumentID": [
+              "VFA 2016/1"
+            ],
+            "SystemEntryDate": [
+              "2016-10-06T17:42:28"
+            ],
+            "Description": [
+              "VFA N� 1/2016"
+            ],
+            "DebitAmount": [
+              "3487.32"
+            ]
+          }
+        ]
+      }
     ]
   },
   {
-    "AccountID": [
-      "21111003"
+    "TransactionID": [
+      "2016-11-23 00041 110001"
     ],
-    "AccountDescription": [
-      "Jos� Maria Fernandes & Filhos, Lda."
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "5149.58"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "2111"
-    ],
-    "TaxonomyCode": [
-      "10"
-    ]
-  },
-  {
-    "AccountID": [
-      "21113001"
-    ],
-    "AccountDescription": [
-      "Inforshow, Inform�tica Comunica��o"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "1781.70"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "2111"
-    ],
-    "TaxonomyCode": [
-      "10"
-    ]
-  },
-  {
-    "AccountID": [
-      "21113002"
-    ],
-    "AccountDescription": [
-      "MicroAvi, Inc."
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "2311.20"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "2111"
-    ],
-    "TaxonomyCode": [
-      "10"
-    ]
-  },
-  {
-    "AccountID": [
-      "21113006"
-    ],
-    "AccountDescription": [
-      "Maria Jos� da Silva"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "3412.86"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "2111"
-    ],
-    "TaxonomyCode": [
-      "10"
-    ]
-  },
-  {
-    "AccountID": [
-      "2112"
-    ],
-    "AccountDescription": [
-      "Clientes - c/c - M. Intrac."
-    ],
-    "OpeningDebitBalance": [
-      "1333.54"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "14676.25"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "211"
-    ]
-  },
-  {
-    "AccountID": [
-      "21122001"
-    ],
-    "AccountDescription": [
-      "Soluciones Cad de Madrid, SA"
-    ],
-    "OpeningDebitBalance": [
-      "1333.54"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "1333.54"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "2112"
-    ],
-    "TaxonomyCode": [
+    "Period": [
       "11"
-    ]
-  },
-  {
-    "AccountID": [
-      "21123004"
-    ],
-    "AccountDescription": [
-      "Soluciones Cad de Madrid, SA"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "13342.71"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "2112"
-    ],
-    "TaxonomyCode": [
-      "11"
-    ]
-  },
-  {
-    "AccountID": [
-      "212"
-    ],
-    "AccountDescription": [
-      "Clientes - T�tulos a Receber"
-    ],
-    "OpeningDebitBalance": [
-      "1176.37"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "1176.37"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "21"
-    ]
-  },
-  {
-    "AccountID": [
-      "2121"
-    ],
-    "AccountDescription": [
-      "Clientes - T�t. - Mercado Nacional"
-    ],
-    "OpeningDebitBalance": [
-      "1176.37"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "1176.37"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "212"
-    ]
-  },
-  {
-    "AccountID": [
-      "21211001"
-    ],
-    "AccountDescription": [
-      "Sofrio, Lda"
-    ],
-    "OpeningDebitBalance": [
-      "1176.37"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "1176.37"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "2121"
-    ],
-    "TaxonomyCode": [
-      "16"
-    ]
-  },
-  {
-    "AccountID": [
-      "219"
-    ],
-    "AccountDescription": [
-      "Adiantamentos de Clientes"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "8835.60"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "8835.60"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "21"
-    ]
-  },
-  {
-    "AccountID": [
-      "2191"
-    ],
-    "AccountDescription": [
-      "Clientes - Adt. -Mercado Nacional"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "8835.60"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "8835.60"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "219"
-    ]
-  },
-  {
-    "AccountID": [
-      "21911001"
-    ],
-    "AccountDescription": [
-      "Sofrio, Lda"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "8800.00"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "8800.00"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "2191"
-    ],
-    "TaxonomyCode": [
-      "24"
-    ]
-  },
-  {
-    "AccountID": [
-      "21911003"
-    ],
-    "AccountDescription": [
-      "Jos� Maria Fernandes & Filhos, Lda."
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "35.60"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "35.60"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "2191"
-    ],
-    "TaxonomyCode": [
-      "24"
-    ]
-  },
-  {
-    "AccountID": [
-      "22"
-    ],
-    "AccountDescription": [
-      "Fornecedores"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "6812.30"
-    ],
-    "ClosingDebitBalance": [
-      "523.02"
-    ],
-    "ClosingCreditBalance": [
-      "37773.88"
-    ],
-    "GroupingCategory": [
-      "GR"
-    ]
-  },
-  {
-    "AccountID": [
-      "221"
-    ],
-    "AccountDescription": [
-      "Fornecedores - c/c"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "6812.30"
-    ],
-    "ClosingDebitBalance": [
-      "523.02"
-    ],
-    "ClosingCreditBalance": [
-      "37773.88"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "22"
-    ]
-  },
-  {
-    "AccountID": [
-      "2211"
-    ],
-    "AccountDescription": [
-      "Fornecedores - c/c - M.Nacional"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "6812.30"
-    ],
-    "ClosingDebitBalance": [
-      "523.02"
-    ],
-    "ClosingCreditBalance": [
-      "37773.88"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "221"
-    ]
-  },
-  {
-    "AccountID": [
-      "22111001"
-    ],
-    "AccountDescription": [
-      "Sociedade de Fornecimentos, Lda."
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "6812.30"
-    ],
-    "ClosingDebitBalance": [
-      "523.02"
-    ],
-    "ClosingCreditBalance": [
-      "26857.54"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "2211"
-    ],
-    "TaxonomyCode": [
-      "37"
-    ]
-  },
-  {
-    "AccountID": [
-      "22111002"
-    ],
-    "AccountDescription": [
-      "Publicidade & Marrketing"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "6693.81"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "2211"
-    ],
-    "TaxonomyCode": [
-      "37"
-    ]
-  },
-  {
-    "AccountID": [
-      "22111003"
-    ],
-    "AccountDescription": [
-      "Companhia de Hardware"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "4184.78"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "2211"
-    ],
-    "TaxonomyCode": [
-      "37"
-    ]
-  },
-  {
-    "AccountID": [
-      "22111005"
-    ],
-    "AccountDescription": [
-      "Distribuidora X, SA."
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "37.75"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "2211"
-    ],
-    "TaxonomyCode": [
-      "37"
-    ]
-  },
-  {
-    "AccountID": [
-      "24"
-    ],
-    "AccountDescription": [
-      "Estados e Outros Entes P�blicos"
-    ],
-    "OpeningDebitBalance": [
-      "1182.30"
-    ],
-    "OpeningCreditBalance": [
-      "2870.82"
-    ],
-    "ClosingDebitBalance": [
-      "10109.77"
-    ],
-    "ClosingCreditBalance": [
-      "13203.41"
-    ],
-    "GroupingCategory": [
-      "GR"
-    ]
-  },
-  {
-    "AccountID": [
-      "243"
-    ],
-    "AccountDescription": [
-      "Imposto S/Valor Acrescentado - Iva"
-    ],
-    "OpeningDebitBalance": [
-      "1182.30"
-    ],
-    "OpeningCreditBalance": [
-      "2870.82"
-    ],
-    "ClosingDebitBalance": [
-      "10109.77"
-    ],
-    "ClosingCreditBalance": [
-      "13203.41"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "24"
-    ]
-  },
-  {
-    "AccountID": [
-      "2432"
-    ],
-    "AccountDescription": [
-      "Iva - Dedut�vel"
-    ],
-    "OpeningDebitBalance": [
-      "1182.30"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "6525.83"
-    ],
-    "ClosingCreditBalance": [
-      "1882.74"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "243"
-    ]
-  },
-  {
-    "AccountID": [
-      "24321"
-    ],
-    "AccountDescription": [
-      "Exist�ncias"
-    ],
-    "OpeningDebitBalance": [
-      "1182.30"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "6525.83"
-    ],
-    "ClosingCreditBalance": [
-      "1882.74"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "2432"
-    ]
-  },
-  {
-    "AccountID": [
-      "243211"
-    ],
-    "AccountDescription": [
-      "Exist�ncias Continente"
-    ],
-    "OpeningDebitBalance": [
-      "1182.30"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "6525.83"
-    ],
-    "ClosingCreditBalance": [
-      "1882.74"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "24321"
-    ]
-  },
-  {
-    "AccountID": [
-      "2432113"
-    ],
-    "AccountDescription": [
-      "Ex. - Taxa Normal"
-    ],
-    "OpeningDebitBalance": [
-      "1182.30"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "6525.83"
-    ],
-    "ClosingCreditBalance": [
-      "1882.74"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "243211"
-    ]
-  },
-  {
-    "AccountID": [
-      "243211320"
-    ],
-    "AccountDescription": [
-      "Ex. - Taxa Normal-Tx.20%"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "727.39"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "2432113"
-    ]
-  },
-  {
-    "AccountID": [
-      "2432113201"
-    ],
-    "AccountDescription": [
-      "Ex. Tx. Nm. - Mercado Nacional"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "727.39"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "243211320"
-    ]
-  },
-  {
-    "AccountID": [
-      "24321132011"
-    ],
-    "AccountDescription": [
-      "Ex. Tx. Nm..- MN-TT/Dedut�vel"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "727.39"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "2432113201"
-    ],
-    "TaxonomyCode": [
-      "74"
-    ]
-  },
-  {
-    "AccountID": [
-      "243211321"
-    ],
-    "AccountDescription": [
-      "Ex. - Taxa Normal-Tx.21%"
-    ],
-    "OpeningDebitBalance": [
-      "1182.30"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "5798.44"
-    ],
-    "ClosingCreditBalance": [
-      "1882.74"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "2432113"
-    ]
-  },
-  {
-    "AccountID": [
-      "2432113211"
-    ],
-    "AccountDescription": [
-      "Ex. Tx. Nm. - Mercado Nacional"
-    ],
-    "OpeningDebitBalance": [
-      "1182.30"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "5798.44"
-    ],
-    "ClosingCreditBalance": [
-      "1882.74"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "243211321"
-    ]
-  },
-  {
-    "AccountID": [
-      "24321132111"
-    ],
-    "AccountDescription": [
-      "Ex. Tx. Nm..- MN-TT/Dedut�vel"
-    ],
-    "OpeningDebitBalance": [
-      "1182.30"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "5798.44"
-    ],
-    "ClosingCreditBalance": [
-      "1882.74"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "2432113211"
-    ],
-    "TaxonomyCode": [
-      "74"
-    ]
-  },
-  {
-    "AccountID": [
-      "2433"
-    ],
-    "AccountDescription": [
-      "Iva - Liquidado"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "2870.82"
-    ],
-    "ClosingDebitBalance": [
-      "64.44"
-    ],
-    "ClosingCreditBalance": [
-      "9528.70"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "243"
-    ]
-  },
-  {
-    "AccountID": [
-      "24331"
-    ],
-    "AccountDescription": [
-      "Operacoes Gerais"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "1015.34"
-    ],
-    "ClosingDebitBalance": [
-      "64.44"
-    ],
-    "ClosingCreditBalance": [
-      "7673.22"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "2433"
-    ]
-  },
-  {
-    "AccountID": [
-      "243311"
-    ],
-    "AccountDescription": [
-      "Iva Liq. - Vendas"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "1015.34"
-    ],
-    "ClosingDebitBalance": [
-      "64.44"
-    ],
-    "ClosingCreditBalance": [
-      "7559.28"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "24331"
-    ]
-  },
-  {
-    "AccountID": [
-      "2433111"
-    ],
-    "AccountDescription": [
-      "Iva Liq. - Vendas-Continente"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "1015.34"
-    ],
-    "ClosingDebitBalance": [
-      "64.44"
-    ],
-    "ClosingCreditBalance": [
-      "7559.28"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "243311"
-    ]
-  },
-  {
-    "AccountID": [
-      "24331113"
-    ],
-    "AccountDescription": [
-      "Iva Liq. - Taxa Normal"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "1015.34"
-    ],
-    "ClosingDebitBalance": [
-      "64.44"
-    ],
-    "ClosingCreditBalance": [
-      "7559.28"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "2433111"
-    ]
-  },
-  {
-    "AccountID": [
-      "2433111320"
-    ],
-    "AccountDescription": [
-      "Iva Liq. - Taxa Normal-Tx.20%"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "2010.34"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "24331113"
-    ]
-  },
-  {
-    "AccountID": [
-      "24331113201"
-    ],
-    "AccountDescription": [
-      "Iva Liq.- Tx. Nm.- Mercado Nacional"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "2010.34"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "2433111320"
-    ],
-    "TaxonomyCode": [
-      "75"
-    ]
-  },
-  {
-    "AccountID": [
-      "2433111321"
-    ],
-    "AccountDescription": [
-      "Iva Liq. - Taxa Normal-Tx.21%"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "1015.34"
-    ],
-    "ClosingDebitBalance": [
-      "64.44"
-    ],
-    "ClosingCreditBalance": [
-      "5548.94"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "24331113"
-    ]
-  },
-  {
-    "AccountID": [
-      "24331113211"
-    ],
-    "AccountDescription": [
-      "Iva Liq.- Tx. Nm.- Mercado Nacional"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "1015.34"
-    ],
-    "ClosingDebitBalance": [
-      "64.44"
-    ],
-    "ClosingCreditBalance": [
-      "5548.94"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "2433111321"
-    ],
-    "TaxonomyCode": [
-      "75"
-    ]
-  },
-  {
-    "AccountID": [
-      "243312"
-    ],
-    "AccountDescription": [
-      "Iva Liq. - Presta��es de Servi�os"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "113.94"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "24331"
-    ]
-  },
-  {
-    "AccountID": [
-      "2433121"
-    ],
-    "AccountDescription": [
-      "Iva Liq. - Prest. de Servi�os-Continente"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "113.94"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "243312"
-    ]
-  },
-  {
-    "AccountID": [
-      "24331213"
-    ],
-    "AccountDescription": [
-      "Iva Liq. - Ps - Taxa Normal"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "113.94"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "2433121"
-    ]
-  },
-  {
-    "AccountID": [
-      "2433121321"
-    ],
-    "AccountDescription": [
-      "Iva Liq. - Ps - Taxa Normal-Tx.21%"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "113.94"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "24331213"
-    ]
-  },
-  {
-    "AccountID": [
-      "24331213211"
-    ],
-    "AccountDescription": [
-      "Iva Liq. - Ps - Tx. Nm. Merc. Nac."
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "113.94"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "2433121321"
-    ],
-    "TaxonomyCode": [
-      "75"
-    ]
-  },
-  {
-    "AccountID": [
-      "24339"
-    ],
-    "AccountDescription": [
-      "Iva Liq - Adiantamentos"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "1855.48"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "1855.48"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "2433"
-    ]
-  },
-  {
-    "AccountID": [
-      "243391"
-    ],
-    "AccountDescription": [
-      "Iva Liq - Ad - Vendas"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "1855.48"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "1855.48"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "24339"
-    ]
-  },
-  {
-    "AccountID": [
-      "2433911"
-    ],
-    "AccountDescription": [
-      "Iva Liq - Ad - Vendas-Continente"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "1855.48"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "1855.48"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "243391"
-    ]
-  },
-  {
-    "AccountID": [
-      "24339113"
-    ],
-    "AccountDescription": [
-      "Iva Liq - Ad - Vd - Taxa Normal"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "1855.48"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "1855.48"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "2433911"
-    ]
-  },
-  {
-    "AccountID": [
-      "2433911321"
-    ],
-    "AccountDescription": [
-      "Iva Liq - Ad - Vd - Taxa Normal-Tx.21%"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "1855.48"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "1855.48"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "24339113"
-    ]
-  },
-  {
-    "AccountID": [
-      "24339113211"
-    ],
-    "AccountDescription": [
-      "Iva Liq - Ad - Vd - Tx.Nm. - Mn"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "1855.48"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "1855.48"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "2433911321"
-    ],
-    "TaxonomyCode": [
-      "75"
-    ]
-  },
-  {
-    "AccountID": [
-      "2435"
-    ],
-    "AccountDescription": [
-      "Iva - Apuramento"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "1791.97"
-    ],
-    "ClosingCreditBalance": [
-      "1791.97"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "243"
-    ],
-    "TaxonomyCode": [
-      "77"
-    ]
-  },
-  {
-    "AccountID": [
-      "2437"
-    ],
-    "AccountDescription": [
-      "Iva - A Recuperar"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "727.53"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "243"
-    ],
-    "TaxonomyCode": [
-      "79"
-    ]
-  },
-  {
-    "AccountID": [
-      "2438"
-    ],
-    "AccountDescription": [
-      "Iva - Reembolsos Pedidos"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "1000.00"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "243"
-    ],
-    "TaxonomyCode": [
-      "80"
-    ]
-  },
-  {
-    "AccountID": [
-      "31"
-    ],
-    "AccountDescription": [
-      "Compras"
-    ],
-    "OpeningDebitBalance": [
-      "5630.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "31248.05"
-    ],
-    "ClosingCreditBalance": [
-      "4276.33"
-    ],
-    "GroupingCategory": [
-      "GR"
-    ]
-  },
-  {
-    "AccountID": [
-      "312"
-    ],
-    "AccountDescription": [
-      "Compras-Mercadorias"
-    ],
-    "OpeningDebitBalance": [
-      "5630.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "27403.97"
-    ],
-    "ClosingCreditBalance": [
-      "432.25"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "31"
-    ]
-  },
-  {
-    "AccountID": [
-      "3121"
-    ],
-    "AccountDescription": [
-      "Compras-Merc-Mercado Nacional"
-    ],
-    "OpeningDebitBalance": [
-      "5630.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "27403.97"
-    ],
-    "ClosingCreditBalance": [
-      "432.25"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "312"
-    ],
-    "TaxonomyCode": [
-      "157"
-    ]
-  },
-  {
-    "AccountID": [
-      "316"
-    ],
-    "AccountDescription": [
-      "Compras-Mat. Primas,Subsid.,Consumo"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "3844.08"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "31"
-    ]
-  },
-  {
-    "AccountID": [
-      "3161"
-    ],
-    "AccountDescription": [
-      "Compras-Mat�rias Primas"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "3844.08"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "316"
-    ]
-  },
-  {
-    "AccountID": [
-      "31611"
-    ],
-    "AccountDescription": [
-      "Compras-Mat.Prim.-Mercado Nac."
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "3844.08"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "3161"
-    ],
-    "TaxonomyCode": [
-      ""
-    ]
-  },
-  {
-    "AccountID": [
-      "319"
-    ],
-    "AccountDescription": [
-      "Imputa��o de Compras"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "3844.08"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "31"
-    ]
-  },
-  {
-    "AccountID": [
-      "3196"
-    ],
-    "AccountDescription": [
-      "Mat. Primas Subs. e Cons. Imput."
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "3844.08"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "319"
-    ]
-  },
-  {
-    "AccountID": [
-      "31961"
-    ],
-    "AccountDescription": [
-      "Mat. Primas Imput."
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "3844.08"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "3196"
-    ],
-    "TaxonomyCode": [
-      ""
-    ]
-  },
-  {
-    "AccountID": [
-      "36"
-    ],
-    "AccountDescription": [
-      "Mat�rias-Primas, Subs. e de Consumo"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "3844.08"
-    ],
-    "ClosingCreditBalance": [
-      "1259.04"
-    ],
-    "GroupingCategory": [
-      "GR"
-    ]
-  },
-  {
-    "AccountID": [
-      "361"
-    ],
-    "AccountDescription": [
-      "Mat�rias-Primas"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "3844.08"
-    ],
-    "ClosingCreditBalance": [
-      "1259.04"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "36"
-    ]
-  },
-  {
-    "AccountID": [
-      "3612"
-    ],
-    "AccountDescription": [
-      "Mat�rias-Primas - CEVC"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "3844.08"
-    ],
-    "ClosingCreditBalance": [
-      "1259.04"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "361"
-    ],
-    "TaxonomyCode": [
-      "193"
-    ]
-  },
-  {
-    "AccountID": [
-      "61"
-    ],
-    "AccountDescription": [
-      "Custo das Merc. Vend. e Mat. Cons."
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "1259.04"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "GR"
-    ]
-  },
-  {
-    "AccountID": [
-      "616"
-    ],
-    "AccountDescription": [
-      "Custo-Mat.Prima, Subs. e de Consumo"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "1259.04"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "61"
-    ]
-  },
-  {
-    "AccountID": [
-      "6161"
-    ],
-    "AccountDescription": [
-      "Mat�rias Primas"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "1259.04"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "616"
-    ]
-  },
-  {
-    "AccountID": [
-      "61611"
-    ],
-    "AccountDescription": [
-      "Mat�rias Primas - CMPVC"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "1259.04"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "6161"
-    ],
-    "TaxonomyCode": [
-      ""
-    ]
-  },
-  {
-    "AccountID": [
-      "62"
-    ],
-    "AccountDescription": [
-      "Fornecimentos e Servi�os Externos"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "560.00"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "GR"
-    ]
-  },
-  {
-    "AccountID": [
-      "622"
-    ],
-    "AccountDescription": [
-      "Fornecimentos e Servi�os"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "560.00"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "62"
-    ]
-  },
-  {
-    "AccountID": [
-      "62212"
-    ],
-    "AccountDescription": [
-      "Combust�veis"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "560.00"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "622"
-    ]
-  },
-  {
-    "AccountID": [
-      "622122"
-    ],
-    "AccountDescription": [
-      "Combust�veis - Gasolina"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "560.00"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "62212"
-    ]
-  },
-  {
-    "AccountID": [
-      "6221222"
-    ],
-    "AccountDescription": [
-      "Gasolina - N/Aceite pela totalidade"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "560.00"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "622122"
-    ],
-    "TaxonomyCode": [
-      "357"
-    ]
-  },
-  {
-    "AccountID": [
-      "71"
-    ],
-    "AccountDescription": [
-      "Vendas"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "31934.18"
-    ],
-    "GroupingCategory": [
-      "GR"
-    ]
-  },
-  {
-    "AccountID": [
-      "711"
-    ],
-    "AccountDescription": [
-      "Vendas-Mercadorias"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "31934.18"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "71"
-    ]
-  },
-  {
-    "AccountID": [
-      "7111"
-    ],
-    "AccountDescription": [
-      "Vendas-Merc.-Mercado Nacional"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "31607.47"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "711"
-    ],
-    "TaxonomyCode": [
-      "506"
-    ]
-  },
-  {
-    "AccountID": [
-      "7112"
-    ],
-    "AccountDescription": [
-      "Vendas-Merc.-Mercado Intrac."
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "326.71"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "711"
-    ],
-    "TaxonomyCode": [
-      "506"
-    ]
-  },
-  {
-    "AccountID": [
-      "72"
-    ],
-    "AccountDescription": [
-      "Presta��es de Servi�os"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "542.59"
-    ],
-    "GroupingCategory": [
-      "GR"
-    ]
-  },
-  {
-    "AccountID": [
-      "721"
-    ],
-    "AccountDescription": [
-      "Servi�o A"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "542.59"
-    ],
-    "GroupingCategory": [
-      "GA"
-    ],
-    "GroupingCode": [
-      "72"
-    ]
-  },
-  {
-    "AccountID": [
-      "7211"
-    ],
-    "AccountDescription": [
-      "Servi�o A - Mercado Nacional"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "542.59"
-    ],
-    "GroupingCategory": [
-      "GM"
-    ],
-    "GroupingCode": [
-      "721"
-    ],
-    "TaxonomyCode": [
-      "513"
-    ]
-  },
-  {
-    "AccountID": [
-      "91"
-    ],
-    "AccountDescription": [
-      "Contas Refletidas"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "3844.08"
-    ],
-    "GroupingCategory": [
-      "AR"
-    ]
-  },
-  {
-    "AccountID": [
-      "9131"
-    ],
-    "AccountDescription": [
-      "Compras Refletidas"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "3844.08"
-    ],
-    "GroupingCategory": [
-      "AM"
-    ],
-    "GroupingCode": [
-      "91"
-    ]
-  },
-  {
-    "AccountID": [
-      "93"
-    ],
-    "AccountDescription": [
-      "Exist�ncias"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "3844.08"
-    ],
-    "ClosingCreditBalance": [
-      "1259.04"
-    ],
-    "GroupingCategory": [
-      "AR"
-    ]
-  },
-  {
-    "AccountID": [
-      "936"
-    ],
-    "AccountDescription": [
-      "Mat�rias Primas"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "3844.08"
-    ],
-    "ClosingCreditBalance": [
-      "1259.04"
-    ],
-    "GroupingCategory": [
-      "AM"
-    ],
-    "GroupingCode": [
-      "93"
-    ]
-  },
-  {
-    "AccountID": [
-      "94"
-    ],
-    "AccountDescription": [
-      "Centro de Custo"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "11.00"
-    ],
-    "GroupingCategory": [
-      "AR"
-    ]
-  },
-  {
-    "AccountID": [
-      "942"
-    ],
-    "AccountDescription": [
-      "Centro de Custo de Produ��o"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "11.00"
-    ],
-    "GroupingCategory": [
-      "AA"
-    ],
-    "GroupingCode": [
-      "94"
-    ]
-  },
-  {
-    "AccountID": [
-      "94201"
-    ],
-    "AccountDescription": [
-      "C. Custos Corte"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "0.00"
-    ],
-    "ClosingCreditBalance": [
-      "11.00"
-    ],
-    "GroupingCategory": [
-      "AM"
-    ],
-    "GroupingCode": [
-      "942"
-    ]
-  },
-  {
-    "AccountID": [
-      "95"
-    ],
-    "AccountDescription": [
-      "Custos de Produ��o"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "1270.04"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "AR"
-    ]
-  },
-  {
-    "AccountID": [
-      "951"
-    ],
-    "AccountDescription": [
-      "Fabrica��o"
-    ],
-    "OpeningDebitBalance": [
-      "0.00"
-    ],
-    "OpeningCreditBalance": [
-      "0.00"
-    ],
-    "ClosingDebitBalance": [
-      "1270.04"
-    ],
-    "ClosingCreditBalance": [
-      "0.00"
-    ],
-    "GroupingCategory": [
-      "AM"
     ],
-    "GroupingCode": [
-      "95"
+    "TransactionDate": [
+      "2016-11-23"
+    ],
+    "SourceID": [
+      "lucia.ribeiro"
+    ],
+    "Description": [
+      "VFP N.�2/A"
+    ],
+    "DocArchivalNumber": [
+      "110001"
+    ],
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-09-14"
+    ],
+    "Lines": [
+      {
+        "CreditLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "22111005"
+            ],
+            "SourceDocumentID": [
+              "VFP A/2"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFP N� 2/A"
+            ],
+            "CreditAmount": [
+              "37.75"
+            ]
+          },
+          {
+            "RecordID": [
+              "4"
+            ],
+            "AccountID": [
+              "31961"
+            ],
+            "SourceDocumentID": [
+              "VFP A/2"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFP N� 2/A"
+            ],
+            "CreditAmount": [
+              "31.20"
+            ]
+          },
+          {
+            "RecordID": [
+              "7"
+            ],
+            "AccountID": [
+              "9131"
+            ],
+            "SourceDocumentID": [
+              "VFP A/2"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFP N� 2/A"
+            ],
+            "CreditAmount": [
+              "31.20"
+            ]
+          }
+        ],
+        "DebitLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "24321132111"
+            ],
+            "SourceDocumentID": [
+              "VFP A/2"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFP N� 2/A"
+            ],
+            "DebitAmount": [
+              "6.55"
+            ]
+          },
+          {
+            "RecordID": [
+              "3"
+            ],
+            "AccountID": [
+              "31611"
+            ],
+            "SourceDocumentID": [
+              "VFP A/2"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFP N� 2/A"
+            ],
+            "DebitAmount": [
+              "31.20"
+            ]
+          },
+          {
+            "RecordID": [
+              "5"
+            ],
+            "AccountID": [
+              "3612"
+            ],
+            "SourceDocumentID": [
+              "VFP A/2"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFP N� 2/A"
+            ],
+            "DebitAmount": [
+              "31.20"
+            ]
+          },
+          {
+            "RecordID": [
+              "6"
+            ],
+            "AccountID": [
+              "936"
+            ],
+            "SourceDocumentID": [
+              "VFP A/2"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VFP N� 2/A"
+            ],
+            "DebitAmount": [
+              "31.20"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "TransactionID": [
+      "2016-01-19 00051 10001"
+    ],
+    "Period": [
+      "1"
+    ],
+    "TransactionDate": [
+      "2016-01-19"
+    ],
+    "SourceID": [
+      "lucia.ribeiro"
+    ],
+    "Description": [
+      "FA N.�15/A"
+    ],
+    "DocArchivalNumber": [
+      "10001"
+    ],
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-09-14"
+    ],
+    "Lines": [
+      {
+        "DebitLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "21123004"
+            ],
+            "SourceDocumentID": [
+              "FA A/15"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "FA N� 15/A"
+            ],
+            "DebitAmount": [
+              "13016.00"
+            ]
+          }
+        ],
+        "CreditLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "24331113211"
+            ],
+            "SourceDocumentID": [
+              "FA A/15"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "FA N� 15/A"
+            ],
+            "CreditAmount": [
+              "2259.00"
+            ]
+          },
+          {
+            "RecordID": [
+              "3"
+            ],
+            "AccountID": [
+              "7111"
+            ],
+            "SourceDocumentID": [
+              "FA A/15"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "FA N� 15/A"
+            ],
+            "CreditAmount": [
+              "10757.00"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "TransactionID": [
+      "2016-01-20 00051 10002"
+    ],
+    "Period": [
+      "1"
+    ],
+    "TransactionDate": [
+      "2016-01-20"
+    ],
+    "SourceID": [
+      "lucia.ribeiro"
+    ],
+    "Description": [
+      "FA N.�16/A"
+    ],
+    "DocArchivalNumber": [
+      "10002"
+    ],
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-09-14"
+    ],
+    "Lines": [
+      {
+        "DebitLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "21111001"
+            ],
+            "SourceDocumentID": [
+              "FA A/16"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "FA N� 16/A"
+            ],
+            "DebitAmount": [
+              "603.79"
+            ]
+          }
+        ],
+        "CreditLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "24331113211"
+            ],
+            "SourceDocumentID": [
+              "FA A/16"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "FA N� 16/A"
+            ],
+            "CreditAmount": [
+              "104.79"
+            ]
+          },
+          {
+            "RecordID": [
+              "3"
+            ],
+            "AccountID": [
+              "7111"
+            ],
+            "SourceDocumentID": [
+              "FA A/16"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "FA N� 16/A"
+            ],
+            "CreditAmount": [
+              "499.00"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "TransactionID": [
+      "2016-01-25 00051 10003"
+    ],
+    "Period": [
+      "1"
+    ],
+    "TransactionDate": [
+      "2016-01-25"
+    ],
+    "SourceID": [
+      "lucia.ribeiro"
+    ],
+    "Description": [
+      "FA N.�17/A"
+    ],
+    "DocArchivalNumber": [
+      "10003"
+    ],
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-09-14"
+    ],
+    "Lines": [
+      {
+        "DebitLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "21111003"
+            ],
+            "SourceDocumentID": [
+              "FA A/17"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "FA N� 17/A"
+            ],
+            "DebitAmount": [
+              "2511.98"
+            ]
+          }
+        ],
+        "CreditLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "24331113211"
+            ],
+            "SourceDocumentID": [
+              "FA A/17"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "FA N� 17/A"
+            ],
+            "CreditAmount": [
+              "435.98"
+            ]
+          },
+          {
+            "RecordID": [
+              "3"
+            ],
+            "AccountID": [
+              "7111"
+            ],
+            "SourceDocumentID": [
+              "FA A/17"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "FA N� 17/A"
+            ],
+            "CreditAmount": [
+              "2076.00"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "TransactionID": [
+      "2016-01-30 00051 10004"
+    ],
+    "Period": [
+      "1"
+    ],
+    "TransactionDate": [
+      "2016-01-30"
+    ],
+    "SourceID": [
+      "teste"
+    ],
+    "Description": [
+      "FA N.�18/A"
+    ],
+    "DocArchivalNumber": [
+      "10004"
+    ],
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-09-14"
+    ],
+    "Lines": [
+      {
+        "DebitLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "21111001"
+            ],
+            "SourceDocumentID": [
+              "FA A/18"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "FA N� 18/A"
+            ],
+            "DebitAmount": [
+              "3480.67"
+            ]
+          }
+        ],
+        "CreditLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "24331213211"
+            ],
+            "SourceDocumentID": [
+              "FA A/18"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "FA N� 18/A"
+            ],
+            "CreditAmount": [
+              "50.94"
+            ]
+          },
+          {
+            "RecordID": [
+              "3"
+            ],
+            "AccountID": [
+              "24331113211"
+            ],
+            "SourceDocumentID": [
+              "FA A/18"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "FA N� 18/A"
+            ],
+            "CreditAmount": [
+              "553.14"
+            ]
+          },
+          {
+            "RecordID": [
+              "4"
+            ],
+            "AccountID": [
+              "7211"
+            ],
+            "SourceDocumentID": [
+              "FA A/18"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "FA N� 18/A"
+            ],
+            "CreditAmount": [
+              "242.59"
+            ]
+          },
+          {
+            "RecordID": [
+              "5"
+            ],
+            "AccountID": [
+              "7111"
+            ],
+            "SourceDocumentID": [
+              "FA A/18"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "FA N� 18/A"
+            ],
+            "CreditAmount": [
+              "2634.00"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "TransactionID": [
+      "2016-02-10 00051 20001"
+    ],
+    "Period": [
+      "2"
+    ],
+    "TransactionDate": [
+      "2016-02-10"
+    ],
+    "SourceID": [
+      "lucia.ribeiro"
+    ],
+    "Description": [
+      "FA N.�19/A"
+    ],
+    "DocArchivalNumber": [
+      "20001"
+    ],
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-09-14"
+    ],
+    "Lines": [
+      {
+        "DebitLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "21113006"
+            ],
+            "SourceDocumentID": [
+              "FA A/19"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "FA N� 19/A"
+            ],
+            "DebitAmount": [
+              "2837.40"
+            ]
+          }
+        ],
+        "CreditLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "24331113211"
+            ],
+            "SourceDocumentID": [
+              "FA A/19"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "FA N� 19/A"
+            ],
+            "CreditAmount": [
+              "492.44"
+            ]
+          },
+          {
+            "RecordID": [
+              "3"
+            ],
+            "AccountID": [
+              "7111"
+            ],
+            "SourceDocumentID": [
+              "FA A/19"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "FA N� 19/A"
+            ],
+            "CreditAmount": [
+              "2344.96"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "TransactionID": [
+      "2016-02-24 00051 20002"
+    ],
+    "Period": [
+      "2"
+    ],
+    "TransactionDate": [
+      "2016-02-24"
+    ],
+    "SourceID": [
+      "lucia.ribeiro"
+    ],
+    "Description": [
+      "FA N.�20/A"
+    ],
+    "DocArchivalNumber": [
+      "20002"
+    ],
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-09-14"
+    ],
+    "CustomerID": [
+      "Consumidor final"
+    ],
+    "Lines": [
+      {
+        "DebitLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "21113001"
+            ],
+            "SourceDocumentID": [
+              "FA A/20"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "FA N� 20/A"
+            ],
+            "DebitAmount": [
+              "1781.70"
+            ]
+          }
+        ],
+        "CreditLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "24331213211"
+            ],
+            "SourceDocumentID": [
+              "FA A/20"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "FA N� 20/A"
+            ],
+            "CreditAmount": [
+              "63.00"
+            ]
+          },
+          {
+            "RecordID": [
+              "3"
+            ],
+            "AccountID": [
+              "24331113211"
+            ],
+            "SourceDocumentID": [
+              "FA A/20"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "FA N� 20/A"
+            ],
+            "CreditAmount": [
+              "246.22"
+            ]
+          },
+          {
+            "RecordID": [
+              "4"
+            ],
+            "AccountID": [
+              "7211"
+            ],
+            "SourceDocumentID": [
+              "FA A/20"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "FA N� 20/A"
+            ],
+            "CreditAmount": [
+              "300.00"
+            ]
+          },
+          {
+            "RecordID": [
+              "5"
+            ],
+            "AccountID": [
+              "7111"
+            ],
+            "SourceDocumentID": [
+              "FA A/20"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "FA N� 20/A"
+            ],
+            "CreditAmount": [
+              "1172.48"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "TransactionID": [
+      "2016-03-10 00051 30001"
+    ],
+    "Period": [
+      "3"
+    ],
+    "TransactionDate": [
+      "2016-03-10"
+    ],
+    "SourceID": [
+      "lucia.ribeiro"
+    ],
+    "Description": [
+      "FA N.�21/A"
+    ],
+    "DocArchivalNumber": [
+      "30001"
+    ],
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-09-14"
+    ],
+    "Lines": [
+      {
+        "DebitLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "21111001"
+            ],
+            "SourceDocumentID": [
+              "FA A/21"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "FA N� 21/A"
+            ],
+            "DebitAmount": [
+              "2175.66"
+            ]
+          }
+        ],
+        "CreditLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "24331113211"
+            ],
+            "SourceDocumentID": [
+              "FA A/21"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "FA N� 21/A"
+            ],
+            "CreditAmount": [
+              "377.59"
+            ]
+          },
+          {
+            "RecordID": [
+              "3"
+            ],
+            "AccountID": [
+              "7111"
+            ],
+            "SourceDocumentID": [
+              "FA A/21"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "FA N� 21/A"
+            ],
+            "CreditAmount": [
+              "1798.07"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "TransactionID": [
+      "2016-04-30 00051 40001"
+    ],
+    "Period": [
+      "4"
+    ],
+    "TransactionDate": [
+      "2016-04-30"
+    ],
+    "SourceID": [
+      "Administrador"
+    ],
+    "Description": [
+      "FA N.�22/A"
+    ],
+    "DocArchivalNumber": [
+      "40001"
+    ],
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-09-14"
+    ],
+    "Lines": [
+      {
+        "CreditLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "7111"
+            ],
+            "SourceDocumentID": [
+              "FA A/22"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "FA N� 22/A"
+            ],
+            "CreditAmount": [
+              "474.12"
+            ]
+          },
+          {
+            "RecordID": [
+              "3"
+            ],
+            "AccountID": [
+              "24331113201"
+            ],
+            "SourceDocumentID": [
+              "FA A/22"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "FA N� 22/A"
+            ],
+            "CreditAmount": [
+              "101.34"
+            ]
+          }
+        ],
+        "DebitLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "21113006"
+            ],
+            "SourceDocumentID": [
+              "FA A/22"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "FA N� 22/A"
+            ],
+            "DebitAmount": [
+              "575.46"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "TransactionID": [
+      "2016-07-10 00051 70001"
+    ],
+    "Period": [
+      "7"
+    ],
+    "TransactionDate": [
+      "2016-07-10"
+    ],
+    "SourceID": [
+      "user"
+    ],
+    "Description": [
+      "FA N� 676/2016"
+    ],
+    "DocArchivalNumber": [
+      "70001"
+    ],
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-09-14"
+    ],
+    "Lines": [
+      {
+        "DebitLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "21111001"
+            ],
+            "SourceDocumentID": [
+              "FA 2016/676"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T15:38:56"
+            ],
+            "Description": [
+              "FA N� 676/2016"
+            ],
+            "DebitAmount": [
+              "5605.20"
+            ]
+          }
+        ],
+        "CreditLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "24331113201"
+            ],
+            "SourceDocumentID": [
+              "FA 2016/676"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T15:38:56"
+            ],
+            "Description": [
+              "FA N� 676/2016"
+            ],
+            "CreditAmount": [
+              "934.20"
+            ]
+          },
+          {
+            "RecordID": [
+              "3"
+            ],
+            "AccountID": [
+              "7111"
+            ],
+            "SourceDocumentID": [
+              "FA 2016/676"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T15:38:56"
+            ],
+            "Description": [
+              "FA N� 676/2016"
+            ],
+            "CreditAmount": [
+              "4671.00"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "TransactionID": [
+      "2016-09-14 00051 90001"
+    ],
+    "Period": [
+      "9"
+    ],
+    "TransactionDate": [
+      "2016-09-14"
+    ],
+    "SourceID": [
+      "user"
+    ],
+    "Description": [
+      "FA N� 677/2016"
+    ],
+    "DocArchivalNumber": [
+      "90001"
+    ],
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-09-14"
+    ],
+    "Lines": [
+      {
+        "DebitLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "21111001"
+            ],
+            "SourceDocumentID": [
+              "FA 2016/677"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T15:39:30"
+            ],
+            "Description": [
+              "FA N� 677/2016"
+            ],
+            "DebitAmount": [
+              "900.00"
+            ]
+          }
+        ],
+        "CreditLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "24331113201"
+            ],
+            "SourceDocumentID": [
+              "FA 2016/677"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T15:39:30"
+            ],
+            "Description": [
+              "FA N� 677/2016"
+            ],
+            "CreditAmount": [
+              "150.00"
+            ]
+          },
+          {
+            "RecordID": [
+              "3"
+            ],
+            "AccountID": [
+              "7111"
+            ],
+            "SourceDocumentID": [
+              "FA 2016/677"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T15:39:30"
+            ],
+            "Description": [
+              "FA N� 677/2016"
+            ],
+            "CreditAmount": [
+              "750.00"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "TransactionID": [
+      "2016-10-06 00051 100001"
+    ],
+    "Period": [
+      "10"
+    ],
+    "TransactionDate": [
+      "2016-10-06"
+    ],
+    "SourceID": [
+      "user"
+    ],
+    "Description": [
+      "FA N� 678/2016"
+    ],
+    "DocArchivalNumber": [
+      "100001"
+    ],
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-10-06"
+    ],
+    "CustomerID": [
+      "Consumidor final"
+    ],
+    "Lines": [
+      {
+        "DebitLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "21123004"
+            ],
+            "SourceDocumentID": [
+              "FA 2016/678"
+            ],
+            "SystemEntryDate": [
+              "2016-10-06T17:33:28"
+            ],
+            "Description": [
+              "FA N� 678/2016"
+            ],
+            "DebitAmount": [
+              "326.71"
+            ]
+          }
+        ],
+        "CreditLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "7112"
+            ],
+            "SourceDocumentID": [
+              "FA 2016/678"
+            ],
+            "SystemEntryDate": [
+              "2016-10-06T17:33:28"
+            ],
+            "Description": [
+              "FA N� 678/2016"
+            ],
+            "CreditAmount": [
+              "326.71"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "TransactionID": [
+      "2016-10-07 00051 100002"
+    ],
+    "Period": [
+      "10"
+    ],
+    "TransactionDate": [
+      "2016-10-07"
+    ],
+    "SourceID": [
+      "user"
+    ],
+    "Description": [
+      "FA N� 679/2016"
+    ],
+    "DocArchivalNumber": [
+      "100002"
+    ],
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-10-07"
+    ],
+    "Lines": [
+      {
+        "DebitLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "21111003"
+            ],
+            "SourceDocumentID": [
+              "FA 2016/679"
+            ],
+            "SystemEntryDate": [
+              "2016-10-07T12:31:36"
+            ],
+            "Description": [
+              "FA N� 679/2016"
+            ],
+            "DebitAmount": [
+              "2637.60"
+            ]
+          }
+        ],
+        "CreditLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "24331113201"
+            ],
+            "SourceDocumentID": [
+              "FA 2016/679"
+            ],
+            "SystemEntryDate": [
+              "2016-10-07T12:31:36"
+            ],
+            "Description": [
+              "FA N� 679/2016"
+            ],
+            "CreditAmount": [
+              "439.60"
+            ]
+          },
+          {
+            "RecordID": [
+              "3"
+            ],
+            "AccountID": [
+              "7111"
+            ],
+            "SourceDocumentID": [
+              "FA 2016/679"
+            ],
+            "SystemEntryDate": [
+              "2016-10-07T12:31:36"
+            ],
+            "Description": [
+              "FA N� 679/2016"
+            ],
+            "CreditAmount": [
+              "2198.00"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "TransactionID": [
+      "2016-10-07 00051 100003"
+    ],
+    "Period": [
+      "10"
+    ],
+    "TransactionDate": [
+      "2016-10-07"
+    ],
+    "SourceID": [
+      "user"
+    ],
+    "Description": [
+      "FA N� 680/2016"
+    ],
+    "DocArchivalNumber": [
+      "100003"
+    ],
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-10-07"
+    ],
+    "CustomerID": [
+      "Consumidor final"
+    ],
+    "Lines": [
+      {
+        "DebitLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "21113002"
+            ],
+            "SourceDocumentID": [
+              "FA 2016/680"
+            ],
+            "SystemEntryDate": [
+              "2016-10-07T17:57:59"
+            ],
+            "Description": [
+              "FA N� 680/2016"
+            ],
+            "DebitAmount": [
+              "2311.20"
+            ]
+          }
+        ],
+        "CreditLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "24331113201"
+            ],
+            "SourceDocumentID": [
+              "FA 2016/680"
+            ],
+            "SystemEntryDate": [
+              "2016-10-07T17:57:59"
+            ],
+            "Description": [
+              "FA N� 680/2016"
+            ],
+            "CreditAmount": [
+              "385.20"
+            ]
+          },
+          {
+            "RecordID": [
+              "3"
+            ],
+            "AccountID": [
+              "7111"
+            ],
+            "SourceDocumentID": [
+              "FA 2016/680"
+            ],
+            "SystemEntryDate": [
+              "2016-10-07T17:57:59"
+            ],
+            "Description": [
+              "FA N� 680/2016"
+            ],
+            "CreditAmount": [
+              "1926.00"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "TransactionID": [
+      "2016-01-04 00056 10001"
+    ],
+    "Period": [
+      "1"
+    ],
+    "TransactionDate": [
+      "2016-01-04"
+    ],
+    "SourceID": [
+      "lucia.ribeiro"
+    ],
+    "Description": [
+      "VD N.�1/A"
+    ],
+    "DocArchivalNumber": [
+      "10001"
+    ],
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-09-14"
+    ],
+    "CustomerID": [
+      "Consumidor final"
+    ],
+    "Lines": [
+      {
+        "DebitLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "112"
+            ],
+            "SourceDocumentID": [
+              "VD A/1"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VD N� 1/A"
+            ],
+            "DebitAmount": [
+              "371.28"
+            ]
+          }
+        ],
+        "CreditLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "7111"
+            ],
+            "SourceDocumentID": [
+              "VD A/1"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VD N� 1/A"
+            ],
+            "CreditAmount": [
+              "306.84"
+            ]
+          },
+          {
+            "RecordID": [
+              "3"
+            ],
+            "AccountID": [
+              "24331113211"
+            ],
+            "SourceDocumentID": [
+              "VD A/1"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "VD N� 1/A"
+            ],
+            "CreditAmount": [
+              "64.44"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "TransactionID": [
+      "2016-01-31 00062 10001"
+    ],
+    "Period": [
+      "1"
+    ],
+    "TransactionDate": [
+      "2016-01-31"
+    ],
+    "SourceID": [
+      "MIGUEL.CORDEIRO"
+    ],
+    "Description": [
+      "Apur. IVA - Janeiro"
+    ],
+    "DocArchivalNumber": [
+      "10001"
+    ],
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-09-14"
+    ],
+    "Lines": [
+      {
+        "CreditLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "24321132111"
+            ],
+            "SourceDocumentID": [
+              "621 2009/1"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "Apur. IVA - Janeiro"
+            ],
+            "CreditAmount": [
+              "1791.97"
+            ]
+          },
+          {
+            "RecordID": [
+              "4"
+            ],
+            "AccountID": [
+              "2435"
+            ],
+            "SourceDocumentID": [
+              "621 2009/1"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "Apur. IVA - Janeiro"
+            ],
+            "CreditAmount": [
+              "64.44"
+            ]
+          },
+          {
+            "RecordID": [
+              "5"
+            ],
+            "AccountID": [
+              "2435"
+            ],
+            "SourceDocumentID": [
+              "621 2009/1"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "Apur. IVA - Janeiro"
+            ],
+            "CreditAmount": [
+              "1727.53"
+            ]
+          }
+        ],
+        "DebitLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "2435"
+            ],
+            "SourceDocumentID": [
+              "621 2009/1"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "Apur. IVA - Janeiro"
+            ],
+            "DebitAmount": [
+              "1791.97"
+            ]
+          },
+          {
+            "RecordID": [
+              "3"
+            ],
+            "AccountID": [
+              "24331113211"
+            ],
+            "SourceDocumentID": [
+              "621 2009/1"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "Apur. IVA - Janeiro"
+            ],
+            "DebitAmount": [
+              "64.44"
+            ]
+          },
+          {
+            "RecordID": [
+              "6"
+            ],
+            "AccountID": [
+              "2438"
+            ],
+            "SourceDocumentID": [
+              "621 2009/1"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "Apur. IVA - Janeiro"
+            ],
+            "DebitAmount": [
+              "1000.00"
+            ]
+          },
+          {
+            "RecordID": [
+              "7"
+            ],
+            "AccountID": [
+              "2437"
+            ],
+            "SourceDocumentID": [
+              "621 2009/1"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "Apur. IVA - Janeiro"
+            ],
+            "DebitAmount": [
+              "727.53"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "TransactionID": [
+      "2016-01-22 00092 10004"
+    ],
+    "Period": [
+      "1"
+    ],
+    "TransactionDate": [
+      "2016-01-22"
+    ],
+    "SourceID": [
+      "lucia.ribeiro"
+    ],
+    "Description": [
+      "SOF N.�1/A"
+    ],
+    "DocArchivalNumber": [
+      "10004"
+    ],
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-09-14"
+    ],
+    "Lines": [
+      {
+        "CreditLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "3612"
+            ],
+            "SourceDocumentID": [
+              "SOF A/1"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "SOF N� 1/A"
+            ],
+            "CreditAmount": [
+              "596.96"
+            ]
+          },
+          {
+            "RecordID": [
+              "3"
+            ],
+            "AccountID": [
+              "936"
+            ],
+            "SourceDocumentID": [
+              "SOF A/1"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "SOF N� 1/A"
+            ],
+            "CreditAmount": [
+              "596.96"
+            ]
+          }
+        ],
+        "DebitLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "61611"
+            ],
+            "SourceDocumentID": [
+              "SOF A/1"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "SOF N� 1/A"
+            ],
+            "DebitAmount": [
+              "596.96"
+            ]
+          },
+          {
+            "RecordID": [
+              "4"
+            ],
+            "AccountID": [
+              "951"
+            ],
+            "SourceDocumentID": [
+              "SOF A/1"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "SOF N� 1/A"
+            ],
+            "DebitAmount": [
+              "596.96"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "TransactionID": [
+      "2016-01-25 00092 10005"
+    ],
+    "Period": [
+      "1"
+    ],
+    "TransactionDate": [
+      "2016-01-25"
+    ],
+    "SourceID": [
+      "lucia.ribeiro"
+    ],
+    "Description": [
+      "SOF N.�2/A"
+    ],
+    "DocArchivalNumber": [
+      "10005"
+    ],
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-09-14"
+    ],
+    "Lines": [
+      {
+        "CreditLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "3612"
+            ],
+            "SourceDocumentID": [
+              "SOF A/2"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "SOF N� 2/A"
+            ],
+            "CreditAmount": [
+              "431.68"
+            ]
+          },
+          {
+            "RecordID": [
+              "3"
+            ],
+            "AccountID": [
+              "936"
+            ],
+            "SourceDocumentID": [
+              "SOF A/2"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "SOF N� 2/A"
+            ],
+            "CreditAmount": [
+              "431.68"
+            ]
+          }
+        ],
+        "DebitLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "61611"
+            ],
+            "SourceDocumentID": [
+              "SOF A/2"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "SOF N� 2/A"
+            ],
+            "DebitAmount": [
+              "431.68"
+            ]
+          },
+          {
+            "RecordID": [
+              "4"
+            ],
+            "AccountID": [
+              "951"
+            ],
+            "SourceDocumentID": [
+              "SOF A/2"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "SOF N� 2/A"
+            ],
+            "DebitAmount": [
+              "431.68"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "TransactionID": [
+      "2016-01-30 00092 10002"
+    ],
+    "Period": [
+      "1"
+    ],
+    "TransactionDate": [
+      "2016-01-30"
+    ],
+    "SourceID": [
+      "LUCIA.RIBEIRO"
+    ],
+    "Description": [
+      "DT N.�8/2006"
+    ],
+    "DocArchivalNumber": [
+      "10002"
+    ],
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-09-14"
+    ],
+    "Lines": [
+      {
+        "DebitLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "951"
+            ],
+            "SourceDocumentID": [
+              "921 A/8"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "DT N� 8/A"
+            ],
+            "DebitAmount": [
+              "11.00"
+            ]
+          }
+        ],
+        "CreditLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "94201"
+            ],
+            "SourceDocumentID": [
+              "921 A/8"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "DT N� 8/A"
+            ],
+            "CreditAmount": [
+              "11.00"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "TransactionID": [
+      "2016-02-12 00092 20001"
+    ],
+    "Period": [
+      "2"
+    ],
+    "TransactionDate": [
+      "2016-02-12"
+    ],
+    "SourceID": [
+      "lucia.ribeiro"
+    ],
+    "Description": [
+      "SOF N.�3/A"
+    ],
+    "DocArchivalNumber": [
+      "20001"
+    ],
+    "TransactionType": [
+      "N"
+    ],
+    "GLPostingDate": [
+      "2016-09-14"
+    ],
+    "Lines": [
+      {
+        "CreditLine": [
+          {
+            "RecordID": [
+              "1"
+            ],
+            "AccountID": [
+              "3612"
+            ],
+            "SourceDocumentID": [
+              "SOF A/3"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "SOF N� 3/A"
+            ],
+            "CreditAmount": [
+              "230.40"
+            ]
+          },
+          {
+            "RecordID": [
+              "3"
+            ],
+            "AccountID": [
+              "936"
+            ],
+            "SourceDocumentID": [
+              "SOF A/3"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "SOF N� 3/A"
+            ],
+            "CreditAmount": [
+              "230.40"
+            ]
+          }
+        ],
+        "DebitLine": [
+          {
+            "RecordID": [
+              "2"
+            ],
+            "AccountID": [
+              "61611"
+            ],
+            "SourceDocumentID": [
+              "SOF A/3"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "SOF N� 3/A"
+            ],
+            "DebitAmount": [
+              "230.40"
+            ]
+          },
+          {
+            "RecordID": [
+              "4"
+            ],
+            "AccountID": [
+              "951"
+            ],
+            "SourceDocumentID": [
+              "SOF A/3"
+            ],
+            "SystemEntryDate": [
+              "2016-09-14T00:25:15"
+            ],
+            "Description": [
+              "SOF N� 3/A"
+            ],
+            "DebitAmount": [
+              "230.40"
+            ]
+          }
+        ]
+      }
     ]
   }
 ]
