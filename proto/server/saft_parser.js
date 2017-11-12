@@ -6,12 +6,17 @@ mongoose.connect('mongodb://localhost/test');
 
 var Customer = require('./database/Customer');
 var Sales = require('./database/Sales');
+var Account = require('./database/Account');
 
 fs.readFile('../assets/SAFT_DEMOSINF_01-01-2016_31-12-2016.xml', function(err, data) {
     parseString(data, function (err, result) {
         writeCustomers(getCustomers(result));
-        writeSalesInvoices(getSalesInvoices(result));       
-        /*fs.writeFile('saft_in_json.js', JSON.stringify(result, null, 2), function (err) {
+        writeSalesInvoices(getSalesInvoices(result)); 
+        writeAccounts(getAccounts(result)); 
+          
+
+        /*var test = getAccounts(result);   
+        fs.writeFile('saft_in_json.js', JSON.stringify(test, null, 2), function (err) {
             if (err) throw err;
             console.log('SAF-T xml parsed.');
         });*/
@@ -26,24 +31,16 @@ function getSalesInvoices(saftParsed) {
     return saftParsed['AuditFile']['SourceDocuments'][0]['SalesInvoices'][0]['Invoice'];
 }
 
-function getValueOfAttribute(attr) {
-    if (attr != null) return attr[0];
-    else return null;
+function getAccounts(saftParsed) {
+    return saftParsed['AuditFile']['MasterFiles'][0]['GeneralLedgerAccounts'][0]['Account'];
 }
 
 function writeCustomers(customersJSON) {
-    // FOR TEST
-        /*Customer.find(function (err, customers) {
-            if (err) return console.error(err);
-            console.log(customers);
-        });*/
-    
-    Customer.remove({ }, function (err) {
+    Customer.remove({}, function (err) {
         if (err) return handleError(err);
 
         for (var i = 0; i < customersJSON.length; i++) {
             var customer = customersJSON[i];
-            
             var customer_doc = new Customer({ 
                 customer_id:  getValueOfAttribute(customer.CustomerID),
                 account_id: getValueOfAttribute(customer.AccountID),  
@@ -59,22 +56,12 @@ function writeCustomers(customersJSON) {
 }
 
 function writeSalesInvoices(SalesInvoicesJSON) {
-    // FOR TEST
-    /*Sales.SalesInvoices.find(function (err, saleInvoices) {
-        if (err) return console.error(err);
-        console.log(JSON.stringify(saleInvoices, null, 2));
-    });
-    return;*/
-
     Sales.Line.remove({}, function (err) {
-
         if (err) return handleError(err);
 
         Sales.SalesInvoices.remove({}, function (err) {
-
             if (err) return handleError(err);
             else saveSalesInvoices(SalesInvoicesJSON);
-
         });
     });
 }
@@ -119,6 +106,34 @@ function getLineOfSaleInvoice(lineJSON) {
         taxType: lineJSON.Tax[0].TaxType,
         taxPercentage: lineJSON.Tax[0].TaxPercentage[0], 
     };
+}
+
+function writeAccounts(accountsJSON) {
+    Account.remove({}, function (err) {
+        if (err) return handleError(err);
+
+        for (var i = 0; i < accountsJSON.length; i++) {
+            var account = accountsJSON[i]; 
+            var account_doc = new Account({ 
+                AccountID:  getValueOfAttribute(account.AccountID),
+                AccountDescription: getValueOfAttribute(account.AccountDescription),  
+                OpeningDebitBalance: getValueOfAttribute(account.OpeningDebitBalance),  
+                OpeningCreditBalance: getValueOfAttribute(account.OpeningCreditBalance),  
+                ClosingDebitBalance: getValueOfAttribute(account.ClosingDebitBalance),  
+                ClosingCreditBalance: getValueOfAttribute(account.ClosingCreditBalance), 
+                GroupingCategory: getValueOfAttribute(account.GroupingCategory), 
+                GroupingCode: getValueOfAttribute(account.GroupingCode), 
+                TaxonomyCode: getValueOfAttribute(account.TaxonomyCode), 
+            });
+        
+            account_doc.save(function (err) { if (err) console.log(err);});
+        }
+    });
+}
+
+function getValueOfAttribute(attr) {
+    if (attr != null) return attr[0];
+    else return null;
 }
 
 //encomendas
