@@ -100,7 +100,7 @@ function getSaleInvoiceDoc(saleInvoiceJSON) {
         InvoiceDate: getValueOfAttribute(saleInvoiceJSON.InvoiceDate),  
         InvoiceType: getValueOfAttribute(saleInvoiceJSON.InvoiceType),  
         CustomerID: getValueOfAttribute(saleInvoiceJSON.CustomerID),
-        Lines: [{}], 
+        Lines: [], 
         TaxPayable: getValueOfAttribute(saleInvoiceJSON.DocumentTotals[0].TaxPayable),
         NetTotal: getValueOfAttribute(saleInvoiceJSON.DocumentTotals[0].NetTotal),
         GrossTotal: getValueOfAttribute(saleInvoiceJSON.DocumentTotals[0].GrossTotal),
@@ -165,9 +165,11 @@ function saveTransactions(transactionsJSON) {
         var transactionJSON = transactionsJSON[i];
         var transaction_doc = getTransactionDoc(transactionJSON);
         
-        for (var j = 0; j < transactionJSON.Lines[0].DebitLine.length; j++) 
-            transaction_doc.DebitLines.push(getDebitLineTransaction(transactionJSON.Lines[0].DebitLine[j]));
-        for (var j = 0; j < transactionJSON.Lines[0].CreditLine.length; j++) 
+        if (transactionJSON.Lines[0].DebitLine)
+            for (var j = 0; j < transactionJSON.Lines[0].DebitLine.length; j++) 
+                transaction_doc.DebitLines.push(getDebitLineTransaction(transactionJSON.Lines[0].DebitLine[j]));
+        if (transactionJSON.Lines[0].CreditLine)
+            for (var j = 0; j < transactionJSON.Lines[0].CreditLine.length; j++) 
             transaction_doc.CreditLines.push(getCreditLineTransaction(transactionJSON.Lines[0].CreditLine[j]));
         
         transaction_doc.save(function (err) { if (err) console.log(err);});
@@ -184,8 +186,8 @@ function getTransactionDoc(transactionJSON) {
         DocArchivalNumber:  getValueOfAttribute(transactionJSON.DocArchivalNumber),
         TransactionType:  getValueOfAttribute(transactionJSON.TransactionType),
         GLPostingDate:  getValueOfAttribute(transactionJSON.GLPostingDate),
-        DebitLines: [{}],
-        CreditLines: [{}],   
+        DebitLines: [],
+        CreditLines: [],   
     });
 }
 
