@@ -57,7 +57,7 @@ var updateData = function($scope, $http) {
 var updateDataCallback = function($scope, $http, data) {
     updateOverview($scope, data);
     updateChart($scope, data);
-    updateSuppliers($scope, $http, data);
+    updateCustomers($scope, $http, data);
 } 
 
 var updateOverview = function($scope, data) {
@@ -160,7 +160,7 @@ var updateChartMonth = function(data, year, month) {
     });
 }
 
-var updateSuppliers = function ($scope, $http) {
+var updateCustomers = function ($scope, $http) {
     var url = address + 'getCustomers?year=' + $scope.chosenYear;
     if ($scope.chosenMonth ) url += '&month=' + $scope.chosenMonth;
 

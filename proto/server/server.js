@@ -97,6 +97,7 @@ app.get('/getCustomers', function(req, res) {
 
     var Customer = require('./database/Customer');
     var Sales = require('./database/Sales');
+    
     Customer.find({}, function(err, customers) {
         if (err) console.error(err);
 
