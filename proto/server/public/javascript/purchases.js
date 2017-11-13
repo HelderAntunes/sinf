@@ -72,6 +72,8 @@ var updateSuppliers = function ($scope, $http) {
 
             $scope.total += purchase.TotalValue;
         }
+
+        $scope.step++;
         
         updateGrowth($scope, $http);
     },function (error){
@@ -99,6 +101,8 @@ var updateGraph = function($scope, $http){
             purchasesTotal.push(purchase.TotalValue);
         }
 
+        $scope.step++;
+
         createGraph(dates, purchasesTotal);
     },function (error){
         $scope.contents = [{heading:"Error",description:"Could not load json data"}];
@@ -121,7 +125,6 @@ var updateGrowth = function($scope, $http){
             
             totalLastYear += purchase.TotalValue;
         }
-        console.log(success.data.length);
         
         if(success.data.length != 0){
             $scope.growth = (($scope.total - totalLastYear)/totalLastYear);
@@ -129,23 +132,21 @@ var updateGrowth = function($scope, $http){
         else{
             $scope.growth = null;
         }
-            
-        //Unblur container and hide spinner
-        $('#loader').hide();
-        $('.container').removeClass('blur');
+
+        $scope.step++;
     },function (error){
         $scope.contents = [{heading:"Error",description:"Could not load json data"}];
     });
 }
 
 var updateData= function($scope, $http){
+    $scope.step = 0
     //Blur container and show spinner
     $('#loader').show();
     $('.container').addClass('blur');
 
     updateSuppliers($scope, $http);
     updateGraph($scope, $http);
-    updateGrowth($scope, $http); 
 }
 
 var app = angular.module('purchases_app', []).config(['$interpolateProvider', function ($interpolateProvider) {
@@ -178,19 +179,25 @@ app.controller('purchases_controller', function($scope, $http) {
     }
     $scope.months = [{value: 1, name: 'Jan'},{value: 2, name: 'Feb'},{value: 3, name: 'Mar'},{value: 4, name: 'Apr'},{value: 5, name: 'May'},{value: 6, name: 'Jun'},
     {value: 7, name: 'Jul'},{value: 8, name: 'Aug'},{value: 9, name: 'Sep'},{value: 10, name: 'Oct'},{value: 11, name: 'Nov'},{value: 12, name: 'Dec'}];
-        
+    
+    $scope.$watch('step', function() {
+        if($scope.step == 3){                    
+            //Unblur container and hide spinner
+            $('#loader').hide();
+            $('.container').removeClass('blur');
+        }
+    });
+
     $scope.chooseYear = function(year){
         $scope.chosenYear = year;        
         updateData($scope, $http);
     };
 
-    $scope.chooseMonth = function(month){
-        $('.month-selector').removeClass('active');
-        event.target.className += ' active';
-
-        $scope.chosenMonth = month;
+    $scope.update = function(){
+        $('.month-selector input[type="radio"]').parent().removeClass('active');
+        $('.month-selector input[type="radio"]:checked').parent().addClass('active');
         updateData($scope, $http);
-    };
+    }
 
     updateData($scope,$http);
 

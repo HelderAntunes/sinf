@@ -12,9 +12,13 @@
                         <li ng-repeat="year in years"><a href="" ng-click="chooseYear(year)">[[year]]</a></li>
                     </ul>
                 </div>
-                <div class="btn-group mr-2" role="group" aria-label="Month Group">
-                    <button type="button" class="btn btn-timeFilter month-selector active" ng-click="chooseMonth(null)">None</button>
-                    <button ng-repeat="month in months" type="button" class="btn btn-timeFilter ng-cloak month-selector" ng-click="chooseMonth(month.value)">[[month.name]]</button>
+                <div class="btn-group">
+                    <label class="btn btn-timeFilter month-selector active" ng-class="{active: chosenMonth == null}">
+                        <input type="radio" name="options" autocomplete="off" ng-model="$chosenMonth" ng-value="null" ng-change="update()">None
+                    </label>
+                    <label ng-repeat="month in months" class="btn btn-timeFilter month-selector">
+                        <input type="radio" name="options" autocomplete="off" ng-model="$parent.chosenMonth" ng-value="[[month.value]]" ng-change="update()">[[month.name]]
+                    </label>
                 </div>
             </div>
         </div>
@@ -41,7 +45,7 @@
                     </ul>
                 </div>
             </div>
-            <a href="purchases_detailed" style="display:block; text-align:center; color: #d09b1c">More details</a>
+            <a ng-href="purchases_detailed?year=[[chosenYear]]&month=[[chosenMonth]]" style="display:block; text-align:center; color: #d09b1c">More details</a>
         </div>
 
         <div class="col-sm-6">
