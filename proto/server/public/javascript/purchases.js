@@ -1,3 +1,5 @@
+$('#purchases-tab').addClass('active');
+
 var createGraph = function (dates, purchasesTotal) {
     Highcharts.chart('total-purchases', {
         
@@ -71,7 +73,9 @@ var updateSuppliers = function ($scope, $http) {
             $scope.total += purchase.TotalValue;
         }
 
-        //console.log($scope);
+        $scope.step++;
+        
+        updateGrowth($scope, $http);
     },function (error){
         $scope.contents = [{heading:"Error",description:"Could not load json   data"}];
         //console.log($scope);
@@ -91,18 +95,17 @@ var updateGraph = function($scope, $http){
 
         for (i in success.data) {
             var purchase = success.data[i];
-            var date = new Date(purchase.DocumentDate)
+            var date = new Date(purchase.DocumentDate);
 
             dates.push(date.toLocaleDateString());
             purchasesTotal.push(purchase.TotalValue);
         }
 
-        createGraph(dates, purchasesTotal);
+        $scope.step++;
 
-        //console.log($scope);
+        createGraph(dates, purchasesTotal);
     },function (error){
         $scope.contents = [{heading:"Error",description:"Could not load json data"}];
-        //console.log($scope);
     });
 }
 
@@ -122,21 +125,28 @@ var updateGrowth = function($scope, $http){
             
             totalLastYear += purchase.TotalValue;
         }
+        
+        if(success.data.length != 0){
+            $scope.growth = (($scope.total - totalLastYear)/totalLastYear);
+        }
+        else{
+            $scope.growth = null;
+        }
 
-        $scope.growth = (($scope.total - totalLastYear)/totalLastYear);
-
-        //console.log($scope);
+        $scope.step++;
     },function (error){
         $scope.contents = [{heading:"Error",description:"Could not load json data"}];
-        //console.log($scope);
     });
 }
 
 var updateData= function($scope, $http){
+    $scope.step = 0
+    //Blur container and show spinner
+    $('#loader').show();
+    $('.container').addClass('blur');
 
     updateSuppliers($scope, $http);
     updateGraph($scope, $http);
-    updateGrowth($scope, $http);
 }
 
 var app = angular.module('purchases_app', []).config(['$interpolateProvider', function ($interpolateProvider) {
@@ -147,6 +157,12 @@ var app = angular.module('purchases_app', []).config(['$interpolateProvider', fu
   app.filter('percentage', ['$filter', function ($filter) {
     return function (input, decimals) {
       return $filter('number')(input * 100, decimals) + '%';
+    };
+  }]);
+
+  app.filter('euro', ['$filter', function ($filter) {
+    return function (input) {
+      return $filter('number')(input, 2) + '€';
     };
   }]);
 
@@ -161,19 +177,27 @@ app.controller('purchases_controller', function($scope, $http) {
     for(var i = 2015; i <= today.getFullYear(); i++){
            $scope.years.push(i);
     }
-    $scope.months = [{value: null, name: 'None'},{value: 1, name: 'Jan'},{value: 2, name: 'Feb'},{value: 3, name: 'Mar'},{value: 4, name: 'Apr'},{value: 5, name: 'May'},{value: 6, name: 'Jun'},
+    $scope.months = [{value: 1, name: 'Jan'},{value: 2, name: 'Feb'},{value: 3, name: 'Mar'},{value: 4, name: 'Apr'},{value: 5, name: 'May'},{value: 6, name: 'Jun'},
     {value: 7, name: 'Jul'},{value: 8, name: 'Aug'},{value: 9, name: 'Sep'},{value: 10, name: 'Oct'},{value: 11, name: 'Nov'},{value: 12, name: 'Dec'}];
-        
+    
+    $scope.$watch('step', function() {
+        if($scope.step == 3){                    
+            //Unblur container and hide spinner
+            $('#loader').hide();
+            $('.container').removeClass('blur');
+        }
+    });
+
     $scope.chooseYear = function(year){
         $scope.chosenYear = year;        
         updateData($scope, $http);
     };
 
-    $scope.chooseMonth = function(month){
-        $scope.chosenMonth = month;
-        console.log($scope.chosenYear + '/' + $scope.chosenMonth);
+    $scope.update = function(){
+        $('.month-selector input[type="radio"]').parent().removeClass('active');
+        $('.month-selector input[type="radio"]:checked').parent().addClass('active');
         updateData($scope, $http);
-    };
+    }
 
     updateData($scope,$http);
 
