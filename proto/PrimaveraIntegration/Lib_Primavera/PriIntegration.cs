@@ -13,6 +13,178 @@ namespace PrimaveraIntegration.Lib_Primavera
     public class PriIntegration
     {
 
+        # region Inventory
+        // base string query = "SELECT DISTINCT Artigo.Familia, Familias.Descricao, Artigo.Artigo, Artigo.Descricao, Artigo.UnidadeBase, Recalculo.PCMedio, Artigo.SubFamilia, Artigo.STKActual, Artigo.TratamentoDim, Recalculo.QuantidadeArm, Recalculo.QuantReservArm, Recalculo.Artigo, Recalculo.Armazem, Recalculo.Localizacao, Recalculo.Lote, Artigo.MovStock FROM (Artigo Artigo LEFT OUTER JOIN tempdb.dbo.##RecalculoStk Recalculo ON Artigo.Artigo=Recalculo.Artigo) LEFT OUTER JOIN Familias Familias ON Artigo.Familia=Familias.Familia WHERE Artigo.TratamentoDim<>1 ORDER BY Artigo.Artigo, Artigo.SubFamilia";
+        static double parseNullDouble(StdBELista objList, string key)
+        {
+            if (objList.Valor(key).GetType().Name == "Double")
+            {
+                return objList.Valor(key);
+            }
+            return 0;
+        }
+
+
+        public static List<Lib_Primavera.Model.Stock> getInventoryTest()
+        {
+            string query = @"SELECT DISTINCT
+                Artigo.Familia Familia,
+                Familias.Descricao NomeFamilia, 
+                Artigo.Artigo Artigo,
+                Artigo.Descricao Descricao,
+                Artigo.UnidadeBase UnidadeBase,
+                Recalculo.PCMedio PCMedio,
+                Artigo.SubFamilia SubFamilia,
+                Artigo.STKActual STKActual,
+                Artigo.TratamentoDim,
+                Recalculo.QuantidadeArm Actual,
+                Recalculo.QuantReservArm Reserva,
+                Recalculo.Artigo rArtigo,
+                Recalculo.Armazem Armazem,
+                Artigo.TipoArtigo
+            FROM (Artigo Artigo LEFT OUTER JOIN tempdb.dbo.##RecalculoStk Recalculo ON Artigo.Artigo=Recalculo.Artigo)
+            LEFT OUTER JOIN Familias Familias ON Artigo.Familia=Familias.Familia
+            WHERE Artigo.TratamentoDim<>1
+            ORDER BY Artigo.Artigo, Artigo.SubFamilia";
+            if (PriEngine.InitializeCompany(PrimaveraIntegration.Properties.Settings.Default.Company.Trim(), PrimaveraIntegration.Properties.Settings.Default.User.Trim(), PrimaveraIntegration.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                DateTime d = new DateTime(2016, 12,31);
+                
+                PriEngine.Engine.Comercial.Stocks.RecalculoStocks(enumTipoRecalculoCusteio.trcRecalculo, dtData: d, blnArtNecRecalcPCM: false, blnRecalcQtdReservada: false);
+                StdBELista objList = PriEngine.Engine.Consulta(query);
+
+                List<Lib_Primavera.Model.Stock> res = new List<Lib_Primavera.Model.Stock>();
+                while (!objList.NoFim())
+                {
+                    Lib_Primavera.Model.Stock stock = new Lib_Primavera.Model.Stock();
+
+                    stock.CurrentStock = parseNullDouble(objList, "Actual");
+                    stock.ReserveStock = parseNullDouble(objList, "Reserva");
+                    stock.Article = objList.Valor("Artigo");
+                    stock.Family = objList.Valor("Familia");
+                    stock.SubFamily = objList.Valor("SubFamilia");
+                    stock.Description = objList.Valor("TipoArtigo").ToString(); ;//objList.Valor("Descricao"); AND Recalculo.Posto='00'
+                    stock.UnitPrice = parseNullDouble(objList, "PCMedio");
+                    stock.Warehouse = objList.Valor("Armazem");
+                    stock.TotalValue = (stock.ReserveStock + stock.CurrentStock) * stock.UnitPrice;
+
+                    res.Add(stock);
+                    objList.Seguinte();
+                }
+                /*
+               objList = PriEngine.Engine.Consulta("Select * from As");
+               for(short i = 0; i < objList.NumColunas(); i++)
+                   System.Diagnostics.Debug.WriteLine(objList.Nome(i));
+               */
+
+                return res;
+
+
+            }
+            else
+            {
+                return null;
+            }
+
+           
+        }
+
+        public static List<Lib_Primavera.Model.Stock> getInventoryTotals(int year = 0, int month = 1)
+        {
+            /*string query = @"SELECT DISTINCT
+                Artigo.Familia Familia,
+                Familias.Descricao NomeFamilia, 
+                Artigo.Artigo Artigo,
+                Artigo.Descricao Descricao,
+                Artigo.UnidadeBase UnidadeBase,
+                Recalculo.PCMedio PCMedio,
+                Artigo.SubFamilia SubFamilia,
+                Artigo.STKActual STKActual,
+                SUM(Recalculo.QuantidadeArm) Actual,
+                Artigo.TratamentoDim,
+                Recalculo.Artigo rArtigo
+            FROM (Artigo Artigo LEFT OUTER JOIN 
+                (SELECT PCMedio, SUM(QuantidadeArm) QuantidadeArm, Artigo FROM tempdb.dbo.##RecalculoStk GROUP BY Artigo, PCMedio) Recalculo ON Artigo.Artigo=Recalculo.Artigo)
+            LEFT OUTER JOIN Familias Familias ON Artigo.Familia=Familias.Familia
+            WHERE Artigo.TratamentoDim<>1
+            ORDER BY Artigo.Artigo, Artigo.SubFamilia";*/
+            string query = @"SELECT DISTINCT
+                Artigo.Familia Familia,
+                Familias.Descricao NomeFamilia, 
+                Artigo.Artigo Artigo,
+                Artigo.Descricao Descricao,
+                Artigo.UnidadeBase UnidadeBase,
+                Recalculo.PCMedio PCMedio,
+                Artigo.SubFamilia SubFamilia,
+                Artigo.STKActual STKActual,
+                Recalculo.QuantidadeArm Actual,
+                Artigo.TratamentoDim,
+                Recalculo.Artigo rArtigo
+            FROM (Artigo Artigo LEFT OUTER JOIN tempdb.dbo.##RecalculoStk Recalculo ON Artigo.Artigo=Recalculo.Artigo)
+            LEFT OUTER JOIN Familias Familias ON Artigo.Familia=Familias.Familia
+            WHERE Artigo.TratamentoDim<>1
+            ORDER BY Artigo.Artigo, Artigo.SubFamilia";
+            if (PriEngine.InitializeCompany(PrimaveraIntegration.Properties.Settings.Default.Company.Trim(), PrimaveraIntegration.Properties.Settings.Default.User.Trim(), PrimaveraIntegration.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                //Data
+                DateTime date;
+                if (year != 0)
+                {
+                    date = new DateTime(year, month, 1);
+                }
+                else
+                {
+                    date = DateTime.Now;
+                }
+
+                //armazens
+                StdBELista armsList = PriEngine.Engine.Consulta("Select Armazem from Armazens");
+                string arms = "";
+                while (!armsList.NoFim())
+                {
+                    arms += "[" + armsList.Valor("Armazem") + "]";
+                    armsList.Seguinte();
+                }
+
+                PriEngine.Engine.Comercial.Stocks.RecalculoStocks(enumTipoRecalculoCusteio.trcRecalculoData, strExtArms: arms, dtData: date, blnArtNecRecalcPCM: false, blnRecalcQtdReservada: false, blnExtRecalculo: false);
+                StdBELista objList = PriEngine.Engine.Consulta(query);
+
+                List<Lib_Primavera.Model.Stock> res = new List<Lib_Primavera.Model.Stock>();
+                while (!objList.NoFim())
+                {
+                    Lib_Primavera.Model.Stock stock = new Lib_Primavera.Model.Stock();
+
+                    stock.CurrentStock = parseNullDouble(objList, "Actual");
+                    stock.ReserveStock = 0;
+                    stock.Article = objList.Valor("Artigo");
+                    stock.Family = objList.Valor("Familia");
+                    stock.SubFamily = objList.Valor("SubFamilia");
+                    stock.Description = objList.Valor("Descricao");
+                    stock.UnitPrice = parseNullDouble(objList, "PCMedio");
+                    stock.Warehouse = date.ToString();
+                    stock.TotalValue = stock.CurrentStock * stock.UnitPrice;
+
+                    res.Add(stock);
+                    objList.Seguinte();
+                }
+
+
+                objList = PriEngine.Engine.Consulta("Select * from ##RecalculoStk");
+                System.Diagnostics.Debug.WriteLine(objList.NumLinhas());
+
+                return res;
+
+
+            }
+            else
+            {
+                return null;
+            }
+
+
+        }
+
+        # endregion
 
 
         # region Purchase
