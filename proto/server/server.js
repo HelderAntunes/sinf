@@ -3,10 +3,9 @@ var jSmart = require('jsmart');
 var express = require('express');
 var utils = require('./utils');
 
-/*
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test');
-*/
+
 // PAGES
 var sales = require('./pages/sales');
 var purchases = require('./pages/purchases');
