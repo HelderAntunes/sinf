@@ -157,7 +157,7 @@ namespace PrimaveraIntegration.Lib_Primavera
                     stock.CurrentStock = parseNullDouble(objList, "Actual");
                     stock.ReserveStock = 0;
                     stock.Article = objList.Valor("Artigo");
-                    stock.Family = objList.Valor("Familia");
+                    stock.Family = objList.Valor("NomeFamilia");
                     stock.SubFamily = objList.Valor("SubFamilia");
                     stock.Description = objList.Valor("Descricao");
                     stock.UnitPrice = parseNullDouble(objList, "PCMedio");

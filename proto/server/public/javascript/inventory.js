@@ -64,7 +64,7 @@ $(document).ready(function () {
           }]
       }
     });
-
+/*
     Highcharts.chart('inventory-value', {
         chart: {
             plotBackgroundColor: null,
@@ -109,7 +109,7 @@ $(document).ready(function () {
             ]
         }]
     });
-
+*/
     Highcharts.chart('best-seller-inventory', {
       chart: {
           type: 'column'
@@ -234,22 +234,112 @@ $(document).ready(function () {
 
 });
 
+var best = function(array, n){
+    var sArray = array.sort(function(a, b){
+        return b.value - a.value;
+    });
+
+    var res = [];
+    var others = 0;
+    var i = 0;
+
+    for (s of sArray) {
+        if(i < n){
+            res.push({
+                name: s.name,
+                value: s.value
+            })
+        }
+        else{
+            others += s.value;
+        }
+        i++;
+    }
+    console.log(others);
+    if(others>0)
+        res.push({
+            name: "Others",
+            value: others
+        })
+    console.log(res);
+    return res;
+}
+
+var createPizza= function(categories){
+    var data = [];
+    for (i of categories) {
+        data.push([i.name, i.value]);
+    }
+
+    Highcharts.chart('inventory-value', {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: 0,
+            plotShadow: false
+        },
+        title: {
+            text: 'Inventory Value'
+        },
+        subtitle: {
+            text: 'by Category'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                dataLabels: {
+                    enabled: false,
+                    distance: -30,
+                    style: {
+                        fontWeight: 'bold',
+                        color: 'white'
+                    }
+                },
+                startAngle: -180,
+                endAngle: 180,
+                showInLegend: true,
+                center: ['50%', '50%']
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Inventory Value Percentage',
+            innerSize: '50%',
+            data: data
+        }]
+    });
+}
 var updateValue= function($scope, $http){
     var url = 'http://localhost:49822/api/Inventory/date/' + $scope.chosenYear;
     
     if($scope.chosenMonth != null){
         url += "/" + $scope.chosenMonth;
     }
-    console.log()
+    
     $http.get(url).then(function (success){
+        var data = [];
+        var categories = [];
         var value = 0;
-
         for (i of success.data) {
-            value += i.CurrentStock * i.UnitPrice;
+            var name = i.Family || "";
+            if(data[name] !=null)
+                data[name] += i.TotalValue;
+            else
+                data[name] = i.TotalValue; 
         }
+        
+        for (i in data) {
+            categories.push({
+                name: i,
+                value: data[i] 
+            })
+            value += data[i] ;
+        }
+        console.log(data);
         $scope.totalValue = value;
         $scope.step++;
-        
+        createPizza(best(categories, 5));
     },function (error){
         $scope.contents = [{heading:"Error",description:"Could not load json data"}];
     });
