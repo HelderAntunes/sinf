@@ -3,12 +3,14 @@ var jSmart = require('jsmart');
 var express = require('express');
 var utils = require('./utils');
 
+/*
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test');
-
+*/
 // PAGES
 var sales = require('./pages/sales');
 var purchases = require('./pages/purchases');
+var inventory = require('./pages/inventory');
 var main = require('./pages/main');
 
 var app = express();
@@ -40,13 +42,7 @@ app.get('/finances', function (req, res) {
 });
 
 app.get('/inventory', function (req, res) {
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    
-    var tpl = fs.readFileSync('./templates/inventory.html', {encoding: 'utf-8'});
-    var compiledTemplate = new jSmart(tpl);
-    var output = compiledTemplate.fetch();
-    
-    res.end(output);
+    inventory.getInventory(req, res);
 });
 
 app.get('/purchases', function (req, res) {
