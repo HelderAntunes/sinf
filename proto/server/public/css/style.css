@@ -261,3 +261,6 @@ body{
       display: block;
   }
   
+  .month-selector input[type="radio"] {
+    display: none;
+  }

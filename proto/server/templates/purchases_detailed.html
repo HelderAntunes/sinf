@@ -1,3 +1,5 @@
+<div id="loader"></div>
+
 <div class="container" ng-app="purchases_detailed_app" ng-controller="purchases_detailed_controller">
     
     <div class="row">
@@ -10,9 +12,10 @@
                         <li ng-repeat="year in years"><a href="" ng-click="chooseYear(year)">[[year]]</a></li>
                     </ul>
                 </div>
-                <div class="btn-group mr-2" role="group" aria-label="Month Group">
-                    <button type="button" class="btn btn-timeFilter month-selector active" ng-click="chooseMonth(null)">None</button>
-                    <button ng-repeat="month in months" type="button" class="btn btn-timeFilter ng-cloak month-selector" ng-click="chooseMonth(month.value)">[[month.name]]</button>
+                <div class="btn-group">
+                    <label ng-repeat="month in months" class="btn btn-timeFilter month-selector">
+                        <input type="radio" name="options" autocomplete="off" ng-model="$parent.chosenMonth" ng-value="[[month.value]]" ng-change="update()">[[month.name]]
+                    </label>
                 </div>
             </div>
         </div>
