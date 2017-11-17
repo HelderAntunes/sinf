@@ -38,6 +38,10 @@ app.controller('sales_controller', function($scope, $http) {
 });
 
 var updateData = function($scope, $http) {
+    //Blur container and show spinner
+    $('#loader').show();
+    $('.container').addClass('blur');
+
     var requestUrl = address;
     if ($scope.chosenMonth) 
         requestUrl += 'getSalesByMonth?year=' + $scope.chosenYear + '&month=' + $scope.chosenMonth;
@@ -47,6 +51,10 @@ var updateData = function($scope, $http) {
     $http.get(requestUrl).then(
         function (success) {
             updateDataCallback($scope, $http, success.data);
+
+            //Unblur container and hide spinner
+            $('#loader').hide();
+            $('.container').removeClass('blur');
         },
         function (error){
             $scope.contents = [{heading:"Error",description:"Could not load json data"}];
