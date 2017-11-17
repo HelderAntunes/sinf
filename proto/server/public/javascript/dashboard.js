@@ -41,10 +41,23 @@ app.controller('main_controller', function($scope, $http) {
         updateData($scope, $http);
     };
 
+    $scope.$watch('step', function() {
+        if($scope.step == 3){                    
+            //Unblur container and hide spinner
+            $('#loader').hide();
+            $('.container').removeClass('blur');
+        }
+    });
+
     updateData($scope,$http);
 });
 
 var updateData= function($scope, $http){
+    $scope.step = 0
+    //Blur container and show spinner
+    $('#loader').show();
+    $('.container').addClass('blur');
+
     updateTotalPurchases($scope, $http);
     updateTotaSales($scope, $http);
     updateCustomersInfo($scope, $http);
@@ -117,6 +130,8 @@ var updateTotalPurchases = function ($scope, $http) {
 
             $scope.total_purchases += purchase.TotalValue;
         }
+
+        $scope.step++;
     },function (error){
         $scope.contents = [{heading:"Error",description:"Could not load json   data"}];
         //console.log($scope);
@@ -134,6 +149,8 @@ var updateTotaSales = function ($scope, $http) {
         function (success) {
             $scope.total_sales = 0;
             for (i in success.data) $scope.total_sales += success.data[i].NetTotal;
+
+            $scope.step++;
         },
         function (error) {
             $scope.contents = [{heading:"Error",description:"Could not load json data"}];
@@ -154,6 +171,8 @@ var updateCustomersInfo = function ($scope, $http) {
         $scope.mostValuableCustomer = 'No customer';
         if (success.data.length > 0 && success.data[0].sales > 0)
             $scope.mostValuableCustomer = success.data[0].company_name;
+
+        $scope.step++;
     }
     , function (error) {
         $scope.contents = [{heading:"Error",description:"Could not load json   data"}];
