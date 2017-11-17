@@ -83,6 +83,9 @@ function writeSalesInvoices(SalesInvoicesJSON) {
 function saveSalesInvoices(SalesInvoicesJSON) {
     for (var i = 0; i < SalesInvoicesJSON.length; i++) {
         var saleInvoiceJSON = SalesInvoicesJSON[i];
+        if (saleInvoiceJSON.CustomerID == null) {
+            console.log('saleInvoiceJSON.CustomerID');
+        }
         var saleInvoice_doc = getSaleInvoiceDoc(saleInvoiceJSON);
         
         for (var j = 0; j < saleInvoiceJSON.Line.length; j++) 

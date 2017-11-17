@@ -758,7 +758,7 @@
 				<ClosingCreditBalance>0.00</ClosingCreditBalance>
 				<GroupingCategory>GM</GroupingCategory>
 				<GroupingCode>3161</GroupingCode>
-				<TaxonomyCode></TaxonomyCode>
+				<TaxonomyCode>1</TaxonomyCode>
 			</Account>
 			<Account>
 				<AccountID>319</AccountID>
@@ -789,7 +789,7 @@
 				<ClosingCreditBalance>3844.08</ClosingCreditBalance>
 				<GroupingCategory>GM</GroupingCategory>
 				<GroupingCode>3196</GroupingCode>
-				<TaxonomyCode></TaxonomyCode>
+				<TaxonomyCode>2</TaxonomyCode>
 			</Account>
 			<Account>
 				<AccountID>36</AccountID>
@@ -859,7 +859,7 @@
 				<ClosingCreditBalance>0.00</ClosingCreditBalance>
 				<GroupingCategory>GM</GroupingCategory>
 				<GroupingCode>6161</GroupingCode>
-				<TaxonomyCode></TaxonomyCode>
+				<TaxonomyCode>3</TaxonomyCode>
 			</Account>
 			<Account>
 				<AccountID>62</AccountID>
@@ -1722,6 +1722,14 @@
 				<TransactionType>N</TransactionType>
 				<GLPostingDate>2016-09-14</GLPostingDate>
 				<Lines>
+					<DebitLine>
+					 <RecordID>1</RecordID>
+					 <AccountID>112</AccountID>
+					 <SourceDocumentID>RE A/6</SourceDocumentID>
+					 <SystemEntryDate>2016-09-14T00:25:15</SystemEntryDate>
+					 <Description>RE N� 6/A</Description>
+					 <DebitAmount>123.42</DebitAmount>
+					</DebitLine>
 					<CreditLine>
 						<RecordID>1</RecordID>
 						<AccountID>1201</AccountID>
@@ -70536,7 +70544,7 @@
 				<SourceID>LUCIA.RIBEIRO</SourceID>
 				<SystemEntryDate>2016-01-20T00:00:00</SystemEntryDate>
 				<TransactionID>2016-01-20 00051 10002</TransactionID>
-				<CustomerID>Consumidor final</CustomerID>
+				<CustomerID>PT123456789_C</CustomerID>
 				<ShipTo>
 					<DeliveryDate>2007-01-30</DeliveryDate>
 					<Address>
@@ -70692,7 +70700,7 @@
 				<SourceID>TESTE</SourceID>
 				<SystemEntryDate>2016-01-30T00:00:00</SystemEntryDate>
 				<TransactionID>2016-01-30 00051 10004</TransactionID>
-				<CustomerID>Consumidor final</CustomerID>
+				<CustomerID>PT123456789_C</CustomerID>
 				<ShipTo>
 					<DeliveryDate>2016-01-30</DeliveryDate>
 					<Address>
@@ -71258,7 +71266,7 @@
 				</SpecialRegimes>
 				<SourceID>SERGIO.LOPES</SourceID>
 				<SystemEntryDate>2016-01-29T00:00:00</SystemEntryDate>
-				<CustomerID>Consumidor final</CustomerID>
+				<CustomerID>PT123456789_C</CustomerID>
 				<ShipTo>
 					<DeliveryDate>2007-01-29</DeliveryDate>
 					<Address>

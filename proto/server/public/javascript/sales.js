@@ -166,8 +166,8 @@ var updateCustomers = function ($scope, $http) {
 
     $http.get(url).then(function (success) {
         $scope.customers = [];
-        for (var i = 0; i < success.data.length && i < 5; i++) {
-            if (success.data[i].sales <= 0.1) break;
+        for (var i = 0; i < success.data.length; i++) {
+            if (success.data[i].sales <= 0) break;
             $scope.customers.push(success.data[i]);
         }
     }
