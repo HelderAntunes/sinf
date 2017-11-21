@@ -6,19 +6,21 @@ mongoose.connect('mongodb://localhost/test');
 
 var Customer = require('./database/Customer');
 var Sales = require('./database/Sales');
-
+var Account = require('./database/Account');
+var Transaction = require('./database/Transaction');
 
 fs.readFile('../assets/SAFT_DEMOSINF_01-01-2016_31-12-2016.xml', function(err, data) {
     parseString(data, function (err, result) {
-        //result = getSalesInvoices(result);
-        //writeSalesInvoices(result);       
-        result = getCustomers(result);
-        writeCustomers(result);
-       
-        fs.writeFile('saft_in_json.js', JSON.stringify(result, null, 2), function (err) {
+        writeCustomers(getCustomers(result));
+        writeSalesInvoices(getSalesInvoices(result)); 
+        writeAccounts(getAccounts(result)); 
+        writeTransactions(getTransactions(result));
+          
+        /* var test = getTransactions(result);   
+        fs.writeFile('saft_in_json.js', JSON.stringify(test, null, 2), function (err) {
             if (err) throw err;
             console.log('SAF-T xml parsed.');
-        });
+        });*/
     });
 });
 
@@ -30,24 +32,29 @@ function getSalesInvoices(saftParsed) {
     return saftParsed['AuditFile']['SourceDocuments'][0]['SalesInvoices'][0]['Invoice'];
 }
 
-function getValueOfAttribute(attr) {
-    if (attr != null) return attr[0];
-    else return null;
+function getAccounts(saftParsed) {
+    return saftParsed['AuditFile']['MasterFiles'][0]['GeneralLedgerAccounts'][0]['Account'];
+}
+
+function getTransactions(saftParsed) {
+    var transactions = [];
+    var journals = saftParsed['AuditFile']['GeneralLedgerEntries'][0]['Journal'];
+
+    for (var i = 0; i < journals.length; i++) {
+        var journal = journals[i];
+        var journalTransactions = journal['Transaction'];
+        
+        if (journalTransactions) transactions = transactions.concat(journalTransactions);
+    }
+    return transactions;
 }
 
 function writeCustomers(customersJSON) {
-    // FOR TEST
-        /*Customer.find(function (err, customers) {
-            if (err) return console.error(err);
-            console.log(customers);
-        });*/
-    
-    Customer.remove({ }, function (err) {
+    Customer.remove({}, function (err) {
         if (err) return handleError(err);
 
         for (var i = 0; i < customersJSON.length; i++) {
             var customer = customersJSON[i];
-            
             var customer_doc = new Customer({ 
                 customer_id:  getValueOfAttribute(customer.CustomerID),
                 account_id: getValueOfAttribute(customer.AccountID),  
@@ -63,20 +70,12 @@ function writeCustomers(customersJSON) {
 }
 
 function writeSalesInvoices(SalesInvoicesJSON) {
-    // FOR TEST
-    /*Sales.SalesInvoices.find(function (err, saleInvoices) {
-        if (err) return console.error(err);
-        console.log(JSON.stringify(saleInvoices, null, 2));
-    });
-    return;*/
-
     Sales.Line.remove({}, function (err) {
         if (err) return handleError(err);
 
         Sales.SalesInvoices.remove({}, function (err) {
             if (err) return handleError(err);
-            
-            saveSalesInvoices(SalesInvoicesJSON);
+            else saveSalesInvoices(SalesInvoicesJSON);
         });
     });
 }
@@ -84,8 +83,11 @@ function writeSalesInvoices(SalesInvoicesJSON) {
 function saveSalesInvoices(SalesInvoicesJSON) {
     for (var i = 0; i < SalesInvoicesJSON.length; i++) {
         var saleInvoiceJSON = SalesInvoicesJSON[i];
+        if (saleInvoiceJSON.CustomerID == null) {
+            console.log('saleInvoiceJSON.CustomerID');
+        }
         var saleInvoice_doc = getSaleInvoiceDoc(saleInvoiceJSON);
-
+        
         for (var j = 0; j < saleInvoiceJSON.Line.length; j++) 
             saleInvoice_doc.Lines.push(getLineOfSaleInvoice(saleInvoiceJSON.Line[j]));
     
@@ -101,7 +103,7 @@ function getSaleInvoiceDoc(saleInvoiceJSON) {
         InvoiceDate: getValueOfAttribute(saleInvoiceJSON.InvoiceDate),  
         InvoiceType: getValueOfAttribute(saleInvoiceJSON.InvoiceType),  
         CustomerID: getValueOfAttribute(saleInvoiceJSON.CustomerID),
-        Lines: [{}], 
+        Lines: [], 
         TaxPayable: getValueOfAttribute(saleInvoiceJSON.DocumentTotals[0].TaxPayable),
         NetTotal: getValueOfAttribute(saleInvoiceJSON.DocumentTotals[0].NetTotal),
         GrossTotal: getValueOfAttribute(saleInvoiceJSON.DocumentTotals[0].GrossTotal),
@@ -121,6 +123,102 @@ function getLineOfSaleInvoice(lineJSON) {
         taxType: lineJSON.Tax[0].TaxType,
         taxPercentage: lineJSON.Tax[0].TaxPercentage[0], 
     };
+}
+
+function writeAccounts(accountsJSON) {
+    Account.remove({}, function (err) {
+        if (err) return handleError(err);
+
+        for (var i = 0; i < accountsJSON.length; i++) {
+            var account = accountsJSON[i]; 
+            var account_doc = new Account({ 
+                AccountID:  getValueOfAttribute(account.AccountID),
+                AccountDescription: getValueOfAttribute(account.AccountDescription),  
+                OpeningDebitBalance: getValueOfAttribute(account.OpeningDebitBalance),  
+                OpeningCreditBalance: getValueOfAttribute(account.OpeningCreditBalance),  
+                ClosingDebitBalance: getValueOfAttribute(account.ClosingDebitBalance),  
+                ClosingCreditBalance: getValueOfAttribute(account.ClosingCreditBalance), 
+                GroupingCategory: getValueOfAttribute(account.GroupingCategory), 
+                GroupingCode: getValueOfAttribute(account.GroupingCode), 
+                TaxonomyCode: getValueOfAttribute(account.TaxonomyCode), 
+            });
+        
+            account_doc.save(function (err) { if (err) console.log(err);});
+        }
+    });
+}
+
+function writeTransactions(transactionsJSON) {
+    Transaction.DebitLine.remove({}, function (err) {
+        if (err) return handleError(err);
+
+        Transaction.CreditLine.remove({}, function (err) {
+            if (err) return handleError(err);
+
+            Transaction.Transaction.remove({}, function (err) {
+                if (err) return handleError(err);
+                else saveTransactions(transactionsJSON);
+            });
+        });
+    });
+}
+
+function saveTransactions(transactionsJSON) {
+    for (var i = 0; i < transactionsJSON.length; i++) {
+        var transactionJSON = transactionsJSON[i];
+        var transaction_doc = getTransactionDoc(transactionJSON);
+        
+        if (transactionJSON.Lines[0].DebitLine)
+            for (var j = 0; j < transactionJSON.Lines[0].DebitLine.length; j++) 
+                transaction_doc.DebitLines.push(getDebitLineTransaction(transactionJSON.Lines[0].DebitLine[j]));
+        if (transactionJSON.Lines[0].CreditLine)
+            for (var j = 0; j < transactionJSON.Lines[0].CreditLine.length; j++) 
+            transaction_doc.CreditLines.push(getCreditLineTransaction(transactionJSON.Lines[0].CreditLine[j]));
+        
+        transaction_doc.save(function (err) { if (err) console.log(err);});
+    }
+}
+
+function getTransactionDoc(transactionJSON) {
+    return new Transaction.Transaction({ 
+        TransactionID:  getValueOfAttribute(transactionJSON.TransactionID),
+        Period:  getValueOfAttribute(transactionJSON.Period),
+        TransactionDate:  getValueOfAttribute(transactionJSON.TransactionDate),
+        SourceID:  getValueOfAttribute(transactionJSON.SourceID),
+        Description:  getValueOfAttribute(transactionJSON.Description),
+        DocArchivalNumber:  getValueOfAttribute(transactionJSON.DocArchivalNumber),
+        TransactionType:  getValueOfAttribute(transactionJSON.TransactionType),
+        GLPostingDate:  getValueOfAttribute(transactionJSON.GLPostingDate),
+        DebitLines: [],
+        CreditLines: [],   
+    });
+}
+
+function getDebitLineTransaction(debitLineJSON) {
+    return new Transaction.DebitLine({
+        RecordID:  getValueOfAttribute(debitLineJSON.RecordID),
+        AccountID:  getValueOfAttribute(debitLineJSON.AccountID),
+        SourceDocumentID:  getValueOfAttribute(debitLineJSON.SourceDocumentID),
+        SystemEntryDate:  getValueOfAttribute(debitLineJSON.SystemEntryDate),
+        Description:  getValueOfAttribute(debitLineJSON.Description),
+        DebitAmount:  getValueOfAttribute(debitLineJSON.DebitAmount),
+    });   
+}
+
+function getCreditLineTransaction(creditLineJSON) {
+    return new Transaction.CreditLine({
+        RecordID:  getValueOfAttribute(creditLineJSON.RecordID),
+        AccountID:  getValueOfAttribute(creditLineJSON.AccountID),
+        SourceDocumentID:  getValueOfAttribute(creditLineJSON.SourceDocumentID),
+        SystemEntryDate:  getValueOfAttribute(creditLineJSON.SystemEntryDate),
+        Description:  getValueOfAttribute(creditLineJSON.Description),
+        CreditAmount:  getValueOfAttribute(creditLineJSON.CreditAmount),
+    });
+}
+
+function getValueOfAttribute(attr) {
+    if (attr != null) return attr[0];
+    else return null;
 }
 
 //encomendas

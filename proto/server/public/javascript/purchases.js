@@ -1,28 +1,4 @@
-this.year = 2017;
-this.month = null;
-
-var formatNumber = function (x) {
-    return x.toFixed(2);
-}
-
-var chooseYear = function (year) {
-   $('.dropdown-toggle').text(year);
-   $('.dropdown-toggle').append(' <span class="caret"></span></button>');
-
-   this.year = year;
-
-   updateData();
-}
-
-var chooseMonth = function (month) {
-    if(month != 'null'){
-        this.month = month;
-    }else{
-        this.month = null;
-    }
-
-    updateData();
- }
+$('#purchases-tab').addClass('active');
 
 var createGraph = function (dates, purchasesTotal) {
     Highcharts.chart('total-purchases', {
@@ -74,59 +50,155 @@ var createGraph = function (dates, purchasesTotal) {
             });
 }
 
-var updateData = function () {
-    var groupBySupplierURL = 'http://localhost:49822/api/Purchases/groupBySupplier?year='+ this.year;
-    var groupByDateURL = 'http://localhost:49822/api/Purchases/groupByDate?year=' + this.year;
+var updateSuppliers = function ($scope, $http) {
+    $scope.purchases = [];
+    $scope.total = 0;
 
-    if(this.month!=null){
-        groupBySupplierURL += '&month=' + this.month;
-        groupByDateURL += '&month=' + this.month;
+    var url = 'http://localhost:49822/api/Purchases/groupBySupplier?year=' + $scope.chosenYear;
+
+    if($scope.chosenMonth != null){
+        url += '&month=' + $scope.chosenMonth;
     }
 
-    $.getJSON(groupBySupplierURL, function(data) {
-        var total = 0;
+    $http.get(url).then(function (success){
+        $scope.purchases= [];
 
-        if(data.length == 0){
-            $('#supplier-purchases').html('<p>No Suppliers<p>');
-        }
-        else{
-            $('#supplier-purchases').html('');
-            
-            for (i in data) {
-                var purchase = data[i];
+        for (i in success.data) {
+            var purchase = success.data[i];
 
-                if(i < 3){
-                    $('#supplier-purchases').append('<tr><td>'+ purchase.EntityName + '</td><td>' + formatNumber(purchase.TotalValue) + '€</td></tr>');
-                }
-
-                total += purchase.TotalValue;
+            if(i < 3){
+                $scope.purchases.push(purchase);
             }
+
+            $scope.total += purchase.TotalValue;
         }
 
-        $('#total-purchases-value').html(formatNumber(total) +' €');
+        $scope.step++;
+        
+        updateGrowth($scope, $http);
+    },function (error){
+        $scope.contents = [{heading:"Error",description:"Could not load json   data"}];
+        //console.log($scope);
     });
+}
 
-    $.getJSON(groupByDateURL, function(data) {
+var updateGraph = function($scope, $http){
+    var url = 'http://localhost:49822/api/Purchases/groupByDate?year=' + $scope.chosenYear;
+
+    if($scope.chosenMonth != null){
+        url += '&month=' + $scope.chosenMonth;
+    }
+
+    $http.get(url).then(function (success){
         var dates = [];
         var purchasesTotal = [];
-        var total = 0;
-        
-        for (i in data) {
-            var purchase = data[i];
 
-            var date = new Date(purchase.DocumentDate)
+        for (i in success.data) {
+            var purchase = success.data[i];
+            var date = new Date(purchase.DocumentDate);
 
             dates.push(date.toLocaleDateString());
             purchasesTotal.push(purchase.TotalValue);
         }
+
+        $scope.step++;
+
         createGraph(dates, purchasesTotal);
+    },function (error){
+        $scope.contents = [{heading:"Error",description:"Could not load json data"}];
     });
 }
 
-$(document).ready(function () {
-    $('input[type=radio][name=options]').change(function() {
-        chooseMonth(this.value);
+var updateGrowth = function($scope, $http){
+    $scope.growth = 0;
+    var url = 'http://localhost:49822/api/Purchases/groupByDate?year=' + ($scope.chosenYear - 1);
+
+    if($scope.chosenMonth != null){
+        url += '&month=' + $scope.chosenMonth;
+    }
+
+    $http.get(url).then(function (success){
+        var totalLastYear = 0;
+
+        for (i in success.data) {
+            var purchase = success.data[i];
+            
+            totalLastYear += purchase.TotalValue;
+        }
+        
+        if(success.data.length != 0){
+            $scope.growth = (($scope.total - totalLastYear)/totalLastYear);
+        }
+        else{
+            $scope.growth = null;
+        }
+
+        $scope.step++;
+    },function (error){
+        $scope.contents = [{heading:"Error",description:"Could not load json data"}];
+    });
+}
+
+var updateData= function($scope, $http){
+    $scope.step = 0
+    //Blur container and show spinner
+    $('#loader').show();
+    $('.container').addClass('blur');
+
+    updateSuppliers($scope, $http);
+    updateGraph($scope, $http);
+}
+
+var app = angular.module('purchases_app', []).config(['$interpolateProvider', function ($interpolateProvider) {
+    $interpolateProvider.startSymbol('[[');
+    $interpolateProvider.endSymbol(']]');
+  }]);
+
+  app.filter('percentage', ['$filter', function ($filter) {
+    return function (input, decimals) {
+      return $filter('number')(input * 100, decimals) + '%';
+    };
+  }]);
+
+  app.filter('euro', ['$filter', function ($filter) {
+    return function (input) {
+      return $filter('number')(input, 2) + '€';
+    };
+  }]);
+
+app.controller('purchases_controller', function($scope, $http) {
+    //init vars
+    var today = new Date();
+    
+    $scope.chosenYear = today.getFullYear();
+    $scope.chosenMonth = null;
+        
+    $scope.years = [];
+    for(var i = 2015; i <= today.getFullYear(); i++){
+           $scope.years.push(i);
+    }
+    $scope.months = [{value: 1, name: 'Jan'},{value: 2, name: 'Feb'},{value: 3, name: 'Mar'},{value: 4, name: 'Apr'},{value: 5, name: 'May'},{value: 6, name: 'Jun'},
+    {value: 7, name: 'Jul'},{value: 8, name: 'Aug'},{value: 9, name: 'Sep'},{value: 10, name: 'Oct'},{value: 11, name: 'Nov'},{value: 12, name: 'Dec'}];
+    
+    $scope.$watch('step', function() {
+        if($scope.step == 3){                    
+            //Unblur container and hide spinner
+            $('#loader').hide();
+            $('.container').removeClass('blur');
+        }
     });
 
-    updateData();
+    $scope.chooseYear = function(year){
+        $scope.chosenYear = year;        
+        updateData($scope, $http);
+    };
+
+    $scope.update = function(){
+        $('.month-selector input[type="radio"]').parent().removeClass('active');
+        $('.month-selector input[type="radio"]:checked').parent().addClass('active');
+        updateData($scope, $http);
+    }
+
+    updateData($scope,$http);
+
 });

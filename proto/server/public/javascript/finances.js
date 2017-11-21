@@ -1,5 +1,8 @@
 
 $(document).ready(function(){
+
+    $('#finances-tab').addClass('active');
+
     Highcharts.chart('container', {
 
         title: {
