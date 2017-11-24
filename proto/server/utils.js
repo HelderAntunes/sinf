@@ -48,6 +48,14 @@ function getDebtLinesFromTransactions(transactions) {
             debitLines.push(debitLine_);
         }
     }
+    console.log(debitLines);
+
+    for (var i = 0; i < debitLines.length; i++)     
+        for (var j = i+1; j < debitLines.length; j++) 
+            if (debitLines[i].SourceDocumentID == debitLines[j].SourceDocumentID) {
+                debitLines.splice(j, 1);
+                j--;
+            }
 
     return debitLines;
 }
@@ -65,6 +73,13 @@ function getCreditLinesFromTransactions(transactions) {
         }
     }
 
+    for (var i = 0; i < creditLines.length; i++)     
+        for (var j = i+1; j < creditLines.length; j++) 
+            if (creditLines[i].SourceDocumentID == creditLines[j].SourceDocumentID) {
+                creditLines.splice(j, 1);
+                j--;
+            }
+
     return creditLines;
 }
 
@@ -75,6 +90,22 @@ function compareCustomersBySalesDec(a,b) {
     return 0;
 }
 
+function compareAccountsIdDec(account1, account2) {
+    if (account1.AccountID < account2.AccountID) return 1;
+    if (account1.AccountID > account2.AccountID) return -1;
+    return 0;
+}
+
+function isSubString(subStringTest, stringTest) {
+    if (subStringTest.length > stringTest) return false;
+
+    for (var i = 0; i < subStringTest.length; i++) 
+        if (subStringTest[i] != stringTest[i])
+            return false;
+    
+    return true;
+}
+
 module.exports = {
     formatNumber : formatNumber,
     getMonthDateRange : getMonthDateRange,
@@ -83,4 +114,6 @@ module.exports = {
     compareCustomersBySalesDec: compareCustomersBySalesDec,
     getDebtLinesFromTransactions: getDebtLinesFromTransactions,
     getCreditLinesFromTransactions: getCreditLinesFromTransactions,
+    compareAccountsIdDec: compareAccountsIdDec,
+    isSubString: isSubString,
 }

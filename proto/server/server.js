@@ -110,46 +110,6 @@ app.get('/getCustomers', function(req, res) {
     });
 });
 
-app.get('/getDebtMovements', function(req, res) {
-    var month = req.query.month, year = req.query.year;
-    var dataRange = month == null ? utils.getYearDateRange(year) : utils.getMonthDateRange(year, month);
-    
-    var Transaction = require('./database/Transaction');
-
-    Transaction.Transaction.find({
-        TransactionDate: {
-            $gte: dataRange.start,
-            $lt: dataRange.end }},
-        function(err, transactions) {
-            if (err) console.error(err);
-            else {
-                transactions = utils.getDebtLinesFromTransactions(JSON.parse(JSON.stringify(transactions)));
-                res.json(transactions);    
-            }
-    });
-
-});
-
-app.get('/getCreditMovements', function(req, res) {
-    var month = req.query.month, year = req.query.year;
-    var dataRange = month == null ? utils.getYearDateRange(year) : utils.getMonthDateRange(year, month);
-    
-    var Transaction = require('./database/Transaction');
-
-    Transaction.Transaction.find({
-        TransactionDate: {
-            $gte: dataRange.start,
-            $lt: dataRange.end }},
-        function(err, transactions) {
-            if (err) console.error(err);
-            else {
-                transactions = utils.getCreditLinesFromTransactions(JSON.parse(JSON.stringify(transactions)));
-                res.json(transactions);    
-            }
-    });
-
-});
-
 app.get('/getBalancete', function(req, res) {
     var month = req.query.month, year = req.query.year;
     var dataRange = month == null ? utils.getYearDateRange(year) : utils.getMonthDateRange(year, month);
@@ -172,32 +132,43 @@ app.get('/getBalancete', function(req, res) {
 
                 accounts = JSON.parse(JSON.stringify(accounts));
                 transactions = JSON.parse(JSON.stringify(transactions));
+                var debitLines = utils.getDebtLinesFromTransactions(transactions);
+                var creditLines = utils.getCreditLinesFromTransactions(transactions); 
+                console.log(debitLines);
 
                 for (var i = 0; i < accounts.length; i++) {
                     accounts[i]['DebtMovements'] = 0;
                     accounts[i]['CreditMovements'] = 0;
                 }
                 
-                for (var i = 0; i < transactions.length; i++) {
-                    var creditLines = transactions[i].CreditLines;
-                    var debitLines = transactions[i].DebitLines;
+                for (var j = 0; j < creditLines.length; j++) {
+                    var accountID = creditLines[j].AccountID;
+                    var creditAmount = creditLines[j].CreditAmount;
 
-                    for (var j = 0; j < creditLines.length; j++) {
-                        var accountID = creditLines[j].AccountID;
-                        var creditAmount = creditLines[j].CreditAmount;
+                    for (var k = 0; k < accounts.length; k++) 
+                        if (accounts[k].AccountID == accountID)
+                            accounts[k]['CreditMovements'] += creditAmount;
+                }
 
-                        for (var k = 0; k < accounts.length; k++) 
-                            if (accounts[k].AccountID == accountID)
-                                accounts[k]['CreditMovements'] += creditAmount;
-                    }
+                for (var j = 0; j < debitLines.length; j++) {
+                    var accountID = debitLines[j].AccountID;
+                    var debitAmount = debitLines[j].DebitAmount;
 
-                    for (var j = 0; j < debitLines.length; j++) {
-                        var accountID = debitLines[j].AccountID;
-                        var debitAmount = debitLines[j].DebitAmount;
-
-                        for (var k = 0; k < accounts.length; k++)
-                            if (accounts[k].AccountID == accountID)
-                                accounts[k]['DebtMovements'] += debitAmount;
+                    for (var k = 0; k < accounts.length; k++)
+                        if (accounts[k].AccountID == accountID)
+                            accounts[k]['DebtMovements'] += debitAmount;
+                }
+            
+                accounts = accounts.sort(utils.compareAccountsIdDec);
+                for (var i = 0; i < accounts.length; i++) {
+                    var accountID1 = accounts[i].AccountID;
+                    for (var j = i+1; j < accounts.length; j++) {
+                        var accountID2 = accounts[j].AccountID;
+                        if (utils.isSubString(accountID2, accountID1)) {
+                            accounts[j]['DebtMovements'] += accounts[i]['DebtMovements'];
+                            accounts[j]['CreditMovements'] += accounts[i]['CreditMovements'];
+                            break;
+                        }
                     }
                 }
                 
