@@ -2,10 +2,10 @@ var fs = require('fs');
 var jSmart = require('jsmart'); 
 var express = require('express');
 var utils = require('./utils');
-/*
+
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test');
-*/
+
 // PAGES
 var sales = require('./pages/sales');
 var purchases = require('./pages/purchases');
@@ -109,6 +109,104 @@ app.get('/getCustomers', function(req, res) {
         });
     });
 });
+
+app.get('/getDebtMovements', function(req, res) {
+    var month = req.query.month, year = req.query.year;
+    var dataRange = month == null ? utils.getYearDateRange(year) : utils.getMonthDateRange(year, month);
+    
+    var Transaction = require('./database/Transaction');
+
+    Transaction.Transaction.find({
+        TransactionDate: {
+            $gte: dataRange.start,
+            $lt: dataRange.end }},
+        function(err, transactions) {
+            if (err) console.error(err);
+            else {
+                transactions = utils.getDebtLinesFromTransactions(JSON.parse(JSON.stringify(transactions)));
+                res.json(transactions);    
+            }
+    });
+
+});
+
+app.get('/getCreditMovements', function(req, res) {
+    var month = req.query.month, year = req.query.year;
+    var dataRange = month == null ? utils.getYearDateRange(year) : utils.getMonthDateRange(year, month);
+    
+    var Transaction = require('./database/Transaction');
+
+    Transaction.Transaction.find({
+        TransactionDate: {
+            $gte: dataRange.start,
+            $lt: dataRange.end }},
+        function(err, transactions) {
+            if (err) console.error(err);
+            else {
+                transactions = utils.getCreditLinesFromTransactions(JSON.parse(JSON.stringify(transactions)));
+                res.json(transactions);    
+            }
+    });
+
+});
+
+app.get('/getBalancete', function(req, res) {
+    var month = req.query.month, year = req.query.year;
+    var dataRange = month == null ? utils.getYearDateRange(year) : utils.getMonthDateRange(year, month);
+    
+    var Transaction = require('./database/Transaction');
+    var Account = require('./database/Account');
+
+    Account.find({}, function(err, accounts) {
+        if (err) console.error(err);
+
+        Transaction.Transaction.find({
+            TransactionDate: {
+                $gte: dataRange.start,
+                $lt: dataRange.end }}, 
+            function(err, transactions) {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+
+                accounts = JSON.parse(JSON.stringify(accounts));
+                transactions = JSON.parse(JSON.stringify(transactions));
+
+                for (var i = 0; i < accounts.length; i++) {
+                    accounts[i]['DebtMovements'] = 0;
+                    accounts[i]['CreditMovements'] = 0;
+                }
+                
+                for (var i = 0; i < transactions.length; i++) {
+                    var creditLines = transactions[i].CreditLines;
+                    var debitLines = transactions[i].DebitLines;
+
+                    for (var j = 0; j < creditLines.length; j++) {
+                        var accountID = creditLines[j].AccountID;
+                        var creditAmount = creditLines[j].CreditAmount;
+
+                        for (var k = 0; k < accounts.length; k++) 
+                            if (accounts[k].AccountID == accountID)
+                                accounts[k]['CreditMovements'] += creditAmount;
+                    }
+
+                    for (var j = 0; j < debitLines.length; j++) {
+                        var accountID = debitLines[j].AccountID;
+                        var debitAmount = debitLines[j].DebitAmount;
+
+                        for (var k = 0; k < accounts.length; k++)
+                            if (accounts[k].AccountID == accountID)
+                                accounts[k]['DebtMovements'] += debitAmount;
+                    }
+                }
+                
+                res.json(accounts);
+        });
+    });
+
+});
+
 
 var server = app.listen(8081, function () {
    var port = server.address().port;

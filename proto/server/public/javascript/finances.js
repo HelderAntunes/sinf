@@ -38,58 +38,57 @@ app.controller('finances_controller', function($scope, $http) {
 });
 
 Highcharts.chart('container', {
-
+    chart: {
+        type: 'column'
+    },
     title: {
-        text: 'Finances'
+        text: 'Monthly Average Rainfall'
     },
-
-    subtitle: {
-        text: 'Equity, Assets and Liabilities'
+    xAxis: {
+        categories: [
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec'
+        ],
+        crosshair: true
     },
-
     yAxis: {
+        min: 0,
         title: {
-            text: 'Euros €'
+            text: 'Rainfall (mm)'
         }
     },
-
-    legend: {
-        layout: 'vertical',
-        align: 'right',
-        verticalAlign: 'middle'
-    },
-
     plotOptions: {
-        series: {
-            pointStart: 2010
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
         }
     },
-
     series: [{
-        name: 'Equity',
-        data: [23344, 25544, 20343, 40344, 60344, 90000, 111034, 114455]
-    }, {
-        name: 'Assets',
-        data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
-    }, {
-        name: 'Liabilities',
-        data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
-    }],
+        name: 'Tokyo',
+        data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
 
-    responsive: {
-        rules: [{
-            condition: {
-                maxWidth: 500
-            },
-            chartOptions: {
-                legend: {
-                    layout: 'horizontal',
-                    align: 'center',
-                    verticalAlign: 'bottom'
-                }
-            }
-        }]
-    }
+    }, {
+        name: 'New York',
+        data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
 
+    }, {
+        name: 'London',
+        data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
+
+    }, {
+        name: 'Berlin',
+        data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
+
+    }]
 });
 

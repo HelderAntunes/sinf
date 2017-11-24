@@ -36,6 +36,38 @@ function setCustomerSales(customers, salesInvoices) {
     return customers;
 }
 
+function getDebtLinesFromTransactions(transactions) {
+    var debitLines = [];
+    for (var i = 0; i < transactions.length; i++) {
+        var transaction = transactions[i];
+        var debitLines_ = transaction.DebitLines;
+
+        for (var j = 0; j < debitLines_.length; j++) {
+            var debitLine_ = debitLines_[j];
+            debitLine_['date'] = transaction.TransactionDate;
+            debitLines.push(debitLine_);
+        }
+    }
+
+    return debitLines;
+}
+
+function getCreditLinesFromTransactions(transactions) {
+    var creditLines = [];
+    for (var i = 0; i < transactions.length; i++) {
+        var transaction = transactions[i];
+        var creditLines_ = transaction.CreditLines;
+
+        for (var j = 0; j < creditLines_.length; j++) {
+            var creditLine_ = creditLines_[j];
+            creditLine_['date'] = transaction.TransactionDate;
+            creditLines.push(creditLine_);
+        }
+    }
+
+    return creditLines;
+}
+
 // decreasing order
 function compareCustomersBySalesDec(a,b) {
     if (a.sales < b.sales) return 1;
@@ -49,4 +81,6 @@ module.exports = {
     getYearDateRange : getYearDateRange,
     setCustomerSales: setCustomerSales,
     compareCustomersBySalesDec: compareCustomersBySalesDec,
+    getDebtLinesFromTransactions: getDebtLinesFromTransactions,
+    getCreditLinesFromTransactions: getCreditLinesFromTransactions,
 }

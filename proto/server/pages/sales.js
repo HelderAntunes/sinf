@@ -36,7 +36,6 @@ exports.getSales = function (req, res) {
             var outputFooter = compiledTemplate.fetch();
             
             res.end(outputHeader + outputSales + outputFooter);
-
         });
         
     });
