@@ -19,6 +19,14 @@ namespace PrimaveraIntegration.Controllers
             // return new List<Lib_Primavera.Model.Stock>();
         }
 
+        public List<Lib_Primavera.Model.Stock> GetInventory(string id)
+        {
+            if(id == "outOfStock")
+                return Lib_Primavera.PriIntegration.getInventoryOutOfStock();
+            else
+                return new List<Lib_Primavera.Model.Stock>();
+        }
+
         // GET api/inventory   
         public List<Lib_Primavera.Model.Stock> GetInventory(int year)
         {
