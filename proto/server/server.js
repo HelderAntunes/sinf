@@ -2,14 +2,15 @@ var fs = require('fs');
 var jSmart = require('jsmart'); 
 var express = require('express');
 var utils = require('./utils');
-
+/*
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test');
-
+*/
 // PAGES
 var sales = require('./pages/sales');
 var purchases = require('./pages/purchases');
 var inventory = require('./pages/inventory');
+var finances = require('./pages/finances');
 var main = require('./pages/main');
 
 var app = express();
@@ -31,17 +32,15 @@ app.get('/sales', function (req, res) {
 });
 
 app.get('/finances', function (req, res) {
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    
-    var tpl = fs.readFileSync('./templates/finances.html', {encoding: 'utf-8'});
-    var compiledTemplate = new jSmart(tpl);
-    var output = compiledTemplate.fetch();
-    
-    res.end(output);
+    finances.getFinances(req, res);
 });
 
 app.get('/inventory', function (req, res) {
     inventory.getInventory(req, res);
+});
+
+app.get('/inventory_detailed', function (req, res) {
+    inventory.getInventoryDetailed(req, res);
 });
 
 app.get('/purchases', function (req, res) {

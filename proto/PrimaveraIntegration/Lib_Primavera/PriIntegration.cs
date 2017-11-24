@@ -87,7 +87,7 @@ namespace PrimaveraIntegration.Lib_Primavera
             }  
         }
 
-        public static List<Lib_Primavera.Model.Stock> getInventoryTotals(int year = 0, int month = 1)
+        public static List<Lib_Primavera.Model.Stock> getInventoryTotalsOld(int year = 0, int month = 1)
         {
             /*string query = @"SELECT DISTINCT
                 Artigo.Familia Familia,
@@ -182,7 +182,6 @@ namespace PrimaveraIntegration.Lib_Primavera
 
         }
 
-
         public static Lib_Primavera.Model.Stock GetStock(string codArtigo)
         {
 
@@ -250,6 +249,97 @@ namespace PrimaveraIntegration.Lib_Primavera
                 }
 
                 return listStocks;
+
+        public static List<Lib_Primavera.Model.Stock> getInventoryTotals(int year = 0, int month = 1)
+        {
+            /*string query = @"SELECT DISTINCT
+                Artigo.Familia Familia,
+                Familias.Descricao NomeFamilia, 
+                Artigo.Artigo Artigo,
+                Artigo.Descricao Descricao,
+                Artigo.UnidadeBase UnidadeBase,
+                Recalculo.PCMedio PCMedio,
+                Artigo.SubFamilia SubFamilia,
+                Artigo.STKActual STKActual,
+                SUM(Recalculo.QuantidadeArm) Actual,
+                Artigo.TratamentoDim,
+                Recalculo.Artigo rArtigo
+            FROM (Artigo Artigo LEFT OUTER JOIN 
+                (SELECT PCMedio, SUM(QuantidadeArm) QuantidadeArm, Artigo FROM tempdb.dbo.##RecalculoStk GROUP BY Artigo, PCMedio) Recalculo ON Artigo.Artigo=Recalculo.Artigo)
+            LEFT OUTER JOIN Familias Familias ON Artigo.Familia=Familias.Familia
+            WHERE Artigo.TratamentoDim<>1
+            ORDER BY Artigo.Artigo, Artigo.SubFamilia";*/
+            string query = @"SELECT DISTINCT
+                Artigo.Familia Familia,
+                Familias.Descricao NomeFamilia, 
+                Artigo.Artigo Artigo,
+                Artigo.Descricao Descricao,
+                Artigo.UnidadeBase UnidadeBase,
+                Recalculo.PCMedio PCMedio,
+                Artigo.SubFamilia SubFamilia,
+                Artigo.STKActual STKActual,
+                Recalculo.QuantidadeArm Actual,
+                Artigo.TratamentoDim,
+                Recalculo.Artigo rArtigo
+            FROM (Artigo Artigo LEFT OUTER JOIN tempdb.dbo.##RecalculoStk Recalculo ON Artigo.Artigo=Recalculo.Artigo)
+            LEFT OUTER JOIN Familias Familias ON Artigo.Familia=Familias.Familia
+            WHERE Artigo.TratamentoDim<>1
+            ORDER BY Artigo.Artigo, Artigo.SubFamilia";
+            if (PriEngine.InitializeCompany(PrimaveraIntegration.Properties.Settings.Default.Company.Trim(), PrimaveraIntegration.Properties.Settings.Default.User.Trim(), PrimaveraIntegration.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                //Data
+                DateTime date;
+                if (year != 0)
+                {
+                    date = new DateTime(year, month, 1);
+                }
+                else
+                {
+                    date = DateTime.Now;
+                }
+
+                //armazens
+                StdBELista armsList = PriEngine.Engine.Consulta("Select Armazem from Armazens");
+                string arms = "";
+                while (!armsList.NoFim())
+                {
+                    arms += "[" + armsList.Valor("Armazem") + "]";
+                    armsList.Seguinte();
+                }
+
+                PriEngine.Engine.Comercial.Stocks.RecalculoStocks(enumTipoRecalculoCusteio.trcRecalculoData, strExtArms: arms, dtData: date, blnArtNecRecalcPCM: false, blnRecalcQtdReservada: false, blnExtRecalculo: false);
+                StdBELista objList = PriEngine.Engine.Consulta(query);
+
+                List<Lib_Primavera.Model.Stock> res = new List<Lib_Primavera.Model.Stock>();
+                Lib_Primavera.Model.Stock stock = null;
+                while (!objList.NoFim())
+                {
+                    if (stock == null)
+                        stock = new Lib_Primavera.Model.Stock();
+                    else if (stock.Article != objList.Valor("Artigo"))
+                    {
+                        res.Add(stock);
+                        stock = new Lib_Primavera.Model.Stock();
+                    }
+                    stock.CurrentStock += parseNullDouble(objList, "Actual");
+                    stock.ReserveStock = 0;
+                    stock.Article = objList.Valor("Artigo");
+                    stock.Family = objList.Valor("NomeFamilia");
+                    stock.SubFamily = objList.Valor("SubFamilia");
+                    stock.Description = objList.Valor("Descricao");
+                    stock.UnitPrice = parseNullDouble(objList, "PCMedio");
+                    stock.Warehouse = date.ToString();
+                    stock.TotalValue = stock.CurrentStock * stock.UnitPrice;
+
+                    
+                    objList.Seguinte();
+                }
+                res.Add(stock);
+
+                objList = PriEngine.Engine.Consulta("Select * from ##RecalculoStk");
+                System.Diagnostics.Debug.WriteLine(objList.NumLinhas());
+
+                return res;
 
             }
             else
