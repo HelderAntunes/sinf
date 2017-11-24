@@ -1,94 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Finances Dashboard </title>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
-
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">360º Company Dashboard</a>
-        </div>
-        <ul class="nav navbar-nav">
-            <li>
-                <a href="main">Dashboard</a>
-            </li>
-            <li>
-                <a href="sales">Sales</a>
-            </li>
-            <li>
-                <a href="purchases">Purchases</a>
-            </li>
-            <li>
-                <a href="inventory">Inventory</a>
-            </li>
-            <li class="active">
-                <a href="finances">Finances</a>
-            </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-        </ul>
-    </div>
-</nav>
-
-<div class="container">
+<div class="container" ng-app="finances_app" ng-controller="finances_controller">
 
     <div class="row">
         <div class="col-sm-12 col-md-10 col-md-offset-1">
-            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                <div class="btn-group dropdown">
-                    <button class="btn btn-timeFilter dropdown-toggle" type="button" data-toggle="dropdown">2017
+            <div class="btn-toolbar" role="toolbar" aria-label="Filter Toolbar">
+                <div class="btn-group dropdown" role="group" aria-label="Year group">
+                    <button class="btn btn-timeFilter dropdown-toggle" type="button" data-toggle="dropdown">[[chosenYear]]
                         <span class="caret"></span></button>
                     <ul class="dropdown-menu">
-                        <li><a href="#">2017</a></li>
-                        <li><a href="#">2016</a></li>
-                        <li><a href="#">2015</a></li>
+                        <li ng-repeat="year in years"><a href="" ng-click="chooseYear(year)">[[year]]</a></li>
                     </ul>
                 </div>
-                <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-timeFilter active">
-                        <input type="radio" name="options" autocomplete="off" checked>None
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off" checked>Jan
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off">Fev
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off">Mar
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off" checked>Apr
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off">Jun
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off">Jul
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off" checked>Aug
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off">Set
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off">Oct
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off" checked>Nov
-                    </label>
-                    <label class="btn btn-timeFilter">
-                        <input type="radio" name="options" autocomplete="off">Dec
-                    </label>
+                <div class="btn-group mr-2" role="group" aria-label="Month Group">
+                  <button ng-repeat="month in months" type="button" class="btn btn-timeFilter" ng-click="chooseMonth(month.value)">[[month.name]]</button>
                 </div>
             </div>
         </div>
@@ -103,16 +26,12 @@
                 <div class="col-sm-12">
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <h4>Final Equity value</h4>
-                            <h3>9 750€</h3>
+                            <h4>Debt Movements</h4>
+                            <h3>[[debtMovements | euro]]</h3>
                         </li>
                         <li class="list-group-item">
-                            <h4>Final Assets value</h4>
-                            <h3>19 983€</h3>
-                        </li>
-                        <li class="list-group-item">
-                            <h4>Final Liabilities value</h4>
-                            <h3>10 233€</h3>
+                            <h4>Credit Movements</h4>
+                            <h3>[[creditMovements | euro]]</h3>
                         </li>
                     </ul>
                 </div>
@@ -128,16 +47,10 @@
 
 </div>
 
-<footer>
-    <h5 style="color: #FFFFFF">© 2017 Copyright: 360º Dashboard Company</h5>
-</footer>
-
 <script src="../javascript/main.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <script src="../javascript/finances.js"></script>
-
-</body>
-</html>
