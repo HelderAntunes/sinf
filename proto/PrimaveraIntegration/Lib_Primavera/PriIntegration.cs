@@ -284,7 +284,7 @@ namespace PrimaveraIntegration.Lib_Primavera
                 Recalculo.PCMedio PCMedio,
                 Artigo.SubFamilia SubFamilia,
                 Artigo.STKActual STKActual,
-                Recalculo.QuantidadeArm Actual,
+                Recalculo.Quantidade Actual,
                 Artigo.TratamentoDim,
                 Recalculo.Artigo rArtigo
             FROM (Artigo Artigo LEFT OUTER JOIN tempdb.dbo.##RecalculoStk Recalculo ON Artigo.Artigo=Recalculo.Artigo)
@@ -313,6 +313,7 @@ namespace PrimaveraIntegration.Lib_Primavera
                     armsList.Seguinte();
                 }
 
+                //PriEngine.Engine.Comercial.Stocks.RecalculoStocks(enumTipoRecalculoCusteio.trcRecalculoData, strArtigoInicial: "D0001", strArtigoFinal: "D0001", strExtArms: arms, dtData: date, blnArtNecRecalcPCM: false, blnRecalcQtdReservada: false, blnExtRecalculo: false);
                 PriEngine.Engine.Comercial.Stocks.RecalculoStocks(enumTipoRecalculoCusteio.trcRecalculoData, strExtArms: arms, dtData: date, blnArtNecRecalcPCM: false, blnRecalcQtdReservada: false, blnExtRecalculo: false);
                 StdBELista objList = PriEngine.Engine.Consulta(query);
 
@@ -327,7 +328,7 @@ namespace PrimaveraIntegration.Lib_Primavera
                         res.Add(stock);
                         stock = new Lib_Primavera.Model.Stock();
                     }
-                    stock.CurrentStock += parseNullDouble(objList, "Actual");
+                    stock.CurrentStock = parseNullDouble(objList, "Actual");
                     stock.ReserveStock = 0;
                     stock.Article = objList.Valor("Artigo");
                     stock.Family = objList.Valor("NomeFamilia");
