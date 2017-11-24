@@ -229,8 +229,9 @@ namespace PrimaveraIntegration.Lib_Primavera
 
                 objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
 
-                while (!objList.NoFim()){
-                    string codArtigo = objList.Valor("Artigo"); 
+                while (!objList.NoFim())
+                {
+                    string codArtigo = objList.Valor("Artigo");
                     Model.Stock stock = new Model.Stock();
 
                     stock.Article = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "Artigo");
@@ -241,7 +242,8 @@ namespace PrimaveraIntegration.Lib_Primavera
                     stock.MinStock = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "STKMinimo");
                     stock.ReposStock = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "STKReposicao");
 
-                    if (stock.CurrentStock < stock.MinStock){
+                    if (stock.CurrentStock < stock.MinStock)
+                    {
                         listStocks.Add(stock);
                     }
 
@@ -249,6 +251,10 @@ namespace PrimaveraIntegration.Lib_Primavera
                 }
 
                 return listStocks;
+            }
+
+            return null;
+        }
 
         public static List<Lib_Primavera.Model.Stock> getInventoryTotals(int year = 0, int month = 1)
         {
