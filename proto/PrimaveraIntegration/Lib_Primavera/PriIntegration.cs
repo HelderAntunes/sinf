@@ -84,9 +84,7 @@ namespace PrimaveraIntegration.Lib_Primavera
             else
             {
                 return null;
-            }
-
-           
+            }  
         }
 
         public static List<Lib_Primavera.Model.Stock> getInventoryTotalsOld(int year = 0, int month = 1)
@@ -184,6 +182,80 @@ namespace PrimaveraIntegration.Lib_Primavera
 
         }
 
+        public static Lib_Primavera.Model.Stock GetStock(string codArtigo)
+        {
+
+            GcpBEArtigo objArtigo = new GcpBEArtigo();
+            Model.Stock stock = new Model.Stock();
+
+            if (PriEngine.InitializeCompany(PrimaveraIntegration.Properties.Settings.Default.Company.Trim(), PrimaveraIntegration.Properties.Settings.Default.User.Trim(), PrimaveraIntegration.Properties.Settings.Default.Password.Trim()) == true)
+            {
+
+                if (PriEngine.Engine.Comercial.Artigos.Existe(codArtigo) == false)
+                {
+                    return null;
+                }
+                else
+                {
+                    //objArtigo = PriEngine.Engine.Comercial.Artigos.Edita(codArtigo);
+                    stock.Article = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "Artigo");
+                    stock.Family = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "Familia");
+                    stock.SubFamily = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "SubFamilia");
+                    stock.Description = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "Descricao");
+                    stock.CurrentStock = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "StkActual");
+                    stock.MinStock = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "STKMinimo");
+                    stock.ReposStock = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "STKReposicao");
+
+                    return stock;
+                }
+
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
+        public static List<Model.Stock> getInventoryOutOfStock()
+        {
+
+            StdBELista objList;
+
+            List<Model.Stock> listStocks = new List<Model.Stock>();
+
+            if (PriEngine.InitializeCompany(PrimaveraIntegration.Properties.Settings.Default.Company.Trim(), PrimaveraIntegration.Properties.Settings.Default.User.Trim(), PrimaveraIntegration.Properties.Settings.Default.Password.Trim()) == true)
+            {
+
+                objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
+
+                while (!objList.NoFim())
+                {
+                    string codArtigo = objList.Valor("Artigo");
+                    Model.Stock stock = new Model.Stock();
+
+                    stock.Article = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "Artigo");
+                    stock.Family = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "Familia");
+                    stock.SubFamily = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "SubFamilia");
+                    stock.Description = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "Descricao");
+                    stock.CurrentStock = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "StkActual");
+                    stock.MinStock = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "STKMinimo");
+                    stock.ReposStock = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "STKReposicao");
+
+                    if (stock.CurrentStock < stock.MinStock)
+                    {
+                        listStocks.Add(stock);
+                    }
+
+                    objList.Seguinte();
+                }
+
+                return listStocks;
+            }
+
+            return null;
+        }
+
         public static List<Lib_Primavera.Model.Stock> getInventoryTotals(int year = 0, int month = 1)
         {
             /*string query = @"SELECT DISTINCT
@@ -212,7 +284,7 @@ namespace PrimaveraIntegration.Lib_Primavera
                 Recalculo.PCMedio PCMedio,
                 Artigo.SubFamilia SubFamilia,
                 Artigo.STKActual STKActual,
-                Recalculo.QuantidadeArm Actual,
+                Recalculo.Quantidade Actual,
                 Artigo.TratamentoDim,
                 Recalculo.Artigo rArtigo
             FROM (Artigo Artigo LEFT OUTER JOIN tempdb.dbo.##RecalculoStk Recalculo ON Artigo.Artigo=Recalculo.Artigo)
@@ -241,6 +313,7 @@ namespace PrimaveraIntegration.Lib_Primavera
                     armsList.Seguinte();
                 }
 
+                //PriEngine.Engine.Comercial.Stocks.RecalculoStocks(enumTipoRecalculoCusteio.trcRecalculoData, strArtigoInicial: "D0001", strArtigoFinal: "D0001", strExtArms: arms, dtData: date, blnArtNecRecalcPCM: false, blnRecalcQtdReservada: false, blnExtRecalculo: false);
                 PriEngine.Engine.Comercial.Stocks.RecalculoStocks(enumTipoRecalculoCusteio.trcRecalculoData, strExtArms: arms, dtData: date, blnArtNecRecalcPCM: false, blnRecalcQtdReservada: false, blnExtRecalculo: false);
                 StdBELista objList = PriEngine.Engine.Consulta(query);
 
@@ -255,7 +328,7 @@ namespace PrimaveraIntegration.Lib_Primavera
                         res.Add(stock);
                         stock = new Lib_Primavera.Model.Stock();
                     }
-                    stock.CurrentStock += parseNullDouble(objList, "Actual");
+                    stock.CurrentStock = parseNullDouble(objList, "Actual");
                     stock.ReserveStock = 0;
                     stock.Article = objList.Valor("Artigo");
                     stock.Family = objList.Valor("NomeFamilia");
@@ -275,15 +348,15 @@ namespace PrimaveraIntegration.Lib_Primavera
 
                 return res;
 
-
             }
             else
             {
                 return null;
+
             }
 
-
         }
+
         # endregion
 
 

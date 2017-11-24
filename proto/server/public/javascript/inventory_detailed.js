@@ -11,7 +11,7 @@ var app = angular.module('inventory_detailed_app', []).config(['$interpolateProv
 
   app.filter('qty', ['$filter', function ($filter) {
     return function (input) {
-      return $filter('number')(input, 2) + ' UN';
+      return $filter('number')(input, 0) + ' UN';
     };
   }]);
 

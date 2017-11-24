@@ -1,69 +1,6 @@
 $(document).ready(function () {
 
   $('#inventory-tab').addClass('active');
-
-  Highcharts.chart('stock-available', {
-      title: {
-          text: 'Stock history'
-      },
-
-      subtitle: {
-          text: 'By category'
-      },
-      xAxis: {
-          categories: ['9 Oct', '10 Oct', '11 Oct', '12 Oct', '13 Oct', '14 Oct', '15 Oct', '16 Oct']
-      },
-      yAxis: {
-          title: {
-              text: 'Stock'
-          }
-      },
-      legend: {
-          layout: 'vertical',
-          align: 'right',
-          verticalAlign: 'middle'
-      },
-
-      plotOptions: {
-          series: {
-              label: {
-                  connectorAllowed: false
-              }
-          }
-      },
-
-      series: [{
-          name: 'Category 1',
-          data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
-      }, {
-          name: 'Category 2',
-          data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
-      }, {
-          name: 'Category 3',
-          data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
-      }, {
-          name: 'Category 4',
-          data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
-      }, {
-          name: 'Category 5',
-          data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
-      }],
-
-      responsive: {
-          rules: [{
-              condition: {
-                  maxWidth: 500
-              },
-              chartOptions: {
-                  legend: {
-                      layout: 'horizontal',
-                      align: 'center',
-                      verticalAlign: 'bottom'
-                  }
-              }
-          }]
-      }
-    });
 /*
     Highcharts.chart('inventory-value', {
         chart: {
@@ -345,8 +282,26 @@ var updateValue= function($scope, $http){
     });
 }
 
-var updateData= function($scope, $http){
+var updateOutOfStock= function($scope, $http){
     $scope.step = 2
+    var url = 'http://localhost:49822/api/Inventory/outOfStock/';
+    
+    $http.get(url).then(function (success){
+        for (i in success.data) {
+            var stock = success.data[i];
+
+            if(i < 5){
+                $scope.prodOutOfStock.push(stock);
+            }
+        }
+    },function (error){
+        $scope.contents = [{heading:"Error",description:"Could not load json data"}];
+    });
+}
+
+var updateData= function($scope, $http){
+    if($scope.step > 2)
+        $scope.step = 2
     //Blur container and show spinner
     $('#loader').show();
     $('.container').addClass('blur');
@@ -379,6 +334,7 @@ app.controller('inventory_controller', function($scope, $http) {
     
     $scope.chosenYear = today.getFullYear();
     $scope.chosenMonth = null;
+    $scope.prodOutOfStock = [];
         
     $scope.years = [];
     for(var i = 2015; i <= today.getFullYear(); i++){
@@ -406,6 +362,7 @@ app.controller('inventory_controller', function($scope, $http) {
         updateData($scope, $http);
     }
 
+    updateOutOfStock($scope,$http);
     updateData($scope,$http);
 
 });

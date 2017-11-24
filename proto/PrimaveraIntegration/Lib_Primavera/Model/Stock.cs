@@ -49,6 +49,18 @@ namespace PrimaveraIntegration.Lib_Primavera.Model
             set;
         }
 
+        public double MinStock
+        {
+            get;
+            set;
+        }
+
+        public double ReposStock
+        {
+            get;
+            set;
+        }
+
         public double UnitPrice
         {
             get;
