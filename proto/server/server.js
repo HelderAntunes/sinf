@@ -196,39 +196,9 @@ app.get('/getBalancetes', function(req, res) {
 
                 accounts = JSON.parse(JSON.stringify(accounts));
                 transactions = JSON.parse(JSON.stringify(transactions));
-
-                if (month == null) {
-                    var transactionsByMonth = [];
-                    for (var i = 0; i < 12; i++) 
-                        transactionsByMonth.push([]);
-                    for (var i = 0; i < transactions.length; i++) {
-                        var month = moment(transactions[i].TransactionDate).month();
-                        transactionsByMonth[month].push(transactions[i]);
-                    }
-
-                    var balancetes = [];
-                    for (var i = 0; i < 12; i++) 
-                        balancetes.push(utils.calcBalancete(transactionsByMonth[i], accounts));
-                        
-                    res.json(balancetes);
-                }
-                else {
-                    var transactionsByDay = [];
-                    var numDays = utils.daysInMonth(year, month);
-                    for (var i = 0; i < numDays; i++) 
-                        transactionsByDay.push([]);
-                    for (var i = 0; i < transactions.length; i++) {
-                        var day = moment(transactions[i].TransactionDate).day();
-                        transactionsByDay[day].push(transactions[i]);
-                    }
-
-                    var balancetes = [];
-                    for (var i = 0; i < numDays; i++) 
-                        balancetes.push(utils.calcBalancete(transactionsByDay[i], accounts));
-                        
-                    res.json(balancetes);
-                }
                 
+                var balancetes = utils.calcBalancetes(transactions, accounts, year, month);
+                res.json(balancetes);
         });
     });
 
@@ -256,29 +226,9 @@ app.get('/getDemonstracaoResultados', function(req, res) {
 
                 accounts = JSON.parse(JSON.stringify(accounts));
                 transactions = JSON.parse(JSON.stringify(transactions));
+
                 var balancete = utils.calcBalancete(transactions, accounts);
-                var demonstracaoResultados = {'gastos':[], 'rendimentos': []};
-                var netIncome = 0;
-                var netExpense = 0;
-
-                for (var i = 0; i < balancete.length; i++) {
-                    if (balancete[i].AccountID.length != 2)
-                        continue;
-
-                    if (balancete[i].AccountID[0] == '6') 
-                        demonstracaoResultados.gastos.push(balancete[i]);
-                    if (balancete[i].AccountID[0] == '7')
-                        demonstracaoResultados.rendimentos.push(balancete[i]);
-                }
-                
-                for (var i = 0; i < demonstracaoResultados.gastos.length; i++)
-                    netExpense += demonstracaoResultados.gastos[i].DebtMovements;
-                for (var i = 0; i < demonstracaoResultados.rendimentos.length; i++)
-                    netIncome += demonstracaoResultados.rendimentos[i].CreditMovements;
-                
-                demonstracaoResultados['netIncome'] = netIncome;
-                demonstracaoResultados['netExpense'] = netExpense;
-                demonstracaoResultados['netResult'] = netIncome - netExpense;
+                var demonstracaoResultados = utils.calcDemonstracaoResultados(balancete);
 
                 res.json(demonstracaoResultados);
         });
@@ -308,47 +258,7 @@ app.get('/getBalanco', function(req, res) {
                 accounts = JSON.parse(JSON.stringify(accounts));
                 transactions = JSON.parse(JSON.stringify(transactions));
                 var balancete = utils.calcBalancete(transactions, accounts);
-                var balanco = {
-                    'assets':{
-                        'accounts': [],
-                        'value': 0,
-                    },
-                    'liabilities': {
-                        'accounts': [],
-                        'value': 0,
-                    },
-                    'equity': {
-                        'accounts': [],
-                        'value': 0,
-                    },
-                };
-
-                for (var i = 0; i < balancete.length; i++) {
-
-                    if (balancete[i].AccountID.length != 2 || 
-                        balancete[i].AccountID[0] === '6' ||
-                        balancete[i].AccountID[0] === '7' ||
-                        balancete[i].AccountID[0] === '8' ||
-                        balancete[i].AccountID[0] === '9') 
-                        continue;
-                        
-                    balancete[i].ClosingDebitBalance = balancete[i].OpeningDebitBalance + balancete[i].DebtMovements;
-                    balancete[i].ClosingCreditBalance = balancete[i].OpeningCreditBalance + balancete[i].CreditMovements;
-
-                    if (balancete[i].ClosingDebitBalance > balancete[i].ClosingCreditBalance) {
-                        balancete[i].ClosingDebitBalance = balancete[i].ClosingDebitBalance - balancete[i].ClosingCreditBalance;
-                        balancete[i].ClosingCreditBalance = 0;
-                        balanco.assets.accounts.push(balancete[i])
-                        balanco.assets.value += balancete[i].ClosingDebitBalance;
-                    }
-                    else {
-                        balancete[i].ClosingCreditBalance = balancete[i].ClosingCreditBalance - balancete[i].ClosingDebitBalance;
-                        balancete[i].ClosingDebitBalance = 0;
-                        balanco.liabilities.accounts.push(balancete[i]);
-                        balanco.liabilities.value += balancete[i].ClosingCreditBalance;
-                    }
-                }
-                balanco.equity.value = balanco.assets.value - balanco.liabilities.value;
+                var balanco = utils.calcBalanco(balancete);
                 res.json(balanco);
         });
     });
