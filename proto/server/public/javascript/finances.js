@@ -39,15 +39,25 @@ app.controller('finances_controller', function($scope, $http) {
 
 var updateData = function($scope, $http) {
     //Blur container and show spinner
-   // $('#loader').show();
+    //$('#loader').show();
     //$('.container').addClass('blur');
 
     var requestUrl = address + 'getBalancetes?year=' + $scope.chosenYear;
     if ($scope.chosenMonth ) requestUrl += '&month=' + $scope.chosenMonth;
-
     $http.get(requestUrl).then(
         function (success) {
-            updateDataCallback($scope, $http, success.data);
+            balancetesCallback($scope, $http, success.data);
+        },
+        function (error){
+            $scope.contents = [{heading:"Error",description:"Could not load json data"}];
+        }
+    );
+
+    requestUrl = address + 'getBalancos?year=' + $scope.chosenYear;
+    if ($scope.chosenMonth ) requestUrl += '&month=' + $scope.chosenMonth;
+    $http.get(requestUrl).then(
+        function (success) {
+            balancosCallback($scope, $http, success.data);
         },
         function (error){
             $scope.contents = [{heading:"Error",description:"Could not load json data"}];
@@ -55,16 +65,104 @@ var updateData = function($scope, $http) {
     );
 }
 
-var updateDataCallback = function($scope, $http, balancetes) {
+var balancosCallback = function($scope, $http, balancos) {
+    if ($scope.chosenMonth) updateAssetsAndLiabilitiesMonth($scope, balancos);
+    else updateAssetsAndLiabilitiesYear($scope, balancos);
+}
 
-    if ($scope.chosenMonth) {
-        updateGrossMarginMonth($scope, balancetes);
+var updateAssetsAndLiabilitiesYear = function($scope, balancos) {    
+    var assets = [];
+    var liabilities = [];
+    $scope.assets = 0;
+    $scope.liabilities = 0;
+
+    for (var i = 0; i < balancos.length; i++) {
+        assets.push(balancos[i].assets.value);
+        liabilities.push(balancos[i].liabilities.value);
+        $scope.assets += balancos[i].assets.value;
+        $scope.liabilities += balancos[i].liabilities.value;
     }
-    else {
-        updateGrossMarginYear($scope, balancetes);
+    $scope.equity = $scope.assets - $scope.liabilities;
+    
+    Highcharts.chart('AssetsAndLiabilitiesChart', {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Assets and Liabilities, ' + $scope.chosenYear
+        },
+        xAxis: {
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        },
+        yAxis: {
+            title: {
+                text: 'Euros €'
+            }
+        },
+        plotOptions: {
+            line: {
+                enableMouseTracking: true
+            }
+        },
+        series: [{
+            name: 'Assets',
+            data: assets
+        },
+        {
+            name: 'Liabilities',
+            data: liabilities
+        },]
+    });
+}
+
+var updateAssetsAndLiabilitiesMonth = function($scope, balancos) { 
+    var assets = [];
+    var liabilities = [];
+    $scope.assets = 0;
+    $scope.liabilities = 0;
+
+    for (var i = 0; i < balancos.length; i++) {
+        assets.push(balancos[i].assets.value);
+        liabilities.push(balancos[i].liabilities.value);
+        $scope.assets += balancos[i].assets.value;
+        $scope.liabilities += balancos[i].liabilities.value;
     }
+    $scope.equity = $scope.assets - $scope.liabilities;
+    
+    Highcharts.chart('AssetsAndLiabilitiesChart', {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Assets and Liabilities, ' + $scope.chosenYear + "/" + $scope.chosenMonth
+        },
+        xAxis: {
+            categories: getArrayWithDays(daysInMonth($scope.chosenYear, $scope.chosenMonth))
+        },
+        yAxis: {
+            title: {
+                text: 'Euros €'
+            }
+        },
+        plotOptions: {
+            line: {
+                enableMouseTracking: true
+            }
+        },
+        series: [{
+            name: 'Assets',
+            data: assets
+        },
+        {
+            name: 'Liabilities',
+            data: liabilities
+        },]
+    });
+}
 
-
+var balancetesCallback = function($scope, $http, balancetes) {
+    if ($scope.chosenMonth) updateGrossMarginMonth($scope, balancetes);
+    else updateGrossMarginYear($scope, balancetes);
 }
 
 var updateGrossMarginMonth = function($scope, balancetes) {    
@@ -88,7 +186,7 @@ var updateGrossMarginMonth = function($scope, balancetes) {
     }
     $scope.grossProfit = $scope.netSales - $scope.costOfGoodsSold;
     
-    Highcharts.chart('container', {
+    Highcharts.chart('grossMarginChart', {
         chart: {
             type: 'line'
         },
@@ -109,12 +207,12 @@ var updateGrossMarginMonth = function($scope, balancetes) {
             }
         },
         series: [{
-            name: 'Cost of goods sold',
-            data: costsOfGoodSold
-        },
-        {
             name: 'Net Sales',
             data: netSales
+        },
+        {
+            name: 'Cost of goods sold',
+            data: costsOfGoodSold
         },]
     });
 }
@@ -140,7 +238,7 @@ var updateGrossMarginYear = function($scope, balancetes) {
     }
     $scope.grossProfit = $scope.netSales - $scope.costOfGoodsSold;
     
-    Highcharts.chart('container', {
+    Highcharts.chart('grossMarginChart', {
         chart: {
             type: 'line'
         },
@@ -160,13 +258,14 @@ var updateGrossMarginYear = function($scope, balancetes) {
                 enableMouseTracking: true
             }
         },
-        series: [{
-            name: 'Cost of goods sold',
-            data: costsOfGoodSold
-        },
+        series: [
         {
             name: 'Net Sales',
             data: netSales
+        },
+        {
+            name: 'Cost of goods sold',
+            data: costsOfGoodSold
         },]
     });
 }

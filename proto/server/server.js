@@ -264,6 +264,39 @@ app.get('/getBalanco', function(req, res) {
     });
 });
 
+app.get('/getBalancos', function(req, res) {
+    var month = req.query.month, year = req.query.year;
+    var dataRange = month == null ? utils.getYearDateRange(year) : utils.getMonthDateRange(year, month);
+
+    var Transaction = require('./database/Transaction');
+    var Account = require('./database/Account');
+
+    Account.find({}, function(err, accounts) {
+        if (err) console.error(err);
+
+        Transaction.Transaction.find({
+            TransactionDate: {
+                $gte: dataRange.start,
+                $lt: dataRange.end }}, 
+            function(err, transactions) {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+
+                accounts = JSON.parse(JSON.stringify(accounts));
+                transactions = JSON.parse(JSON.stringify(transactions));
+                var balancetes = utils.calcBalancetes(transactions, accounts, year, month);
+                
+                var balancos = [];
+                for (var i = 0; i < balancetes.length; i++) 
+                    balancos.push(utils.calcBalanco(balancetes[i]));
+                
+                res.json(balancos);
+        });
+    });
+});
+
 var server = app.listen(8081, function () {
    var port = server.address().port;
    console.log("Listening at port %s", port)
