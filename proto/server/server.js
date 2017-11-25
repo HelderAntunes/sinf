@@ -163,7 +163,7 @@ app.get('/getDemonstracaoResultados', function(req, res) {
                 accounts = JSON.parse(JSON.stringify(accounts));
                 transactions = JSON.parse(JSON.stringify(transactions));
                 var balancete = utils.calcBalancete(transactions, accounts);
-                var demonstracaoResultados = {"gastos":[], "rendimentos": []};
+                var demonstracaoResultados = {'gastos':[], 'rendimentos': []};
                 var netIncome = 0;
                 var netExpense = 0;
 
@@ -185,11 +185,81 @@ app.get('/getDemonstracaoResultados', function(req, res) {
                 demonstracaoResultados['netIncome'] = netIncome;
                 demonstracaoResultados['netExpense'] = netExpense;
                 demonstracaoResultados['netResult'] = netIncome - netExpense;
-                
+
                 res.json(demonstracaoResultados);
         });
     });
 });
+
+app.get('/getBalanco', function(req, res) {
+    var month = req.query.month, year = req.query.year;
+    var dataRange = month == null ? utils.getYearDateRange(year) : utils.getMonthDateRange(year, month);
+
+    var Transaction = require('./database/Transaction');
+    var Account = require('./database/Account');
+
+    Account.find({}, function(err, accounts) {
+        if (err) console.error(err);
+
+        Transaction.Transaction.find({
+            TransactionDate: {
+                $gte: dataRange.start,
+                $lt: dataRange.end }}, 
+            function(err, transactions) {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+
+                accounts = JSON.parse(JSON.stringify(accounts));
+                transactions = JSON.parse(JSON.stringify(transactions));
+                var balancete = utils.calcBalancete(transactions, accounts);
+                var balanco = {
+                    'assets':{
+                        'accounts': [],
+                        'value': 0,
+                    },
+                    'liabilities': {
+                        'accounts': [],
+                        'value': 0,
+                    },
+                    'equity': {
+                        'accounts': [],
+                        'value': 0,
+                    },
+                };
+
+                for (var i = 0; i < balancete.length; i++) {
+
+                    if (balancete[i].AccountID.length != 2 || 
+                        balancete[i].AccountID[0] === '6' ||
+                        balancete[i].AccountID[0] === '7' ||
+                        balancete[i].AccountID[0] === '8' ||
+                        balancete[i].AccountID[0] === '9') 
+                        continue;
+                        
+                    balancete[i].ClosingDebitBalance = balancete[i].OpeningDebitBalance + balancete[i].DebtMovements;
+                    balancete[i].ClosingCreditBalance = balancete[i].OpeningCreditBalance + balancete[i].CreditMovements;
+
+                    if (balancete[i].ClosingDebitBalance > balancete[i].ClosingCreditBalance) {
+                        balancete[i].ClosingDebitBalance = balancete[i].ClosingDebitBalance - balancete[i].ClosingCreditBalance;
+                        balancete[i].ClosingCreditBalance = 0;
+                        balanco.assets.accounts.push(balancete[i])
+                        balanco.assets.value += balancete[i].ClosingDebitBalance;
+                    }
+                    else {
+                        balancete[i].ClosingCreditBalance = balancete[i].ClosingCreditBalance - balancete[i].ClosingDebitBalance;
+                        balancete[i].ClosingDebitBalance = 0;
+                        balanco.liabilities.accounts.push(balancete[i]);
+                        balanco.liabilities.value += balancete[i].ClosingCreditBalance;
+                    }
+                }
+                balanco.equity.value = balanco.assets.value - balanco.liabilities.value;
+                res.json(balanco);
+        });
+    });
+});
+
 
 
 var server = app.listen(8081, function () {
