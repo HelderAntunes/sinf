@@ -68,6 +68,50 @@ function getCreditLinesFromTransactions(transactions) {
     return creditLines;
 }
 
+function calcBalancete(transactions, accounts) {
+    var debitLines = getDebtLinesFromTransactions(transactions);
+    var creditLines = getCreditLinesFromTransactions(transactions); 
+
+    for (var i = 0; i < accounts.length; i++) {
+        accounts[i]['DebtMovements'] = 0;
+        accounts[i]['CreditMovements'] = 0;
+    }
+    
+    for (var j = 0; j < creditLines.length; j++) {
+        var accountID = creditLines[j].AccountID;
+        var creditAmount = creditLines[j].CreditAmount;
+
+        for (var k = 0; k < accounts.length; k++) 
+            if (accounts[k].AccountID == accountID)
+                accounts[k]['CreditMovements'] += creditAmount;
+    }
+
+    for (var j = 0; j < debitLines.length; j++) {
+        var accountID = debitLines[j].AccountID;
+        var debitAmount = debitLines[j].DebitAmount;
+
+        for (var k = 0; k < accounts.length; k++)
+            if (accounts[k].AccountID == accountID)
+                accounts[k]['DebtMovements'] += debitAmount;
+    }
+
+    // Hierarquical accounts
+    accounts = accounts.sort(compareAccountsIdDec);
+    for (var i = 0; i < accounts.length; i++) {
+        var accountID1 = accounts[i].AccountID;
+        for (var j = i+1; j < accounts.length; j++) {
+            var accountID2 = accounts[j].AccountID;
+            if (isSubString(accountID2, accountID1)) {
+                accounts[j]['DebtMovements'] += accounts[i]['DebtMovements'];
+                accounts[j]['CreditMovements'] += accounts[i]['CreditMovements'];
+                break;
+            }
+        }
+    }
+
+    return accounts;
+}
+
 // decreasing order
 function compareCustomersBySalesDec(a,b) {
     if (a.sales < b.sales) return 1;
@@ -101,4 +145,5 @@ module.exports = {
     getCreditLinesFromTransactions: getCreditLinesFromTransactions,
     compareAccountsIdDec: compareAccountsIdDec,
     isSubString: isSubString,
+    calcBalancete: calcBalancete,
 }
