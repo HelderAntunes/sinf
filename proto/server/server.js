@@ -2,6 +2,7 @@ var fs = require('fs');
 var jSmart = require('jsmart'); 
 var express = require('express');
 var utils = require('./utils');
+var moment = require('moment');
 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test');
@@ -110,6 +111,39 @@ app.get('/getCustomers', function(req, res) {
     });
 });
 
+app.get('/getTransactionsAndAccounts', function(req, res) {
+    var month = req.query.month, year = req.query.year;
+    var dataRange = month == null ? utils.getYearDateRange(year) : utils.getMonthDateRange(year, month);
+    
+    var Transaction = require('./database/Transaction');
+    var Account = require('./database/Account');
+
+    Account.find({}, function(err, accounts) {
+        if (err) console.error(err);
+
+        Transaction.Transaction.find({
+            TransactionDate: {
+                $gte: dataRange.start,
+                $lt: dataRange.end }}, 
+            function(err, transactions) {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+
+                accounts = JSON.parse(JSON.stringify(accounts));
+                transactions = JSON.parse(JSON.stringify(transactions));
+
+                var transactionsAndAccounts = {
+                    'transactions': transactions,
+                    'accounts': accounts,
+                }
+                res.json(transactionsAndAccounts);
+        });
+    });
+
+});
+
 app.get('/getBalancete', function(req, res) {
     var month = req.query.month, year = req.query.year;
     var dataRange = month == null ? utils.getYearDateRange(year) : utils.getMonthDateRange(year, month);
@@ -135,6 +169,66 @@ app.get('/getBalancete', function(req, res) {
 
                 var balancete = utils.calcBalancete(transactions, accounts);
                 res.json(balancete);
+        });
+    });
+
+});
+
+app.get('/getBalancetes', function(req, res) {
+    var month = req.query.month, year = req.query.year;
+    var dataRange = month == null ? utils.getYearDateRange(year) : utils.getMonthDateRange(year, month);
+    
+    var Transaction = require('./database/Transaction');
+    var Account = require('./database/Account');
+
+    Account.find({}, function(err, accounts) {
+        if (err) console.error(err);
+
+        Transaction.Transaction.find({
+            TransactionDate: {
+                $gte: dataRange.start,
+                $lt: dataRange.end }}, 
+            function(err, transactions) {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+
+                accounts = JSON.parse(JSON.stringify(accounts));
+                transactions = JSON.parse(JSON.stringify(transactions));
+
+                if (month == null) {
+                    var transactionsByMonth = [];
+                    for (var i = 0; i < 12; i++) 
+                        transactionsByMonth.push([]);
+                    for (var i = 0; i < transactions.length; i++) {
+                        var month = moment(transactions[i].TransactionDate).month();
+                        transactionsByMonth[month].push(transactions[i]);
+                    }
+
+                    var balancetes = [];
+                    for (var i = 0; i < 12; i++) 
+                        balancetes.push(utils.calcBalancete(transactionsByMonth[i], accounts));
+                        
+                    res.json(balancetes);
+                }
+                else {
+                    var transactionsByDay = [];
+                    var numDays = utils.daysInMonth(year, month);
+                    for (var i = 0; i < numDays; i++) 
+                        transactionsByDay.push([]);
+                    for (var i = 0; i < transactions.length; i++) {
+                        var day = moment(transactions[i].TransactionDate).day();
+                        transactionsByDay[day].push(transactions[i]);
+                    }
+
+                    var balancetes = [];
+                    for (var i = 0; i < numDays; i++) 
+                        balancetes.push(utils.calcBalancete(transactionsByDay[i], accounts));
+                        
+                    res.json(balancetes);
+                }
+                
         });
     });
 
@@ -259,8 +353,6 @@ app.get('/getBalanco', function(req, res) {
         });
     });
 });
-
-
 
 var server = app.listen(8081, function () {
    var port = server.address().port;

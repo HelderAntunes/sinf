@@ -68,10 +68,11 @@ function getCreditLinesFromTransactions(transactions) {
     return creditLines;
 }
 
-function calcBalancete(transactions, accounts) {
+function calcBalancete(transactions, accounts_) {
     var debitLines = getDebtLinesFromTransactions(transactions);
     var creditLines = getCreditLinesFromTransactions(transactions); 
-
+    var accounts = JSON.parse(JSON.stringify(accounts_)); // clone hack
+    
     for (var i = 0; i < accounts.length; i++) {
         accounts[i]['DebtMovements'] = 0;
         accounts[i]['CreditMovements'] = 0;
@@ -82,7 +83,7 @@ function calcBalancete(transactions, accounts) {
         var creditAmount = creditLines[j].CreditAmount;
 
         for (var k = 0; k < accounts.length; k++) 
-            if (accounts[k].AccountID == accountID)
+            if (accounts[k].AccountID == accountID) 
                 accounts[k]['CreditMovements'] += creditAmount;
     }
 
@@ -135,6 +136,10 @@ function isSubString(subStringTest, stringTest) {
     return true;
 }
 
+function daysInMonth(year, month) {
+    return new Date(year, month, 0).getDate();
+}
+
 module.exports = {
     formatNumber : formatNumber,
     getMonthDateRange : getMonthDateRange,
@@ -146,4 +151,5 @@ module.exports = {
     compareAccountsIdDec: compareAccountsIdDec,
     isSubString: isSubString,
     calcBalancete: calcBalancete,
+    daysInMonth: daysInMonth,
 }

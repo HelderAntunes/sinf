@@ -26,69 +26,157 @@ app.controller('finances_controller', function($scope, $http) {
 
     $scope.chooseYear = function(year){
         $scope.chosenYear = year;        
-        //updateData($scope, $http);
+        updateData($scope, $http);
     };
 
     $scope.chooseMonth = function(month){
         $scope.chosenMonth = month;
-        //updateData($scope, $http);
+        updateData($scope, $http);
     };
 
-    //updateData($scope, $http);
+    updateData($scope, $http);
 });
 
-Highcharts.chart('container', {
-    chart: {
-        type: 'column'
-    },
-    title: {
-        text: 'Monthly Average Rainfall'
-    },
-    xAxis: {
-        categories: [
-            'Jan',
-            'Feb',
-            'Mar',
-            'Apr',
-            'May',
-            'Jun',
-            'Jul',
-            'Aug',
-            'Sep',
-            'Oct',
-            'Nov',
-            'Dec'
-        ],
-        crosshair: true
-    },
-    yAxis: {
-        min: 0,
+var updateData = function($scope, $http) {
+    //Blur container and show spinner
+   // $('#loader').show();
+    //$('.container').addClass('blur');
+
+    var requestUrl = address + 'getBalancetes?year=' + $scope.chosenYear;
+    if ($scope.chosenMonth ) requestUrl += '&month=' + $scope.chosenMonth;
+
+    $http.get(requestUrl).then(
+        function (success) {
+            updateDataCallback($scope, $http, success.data);
+        },
+        function (error){
+            $scope.contents = [{heading:"Error",description:"Could not load json data"}];
+        }
+    );
+}
+
+var updateDataCallback = function($scope, $http, balancetes) {
+
+    if ($scope.chosenMonth) {
+        updateGrossMarginMonth($scope, balancetes);
+    }
+    else {
+        updateGrossMarginYear($scope, balancetes);
+    }
+
+
+}
+
+var updateGrossMarginMonth = function($scope, balancetes) {    
+    var costsOfGoodSold = [];
+    var netSales = [];
+    $scope.netSales = 0;
+    $scope.costOfGoodsSold = 0;
+
+    for (var i = 0; i < balancetes.length; i++) {
+        var balancete = balancetes[i];
+
+        for (var j = 0; j < balancete.length; j++) 
+            if (balancete[j].AccountID == '61') {
+                costsOfGoodSold.push(balancete[j].DebtMovements);
+                $scope.costOfGoodsSold += balancete[j].DebtMovements;
+            }
+            else if (balancete[j].AccountID == '71') {
+                netSales.push(balancete[j].CreditMovements);
+                $scope.netSales += balancete[j].CreditMovements;
+            }
+    }
+    $scope.grossProfit = $scope.netSales - $scope.costOfGoodsSold;
+    
+    Highcharts.chart('container', {
+        chart: {
+            type: 'line'
+        },
         title: {
-            text: 'Rainfall (mm)'
-        }
-    },
-    plotOptions: {
-        column: {
-            pointPadding: 0.2,
-            borderWidth: 0
-        }
-    },
-    series: [{
-        name: 'Tokyo',
-        data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+            text: 'Net Sales and Cost of goods sold, ' + $scope.chosenYear + "/" + $scope.chosenMonth
+        },
+        xAxis: {
+            categories: getArrayWithDays(daysInMonth($scope.chosenYear, $scope.chosenMonth))
+        },
+        yAxis: {
+            title: {
+                text: 'Euros €'
+            }
+        },
+        plotOptions: {
+            line: {
+                enableMouseTracking: true
+            }
+        },
+        series: [{
+            name: 'Cost of goods sold',
+            data: costsOfGoodSold
+        },
+        {
+            name: 'Net Sales',
+            data: netSales
+        },]
+    });
+}
 
-    }, {
-        name: 'New York',
-        data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
+var updateGrossMarginYear = function($scope, balancetes) {    
+    var costsOfGoodSold = [];
+    var netSales = [];
+    $scope.netSales = 0;
+    $scope.costOfGoodsSold = 0;
 
-    }, {
-        name: 'London',
-        data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
+    for (var i = 0; i < balancetes.length; i++) {
+        var balancete = balancetes[i];
 
-    }, {
-        name: 'Berlin',
-        data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
+        for (var j = 0; j < balancete.length; j++) 
+            if (balancete[j].AccountID == '61') {
+                costsOfGoodSold.push(balancete[j].DebtMovements);
+                $scope.costOfGoodsSold += balancete[j].DebtMovements;
+            }
+            else if (balancete[j].AccountID == '71') {
+                netSales.push(balancete[j].CreditMovements);
+                $scope.netSales += balancete[j].CreditMovements;
+            }
+    }
+    $scope.grossProfit = $scope.netSales - $scope.costOfGoodsSold;
+    
+    Highcharts.chart('container', {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Net Sales and Cost of goods sold, ' + $scope.chosenYear
+        },
+        xAxis: {
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        },
+        yAxis: {
+            title: {
+                text: 'Euros €'
+            }
+        },
+        plotOptions: {
+            line: {
+                enableMouseTracking: true
+            }
+        },
+        series: [{
+            name: 'Cost of goods sold',
+            data: costsOfGoodSold
+        },
+        {
+            name: 'Net Sales',
+            data: netSales
+        },]
+    });
+}
 
-    }]
-});
+var daysInMonth = function(year, month) {
+    return new Date(year, month, 0).getDate();
+}
 
+var getArrayWithDays = function(numDays) {
+    var days = [];
+    for (var i = 1; i <= numDays; i++) days.push(i);
+    return days;
+}
