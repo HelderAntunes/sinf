@@ -48,14 +48,6 @@ function getDebtLinesFromTransactions(transactions) {
             debitLines.push(debitLine_);
         }
     }
-    console.log(debitLines);
-
-    for (var i = 0; i < debitLines.length; i++)     
-        for (var j = i+1; j < debitLines.length; j++) 
-            if (debitLines[i].SourceDocumentID == debitLines[j].SourceDocumentID) {
-                debitLines.splice(j, 1);
-                j--;
-            }
 
     return debitLines;
 }
@@ -72,13 +64,6 @@ function getCreditLinesFromTransactions(transactions) {
             creditLines.push(creditLine_);
         }
     }
-
-    for (var i = 0; i < creditLines.length; i++)     
-        for (var j = i+1; j < creditLines.length; j++) 
-            if (creditLines[i].SourceDocumentID == creditLines[j].SourceDocumentID) {
-                creditLines.splice(j, 1);
-                j--;
-            }
 
     return creditLines;
 }

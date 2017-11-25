@@ -1728,7 +1728,7 @@
 					 <SourceDocumentID>RE A/6</SourceDocumentID>
 					 <SystemEntryDate>2016-09-14T00:25:15</SystemEntryDate>
 					 <Description>RE N� 6/A</Description>
-					 <DebitAmount>123.42</DebitAmount>
+					 <DebitAmount>0</DebitAmount> <!-- verificar... -->
 					</DebitLine>
 					<CreditLine>
 						<RecordID>1</RecordID>
