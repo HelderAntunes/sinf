@@ -264,3 +264,8 @@ body{
   .month-selector input[type="radio"] {
     display: none;
   }
+
+.table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>th {
+   background-color: #f2e2c4;
+ }

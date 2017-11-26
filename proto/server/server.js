@@ -36,6 +36,10 @@ app.get('/finances', function (req, res) {
     finances.getFinances(req, res);
 });
 
+app.get('/income_statement', function(req, res) {
+    finances.getIncomeStatment(req, res);
+});
+
 app.get('/inventory', function (req, res) {
     inventory.getInventory(req, res);
 });

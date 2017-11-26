@@ -1,4 +1,4 @@
-var app = angular.module('purchases_detailed_app', []).config(['$interpolateProvider', function ($interpolateProvider) {
+var app = angular.module('income_statement_app', []).config(['$interpolateProvider', function ($interpolateProvider) {
     $interpolateProvider.startSymbol('[[');
     $interpolateProvider.endSymbol(']]');
   }]);
@@ -9,7 +9,7 @@ var app = angular.module('purchases_detailed_app', []).config(['$interpolateProv
     };
   }]);
 
-app.controller('purchases_detailed_controller', function($scope, $http) {
+app.controller('income_statement_controller', function($scope, $http) {
     //init vars
     var today = new Date();
 
@@ -21,6 +21,9 @@ app.controller('purchases_detailed_controller', function($scope, $http) {
         $scope.chosenYear = today.getFullYear();
     }    
     $scope.chosenMonth = url.searchParams.get("month");
+    $scope.dateTable = $scope.chosenYear;
+    if ($scope.chosenMonth)
+        $scope.dateTable += " - " + $scope.chosenMonth;
     
     $scope.years = [];
     for(var i = 2015; i <= today.getFullYear(); i++){
@@ -48,22 +51,11 @@ app.controller('purchases_detailed_controller', function($scope, $http) {
     updateData($scope, $http);
 });
 
-updateData = function($scope, $http){
+var updateData = function($scope, $http){
     //Blur container and show spinner
-    $('#loader').show();
-    $('.container').addClass('blur');
+    //$('#loader').show();
+    //  $('.container').addClass('blur');
 
-    var url = 'http://localhost:49822/api/Purchases/date/' + $scope.chosenYear;
-    if($scope.chosenMonth != null) url += '/' + $scope.chosenMonth;
-
-    $http.get(url).then(function (success){
-        $scope.purchases= success.data;
-
-        //Unblur container and hide spinner
-        $('#loader').hide();
-        $('.container').removeClass('blur');
-    },function (error){
-        $scope.contents = [{heading:"Error",description:"Could not load json data"}];
-    });
+    
 }
 

@@ -1,0 +1,116 @@
+<div class="container" ng-app="income_statement_app" ng-controller="income_statement_controller">
+    
+    <div class="row">
+        <div class="col-sm-12 col-md-10 col-md-offset-1">
+            <div class="btn-toolbar" role="toolbar" aria-label="Filter Toolbar">
+                <div class="btn-group dropdown" role="group" aria-label="Year group">
+                    <button class="btn btn-timeFilter dropdown-toggle ng-cloak" type="button" data-toggle="dropdown">[[chosenYear]]
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="year in years"><a href="" ng-click="chooseYear(year)">[[year]]</a></li>
+                    </ul>
+                </div>
+                <div class="btn-group">
+                    <label ng-repeat="month in months" class="btn btn-timeFilter month-selector">
+                        <input type="radio" name="options" autocomplete="off" ng-model="$parent.chosenMonth" ng-value="[[month.value]]" ng-change="update()">[[month.name]]
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <hr/>
+    
+    <div class="row">
+      <div class="col-sm-3">
+        <h4 class="text-center" style="color: #8a6d3b">Income statement</h4>
+        <div class="row text-center">
+            <div class="col-sm-12">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <h4>Incomes</h4>
+                        <h3>[[incomes | euro]]</h3>
+                    </li>
+                    <li class="list-group-item">
+                        <h4>Expenses</h4>
+                        <h3>[[costOfGoodsSold | euro]]</h3>
+                    </li>
+                    <li class="list-group-item">
+                        <h4>Net income</h4>
+                        <h3>[[netIncome | euro]]</h3>
+                    </li>
+                </ul>
+            </div>
+        </div>
+      </div>
+
+      <div class="col-sm-9">
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th> </th>
+                <th>[[dateTable]]</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Net Sales</td>
+                <td>[[netSales | euro]]</td>
+              </tr>
+              <tr>
+                <td>Cost of good sold</td>
+                <td>[[costOfGoodSold | euro]]</td>
+              </tr>  
+              <tr>
+                <td>Gross margin</td>
+                <td>[[grossMargin | euro]]</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Expenses</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Selling, general and admin</td>
+                <td>[[sellingGeneralAdmin | euro]]</td>
+              </tr>
+              <tr>
+                <td>Depreciation</td>
+                <td>[[depreciation | euro]]</td>
+              </tr>
+              <tr>
+                <td>Interest</td>
+                <td>[[interest | euro]]</td>
+              </tr>
+              <tr>
+                <td>Total Expenses </td>
+                <td>[[totalExpenses | euro]]</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Pre-tax earnings</td>
+                <td>[[preTaxEarnings | euro]]</td>
+              </tr>
+              <tr>
+                <td>Income tax</td>
+                <td>[[incomeTax | euro]]</td>
+              </tr>
+              <tr>
+                <td>Total Expenses </td>
+                <td>[[netEarnings | euro]]</td>
+              </tr>
+            </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="../javascript/income_statement.js"></script>
