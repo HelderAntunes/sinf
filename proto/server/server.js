@@ -286,7 +286,7 @@ app.get('/getBalancos', function(req, res) {
 
                 accounts = JSON.parse(JSON.stringify(accounts));
                 transactions = JSON.parse(JSON.stringify(transactions));
-                var balancetes = utils.calcBalancetes(transactions, accounts, year, month);
+                var balancetes = utils.calcCumulativeBalancetes(transactions, accounts, year, month);
                 
                 var balancos = [];
                 for (var i = 0; i < balancetes.length; i++) 

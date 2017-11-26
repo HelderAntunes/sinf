@@ -172,6 +172,46 @@ function calcBalancetes(transactions, accounts, year, month) {
     return balancetes;
 }
 
+function calcCumulativeBalancetes(transactions, accounts, year, month) {
+    var balancetes = [];
+    
+    if (month == null) {
+        var transactionsByMonth = [];
+        for (var i = 0; i < 12; i++) 
+            transactionsByMonth.push([]);
+        for (var i = 0; i < transactions.length; i++) {
+            var month = moment(transactions[i].TransactionDate).month();
+            transactionsByMonth[month].push(transactions[i]);
+        }
+
+        for (var i = 0; i < 12; i++) {
+            var transactionsOfBalancete = [];
+            for (var j = 0; j <= i; j++) 
+                transactionsOfBalancete = transactionsOfBalancete.concat(transactionsByMonth[j]);
+            balancetes.push(calcBalancete(transactionsOfBalancete, accounts));
+        }
+    }
+    else {
+        var transactionsByDay = [];
+        var numDays = daysInMonth(year, month);
+        for (var i = 0; i < numDays; i++) 
+            transactionsByDay.push([]);
+        for (var i = 0; i < transactions.length; i++) {
+            var day = moment(transactions[i].TransactionDate).day();
+            transactionsByDay[day].push(transactions[i]);
+        }
+
+        for (var i = 0; i < numDays; i++) {
+            var transactionsOfBalancete = [];
+            for (var j = 0; j <= i; j++) 
+                transactionsOfBalancete = transactionsOfBalancete.concat(transactionsByDay[j]);
+            balancetes.push(calcBalancete(transactionsOfBalancete, accounts));
+        }
+    }
+
+    return balancetes;
+}
+
 function calcBalanco(balancete) {
     var balanco = {
         'assets':{
@@ -190,7 +230,8 @@ function calcBalanco(balancete) {
 
     for (var i = 0; i < balancete.length; i++) {
 
-        if (balancete[i].AccountID.length != 2 || 
+        if (balancete[i].AccountID.length != 2 ||
+            balancete[i].AccountID[0] === '5' || 
             balancete[i].AccountID[0] === '6' ||
             balancete[i].AccountID[0] === '7' ||
             balancete[i].AccountID[0] === '8' ||
@@ -260,4 +301,5 @@ module.exports = {
     calcDemonstracaoResultados: calcDemonstracaoResultados,
     calcBalanco: calcBalanco,
     calcBalancetes: calcBalancetes,
+    calcCumulativeBalancetes: calcCumulativeBalancetes,
 }
