@@ -24,7 +24,7 @@ app.controller('income_statement_controller', function($scope, $http) {
     $scope.dateTable = $scope.chosenYear;
     if ($scope.chosenMonth)
         $scope.dateTable += " - " + $scope.chosenMonth;
-    
+
     $scope.years = [];
     for(var i = 2015; i <= today.getFullYear(); i++){
         $scope.years.push(i);
@@ -56,6 +56,84 @@ var updateData = function($scope, $http){
     //$('#loader').show();
     //  $('.container').addClass('blur');
 
+    var requestUrl = address + 'getDemonstracaoResultados?year=' + $scope.chosenYear;
+    if ($scope.chosenMonth ) requestUrl += '&month=' + $scope.chosenMonth;
+    $http.get(requestUrl).then(
+        function (success) {
+            incomeStatementCallback($scope, $http, success.data);
+        },
+        function (error){
+            $scope.contents = [{heading:"Error",description:"Could not load json data"}];
+        }
+    );
     
 }
+
+var incomeStatementCallback = function($scope, $http, income_statement) {
+    console.log(income_statement);
+    
+    $scope.netSales = 0;
+    for (var i = 0; i < income_statement.rendimentos.length; i++) {
+        var accountID = income_statement.rendimentos[i].AccountID;
+        if (accountID === "71" || accountID === "72")
+            $scope.netSales += income_statement.rendimentos[i].CreditMovements;
+    }
+
+    $scope.costOfGoodSold = 0;
+    for (var i = 0; i < income_statement.gastos.length; i++) {
+        var accountID = income_statement.gastos[i].AccountID;
+        if (accountID === "61" || accountID === "62")
+            $scope.costOfGoodSold += income_statement.gastos[i].DebtMovements;
+    }
+
+    $scope.grossMargin = $scope.netSales - $scope.costOfGoodSold;
+
+    $scope.sellingGeneralAdmin = 0;
+    for (var i = 0; i < income_statement.gastos.length; i++) {
+        if (income_statement.gastos[i].AccountID === "63")
+            $scope.sellingGeneralAdmin += income_statement.gastos[i].DebtMovements;
+    }   
+
+    $scope.depreciation = 0;
+    for (var i = 0; i < income_statement.gastos.length; i++) {
+        if (income_statement.gastos[i].AccountID === "64")
+            $scope.depreciation += income_statement.gastos[i].DebtMovements;
+    }
+
+    $scope.interest = 0;
+    for (var i = 0; i < income_statement.gastos.length; i++) {
+        if (income_statement.gastos[i].AccountID === "69")
+            $scope.interest += income_statement.gastos[i].DebtMovements;
+    }
+
+    $scope.totalExpenses = $scope.sellingGeneralAdmin + $scope.depreciation + $scope.interest;
+
+    $scope.preTaxEarnings = $scope.grossMargin - $scope.totalExpenses;
+
+    $scope.incomeTax = 0;
+    for (var i = 0; i < income_statement.gastos.length; i++) {
+        if (income_statement.gastos[i].AccountID === "68")
+            $scope.incomeTax += income_statement.gastos[i].DebtMovements;
+    }
+
+    $scope.netEarnings = $scope.preTaxEarnings - $scope.incomeTax;
+
+    $scope.incomes = 0;
+    $scope.expenses = 0;
+    for (var i = 0; i < income_statement.gastos.length; i++) 
+        $scope.expenses += income_statement.gastos[i].DebtMovements;
+    for (var i = 0; i < income_statement.rendimentos.length; i++) 
+        $scope.incomes += income_statement.rendimentos[i].CreditMovements;
+    $scope.netIncome = $scope.incomes - $scope.expenses;
+
+    $scope.dateTable = $scope.chosenYear;
+    if ($scope.chosenMonth)
+        $scope.dateTable += ", " + getMonthName($scope.chosenMonth);
+}
+
+var getMonthName = function(index) {
+    var monthNames = [null, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return monthNames[index]; 
+}
+
 
