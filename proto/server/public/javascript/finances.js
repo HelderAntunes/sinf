@@ -73,15 +73,13 @@ var balancosCallback = function($scope, $http, balancos) {
 var updateAssetsAndLiabilitiesYear = function($scope, balancos) {    
     var assets = [];
     var liabilities = [];
-    $scope.assets = 0;
-    $scope.liabilities = 0;
-
     for (var i = 0; i < balancos.length; i++) {
         assets.push(balancos[i].assets.value);
         liabilities.push(balancos[i].liabilities.value);
-        $scope.assets += balancos[i].assets.value;
-        $scope.liabilities += balancos[i].liabilities.value;
     }
+    
+    $scope.assets = balancos[balancos.length-1].assets.value;
+    $scope.liabilities = balancos[balancos.length-1].liabilities.value;
     $scope.equity = $scope.assets - $scope.liabilities;
     
     Highcharts.chart('AssetsAndLiabilitiesChart', {
@@ -118,15 +116,13 @@ var updateAssetsAndLiabilitiesYear = function($scope, balancos) {
 var updateAssetsAndLiabilitiesMonth = function($scope, balancos) { 
     var assets = [];
     var liabilities = [];
-    $scope.assets = 0;
-    $scope.liabilities = 0;
-
     for (var i = 0; i < balancos.length; i++) {
         assets.push(balancos[i].assets.value);
         liabilities.push(balancos[i].liabilities.value);
-        $scope.assets += balancos[i].assets.value;
-        $scope.liabilities += balancos[i].liabilities.value;
     }
+    
+    $scope.assets = balancos[balancos.length-1].assets.value;
+    $scope.liabilities = balancos[balancos.length-1].liabilities.value;
     $scope.equity = $scope.assets - $scope.liabilities;
     
     Highcharts.chart('AssetsAndLiabilitiesChart', {

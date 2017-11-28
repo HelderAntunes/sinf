@@ -37,6 +37,10 @@ app.get('/finances', function (req, res) {
     finances.getFinances(req, res);
 });
 
+app.get('/income_statement', function(req, res) {
+    finances.getIncomeStatment(req, res);
+});
+
 app.get('/inventory', function (req, res) {
     inventory.getInventory(req, res);
 });
@@ -54,8 +58,6 @@ app.get('/purchases_detailed', function (req, res) {
 });
 
 app.get('/product/:id', function (req, res) {
-    console.log(req.params.id);
-    console.log(__dirname);
     product.getMain(req, res);
 });
 
@@ -293,7 +295,7 @@ app.get('/getBalancos', function(req, res) {
 
                 accounts = JSON.parse(JSON.stringify(accounts));
                 transactions = JSON.parse(JSON.stringify(transactions));
-                var balancetes = utils.calcBalancetes(transactions, accounts, year, month);
+                var balancetes = utils.calcCumulativeBalancetes(transactions, accounts, year, month);
                 
                 var balancos = [];
                 for (var i = 0; i < balancetes.length; i++) 

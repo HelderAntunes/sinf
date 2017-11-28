@@ -289,3 +289,8 @@ body{
 .table-hover .table-success:hover>td,.table-hover .table-success:hover>th{
     background-color:#b1dfbb
 }
+
+.table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>th {
+   background-color: #f2e2c4;
+ }

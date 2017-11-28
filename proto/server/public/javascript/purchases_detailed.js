@@ -54,9 +54,7 @@ updateData = function($scope, $http){
     $('.container').addClass('blur');
 
     var url = 'http://localhost:49822/api/Purchases/date/' + $scope.chosenYear;
-    if($scope.chosenMonth != null){
-        url += '/' + $scope.chosenMonth;
-    }
+    if($scope.chosenMonth != null) url += '/' + $scope.chosenMonth;
 
     $http.get(url).then(function (success){
         $scope.purchases= success.data;
