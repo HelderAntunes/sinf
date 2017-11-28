@@ -27,8 +27,12 @@ namespace PrimaveraIntegration.Controllers
             if (id == "groupBySupplier"){
                 return Lib_Primavera.PriIntegration.GetAllPurchasesGroupedBySupplier(null, null);
             }
+            if (id == "notPayed")
+            {
+                return Lib_Primavera.PriIntegration.GetNotPayedPurchases();
+            }
             else{
-                return Lib_Primavera.PriIntegration.GetAllPurchases(null, null);
+                return Lib_Primavera.PriIntegration.GetAllPurchasesOfAProduct(id);
             }
         }
 

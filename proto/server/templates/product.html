@@ -1,0 +1,83 @@
+<div id="loader"></div>
+
+<div class="container" ng-app="product_app" ng-controller="product_controller">
+
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">{$title}</div>
+            <div class="panel-body">
+                <div class="col-md-5">
+                    <div class="form-group row">
+                        <input class="form-control" type="hidden" value={$id} id="id-input">
+                        <div class="col-sm-12 info">
+                            <label for="name-input" class="col-sm-4 col-form-label">Name:</label>
+                            <div class="col-sm-8">
+                                <input class="form-control ng-cloak" type="text" value=[[name]] id="name-input" disabled>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 info">
+                            <label for="family-input" class="col-sm-4 col-form-label">Family:</label>
+                            <div class="col-sm-8">
+                                <input class="form-control ng-cloak" type="text" value=[[family]] id="family-input" disabled>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 info">
+                            <label for="subfamily-input" class="col-sm-4 col-form-label">Sub Family:</label>
+                            <div class="col-sm-8">
+                                <input class="form-control ng-cloak" type="text" value=[[subfamily]] id="subfamily-input" disabled>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 info">
+                            <label for="minstock-input" class="col-sm-4 col-form-label">Minimum Stock:</label>
+                            <div class="col-sm-8">
+                                <input class="form-control ng-cloak" type="text" value=[[minStock]] id="minstock-input" disabled>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 info">
+                            <label for="stock-input" class="col-sm-4 col-form-label">Actual Stock:</label>
+                            <div class="col-sm-8">
+                                <input class="form-control ng-cloak" type="text" value=[[actStock]] id="stock-input" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <table class="table table-hover">
+                        <thead class="thead-default">
+                            <tr>
+                                <th>Date</th>
+                                <th>Client/Supplier</th>
+                                <th>Ammount</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="table-danger ng-cloak" ng-repeat="purchase in transactions">
+                                <td>[[purchase.DocumentDate | date]]</td>
+                                <td>[[purchase.EntityName]]</td>
+                                <td>[[purchase.Items[0].Quantity]] UN</td>
+                                <td class="currency">[[purchase.TotalValue | euro]]</td>
+                            </tr>
+                            <tr class="table-success ng-cloak" ng-repeat="sale in sales">
+                                <td>[[sale.DocumentDate | date]]</td>
+                                <td>[[sale.EntityName]]</td>
+                                <td>[[sale.Items[0].Quantity]] UN</td>
+                                <td class="currency">[[sale.TotalValue | euro]]</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>                
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="/../javascript/main.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="/../javascript/product.js"></script>

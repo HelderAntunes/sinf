@@ -21,8 +21,13 @@ namespace PrimaveraIntegration.Controllers
             return Lib_Primavera.PriIntegration.Encomendas_List();
         }
 
-
         // GET api/cliente/5    
+        public IEnumerable<Lib_Primavera.Model.Purchase> Get(string id)
+        {
+            return Lib_Primavera.PriIntegration.GetAllSalesOfAProduct(id);
+        }
+
+        /*/ GET api/cliente/5    
         public Lib_Primavera.Model.DocVenda Get(string id)
         {
             Lib_Primavera.Model.DocVenda docvenda = Lib_Primavera.PriIntegration.Encomenda_Get(id);
@@ -36,7 +41,7 @@ namespace PrimaveraIntegration.Controllers
             {
                 return docvenda;
             }
-        }
+        }*/
 
 
         public HttpResponseMessage Post(Lib_Primavera.Model.DocVenda dv)

@@ -12,6 +12,7 @@ var sales = require('./pages/sales');
 var purchases = require('./pages/purchases');
 var inventory = require('./pages/inventory');
 var finances = require('./pages/finances');
+var product = require('./pages/product');
 var main = require('./pages/main');
 
 var app = express();
@@ -50,6 +51,12 @@ app.get('/purchases', function (req, res) {
 
 app.get('/purchases_detailed', function (req, res) {
     purchases.getPurchasesDetailed(req, res);
+});
+
+app.get('/product/:id', function (req, res) {
+    console.log(req.params.id);
+    console.log(__dirname);
+    product.getMain(req, res);
 });
 
 app.get('/getSalesByMonth', function(req, res) {

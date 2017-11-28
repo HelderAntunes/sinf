@@ -283,7 +283,7 @@ var updateValue= function($scope, $http){
 }
 
 var updateOutOfStock= function($scope, $http){
-    $scope.step = 2
+    $scope.step = 1
     var url = 'http://localhost:49822/api/Inventory/outOfStock/';
     
     $http.get(url).then(function (success){
@@ -294,6 +294,7 @@ var updateOutOfStock= function($scope, $http){
                 $scope.prodOutOfStock.push(stock);
             }
         }
+        $scope.step++;
     },function (error){
         $scope.contents = [{heading:"Error",description:"Could not load json data"}];
     });

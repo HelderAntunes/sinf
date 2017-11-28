@@ -236,31 +236,56 @@ body{
     height: 75px;
     -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
-  }
-  
-  @-webkit-keyframes spin {
+}
+
+@-webkit-keyframes spin {
     0% { -webkit-transform: rotate(0deg); }
     100% { -webkit-transform: rotate(360deg); }
-  }
-  
-  @keyframes spin {
+}
+
+@keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-  }
+}
 
-  .blur{
+.blur{
     -webkit-filter: blur(5px);
     -moz-filter: blur(5px);
     -o-filter: blur(5px);
     -ms-filter: blur(5px);
     filter: blur(5px);
     opacity: 0.7;
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      display: block;
-  }
-  
-  .month-selector input[type="radio"] {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: block;
+}
+
+.info{
+    margin-top: 10px;
+}
+
+.month-selector input[type="radio"] {
     display: none;
-  }
+}
+
+.table-danger,.table-danger>td,.table-danger>th{
+    background-color:#f5c6cb
+}
+.table-hover .table-danger:hover{
+    background-color:#f1b0b7
+}
+
+.table-hover .table-danger:hover>td,.table-hover .table-danger:hover>th{
+    background-color:#f1b0b7
+}
+
+.table-success,.table-success>td,.table-success>th{
+    background-color:#c3e6cb
+}
+.table-hover .table-success:hover{
+    background-color:#b1dfbb
+}
+.table-hover .table-success:hover>td,.table-hover .table-success:hover>th{
+    background-color:#b1dfbb
+}
