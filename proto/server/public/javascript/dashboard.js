@@ -42,7 +42,7 @@ app.controller('main_controller', function($scope, $http) {
     };
 
     $scope.$watch('step', function() {
-        if($scope.step == 3){                    
+        if($scope.step == 4){                    
             //Unblur container and hide spinner
             $('#loader').hide();
             $('.container').removeClass('blur');
@@ -61,6 +61,7 @@ var updateData= function($scope, $http){
     updateTotalPurchases($scope, $http);
     updateTotaSales($scope, $http);
     updateCustomersInfo($scope, $http);
+    updateInventoryValue($scope, $http);
 
     var data = [
         {
@@ -179,5 +180,36 @@ var updateCustomersInfo = function ($scope, $http) {
     }); 
 }
 
-
+var updateInventoryValue= function($scope, $http){
+    var url = 'http://localhost:49822/api/Inventory/date/' + $scope.chosenYear;
+    
+    if($scope.chosenMonth != null){
+        url += "/" + $scope.chosenMonth;
+    }
+    
+    $http.get(url).then(function (success){
+        var data = [];
+        var categories = [];
+        var value = 0;
+        for (i of success.data) {
+            var name = i.Family || "";
+            if(data[name] !=null)
+                data[name] += i.TotalValue;
+            else
+                data[name] = i.TotalValue; 
+        }
+        
+        for (i in data) {
+            categories.push({
+                name: i,
+                value: data[i] 
+            })
+            value += data[i] ;
+        }
+        $scope.inventory_value = value;
+        $scope.step++;
+    },function (error){
+        $scope.contents = [{heading:"Error",description:"Could not load json data"}];
+    });
+}
 
