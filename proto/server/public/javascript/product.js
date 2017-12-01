@@ -23,7 +23,7 @@ var updateTransactions= function($scope, $http){
     
     $http.get(url).then(function (success){
         console.log(success.data);
-        $scope.transactions = success.data
+        $scope.purchases = success.data
 
         $scope.step++;
     },function (error){
@@ -49,6 +49,7 @@ var updateData= function($scope, $http){
     $scope.step = 0
 
     $scope.transactions=[];
+    $scope.purchases=[];
     $scope.sales=[];
 
     //Blur container and show spinner
@@ -77,6 +78,10 @@ app.controller('product_controller', function($scope, $http) {
             //Unblur container and hide spinner
             $('#loader').hide();
             $('.container').removeClass('blur');
+
+            //Join purchases and sales and order by date
+            $scope.transactions= $scope.sales.concat($scope.purchases);
+            $scope.transactions.sort(function(a,b) {return (a.DocumentDate < b.DocumentDate) ? 1 : ((b.DocumentDate < a.DocumentDate) ? -1 : 0);} );
         }
     });
 

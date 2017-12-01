@@ -52,17 +52,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="table-danger ng-cloak" ng-repeat="purchase in transactions">
-                                <td>[[purchase.DocumentDate | date]]</td>
-                                <td>[[purchase.EntityName]]</td>
-                                <td>[[purchase.Items[0].Quantity]] UN</td>
-                                <td class="currency">[[purchase.TotalValue | euro]]</td>
-                            </tr>
-                            <tr class="table-success ng-cloak" ng-repeat="sale in sales">
-                                <td>[[sale.DocumentDate | date]]</td>
-                                <td>[[sale.EntityName]]</td>
-                                <td>[[sale.Items[0].Quantity]] UN</td>
-                                <td class="currency">[[sale.TotalValue | euro]]</td>
+                            <tr ng-class="transaction.TotalValue > 0 ? 'table-success' : 'table-danger'" class="ng-cloak" ng-repeat="transaction in transactions">
+                                <td>[[transaction.DocumentDate | date]]</td>
+                                <td>[[transaction.EntityName]]</td>
+                                <td>[[transaction.Items[0].Quantity]] UN</td>
+                                <td class="currency">[[transaction.TotalValue | euro]]</td>
                             </tr>
                         </tbody>
                     </table>

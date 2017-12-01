@@ -13,7 +13,7 @@
                     </ul>
                 </div>
                 <div class="btn-group">
-                    <label ng-repeat="month in months" class="btn btn-timeFilter month-selector">
+                    <label ng-repeat="month in months" ng-class="$parent.chosenMonth == month.value ? 'active' : ''" class="btn btn-timeFilter month-selector">
                         <input type="radio" name="options" autocomplete="off" ng-model="$parent.chosenMonth" ng-value="[[month.value]]" ng-change="update()">[[month.name]]
                     </label>
                 </div>
