@@ -62,6 +62,7 @@ var updateData= function($scope, $http){
     updateTotaSales($scope, $http);
     updateCustomersInfo($scope, $http);
     updateInventoryValue($scope, $http);
+    updateGrossProfitRatio($scope, $http);
 
     var data = [
         {
@@ -213,3 +214,34 @@ var updateInventoryValue= function($scope, $http){
     });
 }
 
+var updateGrossProfitRatio= function($scope, $http){
+    var requestUrl = address + 'getBalancetes?year=' + $scope.chosenYear;
+    if ($scope.chosenMonth ) requestUrl += '&month=' + $scope.chosenMonth;
+    
+    $http.get(requestUrl).then(function (success){
+        var balancetes = success.data;
+        var netSales = 0;
+        var costOfGoodsSold = 0;
+    
+        for (var i = 0; i < balancetes.length; i++) {
+            var balancete = balancetes[i];    
+            for (var j = 0; j < balancete.length; j++) 
+                if (balancete[j].AccountID == '61') {
+                    costOfGoodsSold += balancete[j].DebtMovements;
+                }
+                else if (balancete[j].AccountID == '71') {
+                    netSales += balancete[j].CreditMovements;
+                }
+        }
+
+        if(netSales == 0){
+            $scope.gross_profit_ratio = null;
+        }else{
+            $scope.gross_profit_ratio = (netSales - costOfGoodsSold)/ netSales;
+        }
+        $scope.step++;
+
+    },function (error){
+        $scope.contents = [{heading:"Error",description:"Could not load json data"}];
+    });
+}
