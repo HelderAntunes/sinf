@@ -52,7 +52,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-class="transaction.TotalValue > 0 ? 'table-success' : 'table-danger'" class="ng-cloak" ng-repeat="transaction in transactions">
+                            <tr ng-class="transaction.TotalValue > 0 ? 'table-success' : 'table-danger'" class="ng-cloak" ng-repeat="transaction in page">
                                 <td>[[transaction.DocumentDate | date]]</td>
                                 <td>[[transaction.EntityName]]</td>
                                 <td>[[transaction.Items[0].Quantity]] UN</td>
@@ -60,6 +60,24 @@
                             </tr>
                         </tbody>
                     </table>
+                    <!-- pager -->
+                    <ul ng-if="pager.pages.length" class="pagination">
+                        <li ng-class="pager.currentPage === 1 ? 'disabled' : ''">
+                            <a ng-click="setPage(1)">First</a>
+                        </li>
+                        <li ng-class="pager.currentPage === 1  ? 'disabled' : ''">
+                            <a ng-click="setPage(pager.currentPage - 1)">&laquo;</a>
+                        </li>
+                        <li ng-repeat="page in pager.pages" ng-class="pager.currentPage === page ? 'active' : ''">
+                            <a ng-click="setPage(page)">[[page]]</a>
+                        </li>               
+                        <li ng-class="pager.currentPage === pager.totalPages ? 'disabled' : ''">
+                            <a ng-click="setPage(pager.currentPage + 1)">&raquo;</a>
+                        </li>
+                        <li ng-class="pager.currentPage === pager.totalPages ? 'disabled' : ''">
+                            <a ng-click="setPage(pager.totalPages)">Last</a>
+                        </li>
+                    </ul>
                 </div>                
             </div>
         </div>
@@ -74,4 +92,5 @@
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
 <script src="/../javascript/product.js"></script>
