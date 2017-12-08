@@ -1,175 +1,61 @@
-$(document).ready(function () {
+var createInventoryMovementsChart= function(inMovements, outMovements, month) {
+    var subtitle = 'in Euros per day';
+    var tooltip = '{point.x:%e/%b}: {point.y:.2f} €'
 
-  $('#inventory-tab').addClass('active');
-/*
-    Highcharts.chart('inventory-value', {
+    if(month == null){
+        subtitle = 'in Euros per month';
+        tooltip = '{point.x:%b}: {point.y:.2f} €'
+    }
+    Highcharts.chart('inventory-movements', {
         chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: 0,
-            plotShadow: false
+            type: 'spline'
         },
         title: {
-            text: 'Inventory Value'
+            text: 'Inventory Movements'
         },
         subtitle: {
-            text: 'by Category'
+            text: subtitle
         },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        plotOptions: {
-            pie: {
-                dataLabels: {
-                    enabled: false,
-                    distance: -30,
-                    style: {
-                        fontWeight: 'bold',
-                        color: 'white'
-                    }
-                },
-                startAngle: -180,
-                endAngle: 180,
-                showInLegend: true,
-                center: ['50%', '50%']
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: { // don't display the dummy year
+                day: '%e/%b',
+                week: '%e/%b',
+                month: '%b',
+                year: '%b'
+            },
+            title: {
+                text: 'Date'
             }
         },
+        yAxis: {
+            title: {
+                text: 'Total (€)'
+            },
+            min: 0
+        },
+        tooltip: {
+            headerFormat: '<b>{series.name}</b><br>',
+            pointFormat: tooltip
+        },
+    
+        plotOptions: {
+            spline: {
+                marker: {
+                    enabled: true
+                }
+            }
+        },
+    
         series: [{
-            type: 'pie',
-            name: 'Inventory Value Percentage',
-            innerSize: '50%',
-            data: [
-                ['Category 1', 10.34],
-                ['Category 2', 46.33],
-                ['Category 3', 24.03],
-                ['Category 4', 4.77],
-                ['Category 5', 10.04]
-            ]
+            name: 'Out Movements',
+            data: outMovements
+        }, {
+            name: 'In Movements',
+            data: inMovements
         }]
     });
-*/
-    Highcharts.chart('best-seller-inventory', {
-      chart: {
-          type: 'column'
-      },
-      title: {
-          text: 'Best Seller Stock'
-      },
-      subtitle: {
-          text: 'Click the columns to view stock history over the last days'
-      },
-      xAxis: {
-          type: 'category'
-      },
-      yAxis: {
-          title: {
-              text: 'Unit in stock'
-          }
-
-      },
-      legend: {
-          enabled: false
-      },
-      plotOptions: {
-          series: {
-              borderWidth: 0,
-              dataLabels: {
-                  enabled: true,
-                  format: '{point.y}'
-              }
-          }
-      },
-
-      tooltip: {
-          headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-          pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b> of total<br/>'
-      },
-
-      series: [{
-          name: 'Best Sellers',
-          colorByPoint: true,
-          data: [{
-              name: 'Product 7',
-              y: 568,
-              drilldown: 'Product 7'
-          }, {
-              name: 'Product 1',
-              y: 25,
-              drilldown: 'Product 1'
-          }, {
-              name: 'Product 6',
-              y: 120,
-              drilldown: 'Product 6'
-          }]
-      }],
-      drilldown: {
-          series: [{
-              name: 'Product 7',
-              id: 'Product 7',
-              data: [
-                  [
-                      '13 Oct',
-                      368
-                  ],
-                  [
-                      '14 Oct',
-                      24
-                  ],
-                  [
-                      '15 Oct',
-                      700
-                  ],
-                  [
-                      '16 Oct',
-                      568
-                  ]
-              ]
-          }, {
-              name: 'Product 1',
-              id: 'Product 1',
-              data: [
-                  [
-                      '13 Oct',
-                      276
-                  ],
-                  [
-                      '14 Oct',
-                      132
-                  ],
-                  [
-                      '15 Oct',
-                      56
-                  ],
-                  [
-                      '16 Oct',
-                      25
-                  ]
-              ]
-          }, {
-              name: 'Product 6',
-              id: 'Product 6',
-              data: [
-                  [
-                      '13 Oct',
-                      324
-                  ],
-                  [
-                      '14 Oct',
-                      77
-                  ],
-                  [
-                      '15 Oct',
-                      240
-                  ],
-                  [
-                      '16 Oct',
-                      120
-                  ]
-              ]
-          }]
-      }
-    });
-
-});
+}
 
 var best = function(array, n){
     var sArray = array.sort(function(a, b){
@@ -279,6 +165,51 @@ var updateValue= function($scope, $http){
     });
 }
 
+var updateStockMovements= function($scope, $http){
+    var url = 'http://localhost:49822/api/Inventory/';
+    var date_selection = '?year=' + $scope.chosenYear;
+    
+    if($scope.chosenMonth != null){
+        date_selection += "&month=" + $scope.chosenMonth;
+    }
+   
+    $scope.inMovements = [];
+    $scope.outMovements = [];
+    
+    $http.get(url+'outMovements'+date_selection).then(function (success){
+        var outMoves = success.data;
+
+        outMoves.forEach(function(movement) {
+            var date = new Date(movement.data);
+
+            $scope.outMovements.push([Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()), movement.valor],)
+        })
+
+        console.log($scope.outMovements);
+        
+        $scope.step++;
+    },function (error){
+        $scope.contents = [{heading:"Error",description:"Could not load json data"}];
+    });
+
+    $http.get(url+'inMovements'+date_selection).then(function (success){
+        var inMoves = success.data;
+
+        inMoves.forEach(function(movement) {
+            var date = new Date(movement.data);
+            console.log(date);
+            console.log(movement.data);
+            $scope.inMovements.push([Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()), movement.valor],)
+        })
+
+        console.log($scope.inMovements);
+  
+        $scope.step++;
+    },function (error){
+        $scope.contents = [{heading:"Error",description:"Could not load json data"}];
+    });
+}
+
 var updateOutOfStock= function($scope, $http){
     $scope.step = 1
     var url = 'http://localhost:49822/api/Inventory/outOfStock/';
@@ -305,8 +236,7 @@ var updateData= function($scope, $http){
     $('.container').addClass('blur');
     
     updateValue($scope, $http);
-    //updateSuppliers($scope, $http);
-    //updateGraph($scope, $http);
+    updateStockMovements($scope, $http);
 }
 
 var app = angular.module('inventory_app', []).config(['$interpolateProvider', function ($interpolateProvider) {
@@ -330,9 +260,11 @@ app.controller('inventory_controller', function($scope, $http) {
     //init vars
     var today = new Date();
     
-    $scope.chosenYear = today.getFullYear();
+    $scope.chosenYear = today.getFullYear() - 1;
     $scope.chosenMonth = null;
     $scope.prodOutOfStock = [];
+    $scope.inMovements = [];
+    $scope.outMovements = [];
         
     $scope.years = [];
     for(var i = 2015; i <= today.getFullYear(); i++){
@@ -342,7 +274,8 @@ app.controller('inventory_controller', function($scope, $http) {
     {value: 7, name: 'Jul'},{value: 8, name: 'Aug'},{value: 9, name: 'Sep'},{value: 10, name: 'Oct'},{value: 11, name: 'Nov'},{value: 12, name: 'Dec'}];
     
     $scope.$watch('step', function() {
-        if($scope.step == 3){                    
+        if($scope.step == 5){
+            createInventoryMovementsChart($scope.inMovements,$scope.outMovements, $scope.chosenMonth);                    
             //Unblur container and hide spinner
             $('#loader').hide();
             $('.container').removeClass('blur');
