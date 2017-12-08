@@ -24,6 +24,5 @@ namespace PrimaveraIntegration.Lib_Primavera.Model
             get;
             set;
         }
-
     }
 }
