@@ -3,3 +3,4 @@ proto/PrimaveraIntegration/obj/*
 proto/PrimaveraIntegration/bin/*
 proto/PrimaveraIntegration/PrimaveraIntegration.v12.suo
 proto/PrimaveraIntegration/PrimaveraIntegration.csproj.user
+final/server/package-lock.json

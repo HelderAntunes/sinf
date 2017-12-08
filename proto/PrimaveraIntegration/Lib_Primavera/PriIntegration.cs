@@ -361,6 +361,112 @@ namespace PrimaveraIntegration.Lib_Primavera
 
         }
 
+        public static List<Lib_Primavera.Model.StockMovement> ListSTKMovementIn(string year, string month)
+        {
+            StdBELista objList;
+            List<Model.StockMovement> listSums = new List<Model.StockMovement>();
+
+            if (PriEngine.InitializeCompany(PrimaveraIntegration.Properties.Settings.Default.Company.Trim(), PrimaveraIntegration.Properties.Settings.Default.User.Trim(), PrimaveraIntegration.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                string monthSeletion = null;
+                if (month != null)
+                {
+                    monthSeletion = " AND month(LinhasSTK.Data) = " + month;
+                }
+
+                string query = String.Format(
+                    @"SELECT 
+                    year(LinhasSTK.Data) as Ano, 
+                    month(LinhasSTK.Data) as Mes,
+                    day(LinhasSTK.Data) as Dia,
+                    SUM(LinhasSTK.Quantidade) as Quantidade,
+                    SUM(
+                    Case LinhasSTK.TipoDoc When 'VNC' then (1)else 1 end *
+                    round(isnull(LinhasSTK.Quantidade * LinhasSTK.FactorConv ,'0'),Arred)* round(PCM + DifPCMedio, Arred) ) as Total
+                    FROM   
+                    (((((LinhasSTK LinhasSTK INNER JOIN Artigo Artigo ON LinhasSTK.Artigo=Artigo.Artigo) 
+                    LEFT OUTER JOIN CabecSTK CabecSTK ON LinhasSTK.IdCabecOrig=CabecSTK.Id) 
+                        LEFT OUTER JOIN CabecDoc CabecDoc ON LinhasSTK.IdCabecOrig=CabecDoc.Id) 
+                            LEFT OUTER JOIN CabecCompras CabecCompras ON LinhasSTK.IdCabecOrig=CabecCompras.Id) 
+                                LEFT OUTER JOIN CabecInternos CabecInternos ON LinhasSTK.IdCabecOrig=CabecInternos.Id) 
+                                    LEFT OUTER JOIN Familias Familias ON Artigo.Familia=Familias.Familia 
+                    WHERE  
+                    (year(LinhasSTK.Data) = {0} {1})
+                    AND 
+                    LinhasSTK.TipoDoc in ('VFA','VFP', 'AIP', 'VD')
+                    AND
+                    (LinhasSTK.EntradaSaida=N'E' OR LinhasSTK.EntradaSaida=N'I') 
+                    GROUP BY year(LinhasSTK.Data), month(LinhasSTK.Data), day(LinhasSTK.Data)",
+                    year, monthSeletion);
+                objList = PriEngine.Engine.Consulta(query);
+                while (!objList.NoFim())
+                {
+                    Model.StockMovement movement = new Model.StockMovement();
+                    movement.data = new DateTime(objList.Valor("Ano"),objList.Valor("Mes"),objList.Valor("Dia"));
+                    movement.valor = objList.Valor("Total");
+                    movement.quantidade = objList.Valor("Quantidade");
+                    listSums.Add(movement);
+                    objList.Seguinte();
+                }
+                return listSums;
+            }
+            else
+                return null;
+        }
+        public static List<Lib_Primavera.Model.StockMovement> ListSTKMovementOut(string year, string month)
+        {
+            StdBELista objList;
+            List<Model.StockMovement> listSums = new List<Model.StockMovement>();
+
+            if (PriEngine.InitializeCompany(PrimaveraIntegration.Properties.Settings.Default.Company.Trim(), PrimaveraIntegration.Properties.Settings.Default.User.Trim(), PrimaveraIntegration.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                string monthSelection = null;
+                if (month != null)
+                {
+                    monthSelection = " AND month(LinhasSTK.Data) = " + month;
+                }
+
+                string query = String.Format(
+                    @"SELECT 
+                    year(LinhasSTK.Data) as Ano, 
+                    month(LinhasSTK.Data) as Mes,
+                    day(LinhasSTK.Data) as Dia,
+                    SUM(LinhasSTK.Quantidade) as Quantidade,
+                    SUM(
+                    Case LinhasSTK.TipoDoc When 'VNC' then (1)else 1 end *
+                    round(isnull(LinhasSTK.Quantidade * LinhasSTK.FactorConv ,'0'),Arred)* round(PCM + DifPCMedio, Arred) ) as Total
+                    FROM   
+                    (((((LinhasSTK LinhasSTK INNER JOIN Artigo Artigo ON LinhasSTK.Artigo=Artigo.Artigo) 
+                    LEFT OUTER JOIN CabecSTK CabecSTK ON LinhasSTK.IdCabecOrig=CabecSTK.Id) 
+                        LEFT OUTER JOIN CabecDoc CabecDoc ON LinhasSTK.IdCabecOrig=CabecDoc.Id) 
+                            LEFT OUTER JOIN CabecCompras CabecCompras ON LinhasSTK.IdCabecOrig=CabecCompras.Id) 
+                                LEFT OUTER JOIN CabecInternos CabecInternos ON LinhasSTK.IdCabecOrig=CabecInternos.Id) 
+                                    LEFT OUTER JOIN Familias Familias ON Artigo.Familia=Familias.Familia 
+                    WHERE  
+                    (year(LinhasSTK.Data) = {0} {1})
+                    AND 
+                    NOT LinhasSTK.TipoDoc in ('GR')
+                    AND
+                    (LinhasSTK.EntradaSaida=N'S' OR LinhasSTK.EntradaSaida=N'S') 
+                    GROUP BY year(LinhasSTK.Data), month(LinhasSTK.Data), day(LinhasSTK.Data)",
+                    year, monthSelection);
+                objList = PriEngine.Engine.Consulta(query);
+
+                while (!objList.NoFim())
+                {
+                    Model.StockMovement movement = new Model.StockMovement();
+                    movement.data = new DateTime(objList.Valor("Ano"), objList.Valor("Mes"), objList.Valor("Dia"));
+                    movement.valor = objList.Valor("Total");
+                    movement.quantidade = objList.Valor("Quantidade");
+                    listSums.Add(movement);
+                    objList.Seguinte();
+                }
+                return listSums;
+            }
+            else
+                return null;
+        }
+
         # endregion
 
 
@@ -1258,8 +1364,6 @@ namespace PrimaveraIntegration.Lib_Primavera
             }
         }
 
-     
-
         public static List<Model.DocVenda> Encomendas_List()
         {
             
@@ -1310,9 +1414,6 @@ namespace PrimaveraIntegration.Lib_Primavera
             }
             return listdv;
         }
-
-
-       
 
         public static Model.DocVenda Encomenda_Get(string numdoc)
         {
