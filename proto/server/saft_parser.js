@@ -15,7 +15,7 @@ fs.readFile('../assets/SAFT_DEMOSINF_01-01-2016_31-12-2016.xml', function(err, d
         writeSalesInvoices(getSalesInvoices(result)); 
         writeAccounts(getAccounts(result)); 
         writeTransactions(getTransactions(result));
-          
+        writeProducts(getProducts(result));
         /* var test = getTransactions(result);   
         fs.writeFile('saft_in_json.js', JSON.stringify(test, null, 2), function (err) {
             if (err) throw err;
@@ -36,6 +36,10 @@ function getAccounts(saftParsed) {
     return saftParsed['AuditFile']['MasterFiles'][0]['GeneralLedgerAccounts'][0]['Account'];
 }
 
+function getProducts(saftParsed) {
+    return saftParsed['AuditFile']['MasterFiles'][0]['Product'];
+}
+
 function getTransactions(saftParsed) {
     var transactions = [];
     var journals = saftParsed['AuditFile']['GeneralLedgerEntries'][0]['Journal'];
@@ -47,6 +51,25 @@ function getTransactions(saftParsed) {
         if (journalTransactions) transactions = transactions.concat(journalTransactions);
     }
     return transactions;
+}
+
+function writeProducts(productsJSON) {
+    Sales.Product.remove({}, function (err) {
+        if (err) return handleError(err);
+
+        for (var i = 0; i < productsJSON.length; i++) {
+            var product = productsJSON[i];
+            var product_doc = new Sales.Product({ 
+                ProductType:  getValueOfAttribute(product.ProductType),
+                ProductCode: getValueOfAttribute(product.ProductCode),  
+                ProductGroup: getValueOfAttribute(product.ProductGroup),  
+                ProductDescription: getValueOfAttribute(product.ProductDescription),  
+                ProductNumberCode: getValueOfAttribute(product.ProductNumberCode),  
+            });
+        
+            product_doc.save(function (err) { if (err) console.log(err);});
+        }
+    });
 }
 
 function writeCustomers(customersJSON) {

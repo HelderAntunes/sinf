@@ -1,5 +1,13 @@
 var mongoose = require('mongoose');
 
+var productSchema = mongoose.Schema({
+    ProductType: String,
+    ProductCode: String, 
+    ProductGroup: String,
+    ProductDescription: String,
+    ProductNumberCode: String
+});
+
 var lineSchema = mongoose.Schema({
     lineNumber: String,
     productCode: String,
@@ -28,8 +36,10 @@ var salesInvoicesSchema = mongoose.Schema({
 
 var SalesInvoices = mongoose.model('SalesInvoices', salesInvoicesSchema);
 var Line = mongoose.model('Line', lineSchema);
+var Product = mongoose.model('Product', productSchema);
 
 module.exports = {
   SalesInvoices : SalesInvoices,
   Line : Line,
+  Product: Product
 }

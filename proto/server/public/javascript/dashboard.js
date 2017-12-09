@@ -61,26 +61,42 @@ var updateData= function($scope, $http){
     updateTotalPurchases($scope, $http);
     updateTotaSales($scope, $http);
     updateCustomersInfo($scope, $http);
+    updateSalesByProductGroup($scope, $http);
+}
 
-    var data = [
-        {
-            name: 'Plants',
-            y: 60
+var updateSalesByProductGroup = function ($scope, $http) {
+
+    var url = address + 'getSalesByProductGroup?year=' + $scope.chosenYear;
+    if ($scope.chosenMonth) url += '&month=' + $scope.chosenMonth;
+    $http.get(url).then(
+        function (success) {
+            var productGroups = success.data;
+            var data = [];
+            var total_items_selled = 0;
+            for (var i = 0; i < productGroups.length; i++) 
+                total_items_selled += productGroups[i].itemsSelled;
+
+            var total_items_selected = 0;
+            for (var i = 0; i < productGroups.length && i < 4; i++) {
+                total_items_selected += productGroups[i].itemsSelled;
+                data.push({
+                    name: productGroups[i].name,
+                    y: productGroups[i].itemsSelled / total_items_selled
+                });
+            }
+            data.push({
+                name: 'Others',
+                y: total_items_selected / total_items_selled
+            })
+            createChart(data);
+            $scope.step++;
         },
-        {
-            name: 'Chairs',
-            y: 20
-        },
-        {
-            name: 'Windows',
-            y: 13.02
-        },
-        {
-            name: 'Tables',
-            y: 7.07
-        }]
-        
-    createChart(data);
+        function (error) {
+            $scope.contents = [{heading:"Error",description:"Could not load json data"}];
+        }
+    );
+
+     
 }
 
 var createChart = function (data) {

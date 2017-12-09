@@ -355,6 +355,12 @@ function compareCustomersBySalesDec(a,b) {
     return 0;
 }
 
+function compareProductGroupBySalesDec(a, b) {
+    if (a.itemsSelled < b.itemsSelled) return 1;
+    if (a.itemsSelled > b.itemsSelled) return -1;
+    return 0;
+}
+
 function compareAccountsIdDec(account1, account2) {
     if (account1.AccountID < account2.AccountID) return 1;
     if (account1.AccountID > account2.AccountID) return -1;
@@ -391,4 +397,5 @@ module.exports = {
     calcBalanco: calcBalanco,
     calcBalancetes: calcBalancetes,
     calcCumulativeBalancetes: calcCumulativeBalancetes,
+    compareProductGroupBySalesDec: compareProductGroupBySalesDec,
 }

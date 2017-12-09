@@ -359,6 +359,71 @@ app.get('/getBalancos', function(req, res) {
     });
 });
 
+app.get('/getSalesByProductGroup', function (req, res) {
+    var month = req.query.month, year = req.query.year;
+    var dataRange = month == null ? utils.getYearDateRange(year) : utils.getMonthDateRange(year, month);
+
+    var Sales = require('./database/Sales');
+
+    Sales.SalesInvoices.find({
+        InvoiceDate: {
+            $gte: dataRange.start,
+            $lt: dataRange.end },
+        InvoiceType: {$in: ['FT', 'VD']},
+        }, 
+        function (err, salesInvoices) {
+            if (err) return console.error(err);
+
+            Sales.Product.find({}, function (err, products) {
+                salesInvoices = JSON.parse(JSON.stringify(salesInvoices));
+                products = JSON.parse(JSON.stringify(products));
+
+                for (var i = 0; i < products.length; i++) {
+                    products[i]['itemsSelled'] = 0;
+                }
+
+                for (var i = 0; i < salesInvoices.length; i++) {
+                    var lines = salesInvoices[i].Lines;
+                    
+                    for (var j = 0; j < lines.length; j++) {
+                        var productCode = lines[j].productCode;
+                        var quantity = parseInt(lines[j].quantity);
+
+                        for (var k = 0; k < products.length; k++) 
+                            if (products[k].ProductCode == productCode) 
+                                products[k]['itemsSelled'] += quantity;
+                    }
+                }
+
+                var productGroups = [];
+                for (var i = 0; i < products.length; i++) {
+                    var found = false;
+                    for (var j = 0; j < productGroups.length; j++) 
+                        if (productGroups['name'] == products[i].ProductGroup) {
+                            found = true;
+                            break;
+                        }
+                    if (found) continue;
+
+                    productGroups.push({'name': products[i].ProductGroup, 'itemsSelled': 0});
+                }
+
+                for (var i = 0; i < products.length; i++) {
+                    if (products[i]['itemsSelled'] > 0) {
+                        var productGroup = products[i].ProductGroup;
+
+                        for (var j = 0; j < productGroups.length; j++) 
+                            if (productGroups[i]['name'] == products[i].ProductGroup) 
+                                productGroups[i]['itemsSelled'] += products[i].itemsSelled;
+                    }
+                }
+
+                productGroups = productGroups.sort(utils.compareProductGroupBySalesDec);
+                res.json(productGroups);
+            });
+        });
+});
+
 var server = app.listen(8081, function () {
    var port = server.address().port;
    console.log("Listening at port %s", port)
