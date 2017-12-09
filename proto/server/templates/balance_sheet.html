@@ -1,0 +1,173 @@
+<div class="container" ng-app="balance_sheet_app" ng-controller="balance_sheet_controller">
+    
+    <div class="row">
+        <div class="col-sm-12 col-md-10 col-md-offset-1">
+            <div class="btn-toolbar" role="toolbar" aria-label="Filter Toolbar">
+                <div class="btn-group dropdown" role="group" aria-label="Year group">
+                    <button class="btn btn-timeFilter dropdown-toggle ng-cloak" type="button" data-toggle="dropdown">[[chosenYear]]
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="year in years"><a href="" ng-click="chooseYear(year)">[[year]]</a></li>
+                    </ul>
+                </div>
+                <div class="btn-group">
+                    <label ng-repeat="month in months" class="btn btn-timeFilter month-selector">
+                        <input type="radio" name="options" autocomplete="off" ng-model="$parent.chosenMonth" ng-value="[[month.value]]" ng-change="update()">[[month.name]]
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <hr/>
+    
+    <div class="row">
+      <div class="col-sm-3">
+        <h4 class="text-center" style="color: #8a6d3b">Balance sheet</h4>
+        <div class="row text-center">
+            <div class="col-sm-12">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <h4>Assets</h4>
+                        <h3>[[assets | euro]]</h3>
+                    </li>
+                    <li class="list-group-item">
+                        <h4>Liabilities</h4>
+                        <h3>[[liabilities | euro]]</h3>
+                    </li>
+                    <li class="list-group-item">
+                        <h4>Equity</h4>
+                        <h3>[[equity | euro]]</h3>
+                    </li>
+                </ul>
+            </div>
+        </div>
+      </div>
+      <div class="col-sm-9">
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Current Assets</th>
+                <th>[[dateTable]]</th>
+              </tr>
+            </thead>
+            <tbody> 
+              <tr>
+                <td>Cash and bank deposits</td>
+                <td>[[cashAndBankDeposits | euro]]</td>
+              </tr>  
+              <tr>
+                <td>Inventory </td>
+                <td>[[inventory | euro]]</td>
+              </tr>
+              <tr>
+                <td>Clients </td>
+                <td>[[clients | euro]]</td>
+              </tr>
+              <tr>
+                <td>State and other public entities</td>
+                <td>[[stateAndOtherPubEntAssets | euro]]</td>
+              </tr>
+              <tr>
+                <td>Other current assets</td>
+                <td>[[otherCurrAssets | euro]]</td>
+              </tr>
+              <tr>
+                <td>Total current assets</td>
+                <td>[[totalCurrAssets | euro]]</td>
+              </tr>
+            </tbody>
+        </table>
+        <hr/>
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Non Current Assets</th>
+                <th>[[dateTable]]</th>
+              </tr>
+            </thead>
+            <tbody> 
+              <tr>
+                <td>Property</td>
+                <td>[[property | euro]]</td>
+              </tr>  
+              <tr>
+                <td>Other Debtors and Creditors</td>
+                <td>[[otherDebtorsAndCreditors | euro]]</td>
+              </tr>
+              <tr>
+                <td>Other non current assets</td>
+                <td>[[otherNonCurrAssets | euro]]</td>
+              </tr>
+              <tr>
+                <td>Total non current assets</td>
+                <td>[[totalNonCurrAssets | euro]]</td>
+              </tr> 
+            </tbody>
+        </table>
+        <hr/>
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Current Liabilities</th>
+                <th>[[dateTable]]</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Suppliers</td>
+                <td>[[suppliers | euro]]</td>
+              </tr>
+              <tr>
+                <td>Customer Advance</td>
+                <td>[[customerAdvance | euro]]</td>
+              </tr>
+              <tr>
+                <td>State and other public entities</td>
+                <td>[[stateAndOtherPubEntAssetsLiabilities | euro]]</td>
+              </tr>
+              <tr>
+                <td>Other bills to pay</td>
+                <td>[[otherBillsToPay | euro]]</td>
+              </tr>
+              <tr>
+                <td>Total current liablities</td>
+                <td>[[totalCurrLiabilities | euro]]</td>
+              </tr>
+            </tbody>
+        </table>
+        <hr/>
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Non Current Liabilities</th>
+                <th>[[dateTable]]</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Provisions</td>
+                <td>[[provisions | euro]]</td>
+              </tr>
+              <tr>
+                <td>Long-term debt</td>
+                <td>[[customerAdvance | euro]]</td>
+              </tr>
+              <tr>
+                <td>Other non current liabilities</td>
+                <td>[[otherNonCurrentLiabilities | euro]]</td>
+              </tr>
+              <tr>
+                <td>Total non current liablities</td>
+                <td>[[totalNonCurrLiabilities | euro]]</td>
+              </tr>
+            </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+<script src="../javascript/main.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="../javascript/balance_sheet.js"></script>

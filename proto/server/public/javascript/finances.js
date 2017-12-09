@@ -171,11 +171,11 @@ var updateGrossMarginMonth = function($scope, balancetes) {
         var balancete = balancetes[i];
 
         for (var j = 0; j < balancete.length; j++) 
-            if (balancete[j].AccountID == '61') {
+            if (balancete[j].AccountID == '61' || balancete[j].AccountID == '62') {
                 costsOfGoodSold.push(balancete[j].DebtMovements);
                 $scope.costOfGoodsSold += balancete[j].DebtMovements;
             }
-            else if (balancete[j].AccountID == '71') {
+            else if (balancete[j].AccountID == '71' || balancete[j].AccountID == '72') {
                 netSales.push(balancete[j].CreditMovements);
                 $scope.netSales += balancete[j].CreditMovements;
             }
