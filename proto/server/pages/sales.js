@@ -23,13 +23,7 @@ exports.getSales = function (req, res) {
         
             var salesTpl = fs.readFileSync('./templates/sales.html', {encoding: 'utf-8'});
             compiledTemplate = new jSmart(salesTpl);
-            var outputSales = compiledTemplate.fetch({
-                totalSales: getTotalSales(salesInvoices),
-                period: 'year',
-                salesPerPeriod: utils.formatNumber(25),
-                costumerNames: getTopCustomersNames(customers, 5),
-                costumerSales: getTopCustomersSales(customers, 5),
-            });
+            var outputSales = compiledTemplate.fetch();
             
             var footerTpl = fs.readFileSync('./templates/common/footer.html', {encoding: 'utf-8'});
             compiledTemplate = new jSmart(footerTpl);

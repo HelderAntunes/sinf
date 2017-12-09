@@ -168,7 +168,6 @@ function calcBalancetes(transactions, accounts, year, month) {
         for (var i = 0; i < numDays; i++) 
             balancetes.push(calcBalancete(transactionsByDay[i], accounts));
     }
-
     return balancetes;
 }
 
@@ -342,7 +341,6 @@ function calcBalanco(balancete) {
     balanco.liabilities.value = balanco.liabilities.suppliers + balanco.liabilities.customerDownPayment + 
                                 balanco.liabilities.stateAndOtherPubEntAssetsLiabilities + balanco.liabilities.otherLiabilities;
     balanco.equity.value = balanco.assets.value - balanco.liabilities.value;
-    console.log(balanco);
     return balanco;
 }
 

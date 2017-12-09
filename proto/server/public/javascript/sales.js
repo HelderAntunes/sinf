@@ -60,8 +60,8 @@ var updateData = function($scope, $http) {
 
 var updateDataCallback = function($scope, $http, data) {
     updateOverview($scope, data);
-    updateChart($scope, data);
     updateCustomers($scope, $http, data);
+    updateChart($scope, data);
 } 
 
 var updateOverview = function($scope, data) {
@@ -170,7 +170,7 @@ var updateCustomers = function ($scope, $http) {
 
     $http.get(url).then(function (success) {
         $scope.customers = [];
-        for (var i = 0; i < success.data.length; i++) {
+        for (var i = 0; i < success.data.length && i < 5; i++) {
             if (success.data[i].sales <= 0) break;
             $scope.customers.push(success.data[i]);
         }

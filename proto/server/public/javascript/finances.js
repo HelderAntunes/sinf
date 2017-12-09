@@ -53,7 +53,7 @@ var updateData = function($scope, $http) {
         }
     );
 
-    requestUrl = address + 'getBalancos?year=' + $scope.chosenYear;
+    var requestUrl = address + 'getBalancos?year=' + $scope.chosenYear;
     if ($scope.chosenMonth ) requestUrl += '&month=' + $scope.chosenMonth;
     $http.get(requestUrl).then(
         function (success) {
@@ -63,6 +63,11 @@ var updateData = function($scope, $http) {
             $scope.contents = [{heading:"Error",description:"Could not load json data"}];
         }
     );
+}
+
+var balancetesCallback = function($scope, $http, balancetes) {
+    if ($scope.chosenMonth) updateGrossMarginMonth($scope, balancetes);
+    else updateGrossMarginYear($scope, balancetes);
 }
 
 var balancosCallback = function($scope, $http, balancos) {
@@ -156,14 +161,10 @@ var updateAssetsAndLiabilitiesMonth = function($scope, balancos) {
     });
 }
 
-var balancetesCallback = function($scope, $http, balancetes) {
-    if ($scope.chosenMonth) updateGrossMarginMonth($scope, balancetes);
-    else updateGrossMarginYear($scope, balancetes);
-}
-
 var updateGrossMarginMonth = function($scope, balancetes) {    
-    var costsOfGoodSold = [];
-    var netSales = [];
+    var numDaysOfMonth = daysInMonth($scope.chosenYear, $scope.chosenMonth);
+    var costsOfGoodSold = Array.apply(null, Array(numDaysOfMonth)).map(Number.prototype.valueOf,0); // init array to zero;
+    var netSales = Array.apply(null, Array(numDaysOfMonth)).map(Number.prototype.valueOf,0); // init array to zero;
     $scope.netSales = 0;
     $scope.costOfGoodsSold = 0;
 
@@ -172,11 +173,11 @@ var updateGrossMarginMonth = function($scope, balancetes) {
 
         for (var j = 0; j < balancete.length; j++) 
             if (balancete[j].AccountID == '61' || balancete[j].AccountID == '62') {
-                costsOfGoodSold.push(balancete[j].DebtMovements);
+                costsOfGoodSold[i] += balancete[j].DebtMovements;
                 $scope.costOfGoodsSold += balancete[j].DebtMovements;
             }
             else if (balancete[j].AccountID == '71' || balancete[j].AccountID == '72') {
-                netSales.push(balancete[j].CreditMovements);
+                netSales[i] += balancete[j].CreditMovements;
                 $scope.netSales += balancete[j].CreditMovements;
             }
     }
@@ -214,8 +215,8 @@ var updateGrossMarginMonth = function($scope, balancetes) {
 }
 
 var updateGrossMarginYear = function($scope, balancetes) {    
-    var costsOfGoodSold = [];
-    var netSales = [];
+    var costsOfGoodSold = Array.apply(null, Array(12)).map(Number.prototype.valueOf,0); // init array to zero;
+    var netSales = Array.apply(null, Array(12)).map(Number.prototype.valueOf,0); // init array to zero;
     $scope.netSales = 0;
     $scope.costOfGoodsSold = 0;
 
@@ -223,12 +224,12 @@ var updateGrossMarginYear = function($scope, balancetes) {
         var balancete = balancetes[i];
 
         for (var j = 0; j < balancete.length; j++) 
-            if (balancete[j].AccountID == '61') {
-                costsOfGoodSold.push(balancete[j].DebtMovements);
+            if (balancete[j].AccountID == '61' || balancete[j].AccountID == '62') {
+                costsOfGoodSold[i] += balancete[j].DebtMovements;
                 $scope.costOfGoodsSold += balancete[j].DebtMovements;
             }
-            else if (balancete[j].AccountID == '71') {
-                netSales.push(balancete[j].CreditMovements);
+            else if (balancete[j].AccountID == '71' || balancete[j].AccountID == '72') {
+                netSales[i] += balancete[j].CreditMovements;
                 $scope.netSales += balancete[j].CreditMovements;
             }
     }
