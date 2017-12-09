@@ -71,6 +71,30 @@ var updateData = function($scope, $http){
 
 var balanceSheetCallback = function($scope, $http, balanceSheet) {
     console.log(balanceSheet);
+
+    var currAssets = balanceSheet.assets.curr;
+    var nonCurrAssets = balanceSheet.assets.nonCurr;
+    $scope.cashAndBankDeposits = currAssets.cashAndBankDeposits;
+    $scope.inventory = currAssets.inventory;
+    $scope.clients = currAssets.clients;
+    $scope.stateAndOtherPubEntAssets = currAssets.stateAndOtherPubEntAssets;
+    $scope.otherCurrAssets = currAssets.otherCurrAssets;
+    $scope.totalCurrAssets = currAssets.totalCurrAssets;
+    $scope.shareholders_partners = nonCurrAssets.shareholders_partners;
+    $scope.tangibleFixedAssets = nonCurrAssets.tangibleFixedAssets;
+    $scope.otherNonCurrAssets = nonCurrAssets.otherNonCurrAssets;
+    $scope.totalNonCurrAssets = nonCurrAssets.totalNonCurrAssets;
+
+    var liabilities = balanceSheet.liabilities;
+    $scope.suppliers = liabilities.suppliers;
+    $scope.customerDownPayment = liabilities.customerDownPayment;
+    $scope.stateAndOtherPubEntAssetsLiabilities = liabilities.stateAndOtherPubEntAssetsLiabilities;
+    $scope.otherLiabilities = liabilities.otherLiabilities;
+    $scope.totalLiabilities = liabilities.value;
+    
+    $scope.assets = balanceSheet.assets.value;
+    $scope.liabilities = balanceSheet.liabilities.value;
+    $scope.equity = balanceSheet.equity.value;
 }
 
 var getMonthName = function(index) {

@@ -212,15 +212,32 @@ function calcCumulativeBalancetes(transactions, accounts, year, month) {
     return balancetes;
 }
 
+// based on http://www.dfk.pt/snc/balanco.htm
 function calcBalanco(balancete) {
     var balanco = {
-        'assets':{
+        'assets': {
             'accounts': [],
             'value': 0,
+            'curr': {
+                'cashAndBankDeposits': 0,
+                'inventory': 0,
+                'clients': 0,
+                'stateAndOtherPubEntAssets': 0,
+                'otherCurrAssets': 0
+            },
+            'nonCurr': {
+                'shareholders_partners': 0,
+                'tangibleFixedAssets': 0,
+                'otherNonCurrAssets': 0,
+            }
         },
         'liabilities': {
             'accounts': [],
             'value': 0,
+            'suppliers': 0,
+            'stateAndOtherPubEntAssetsLiabilities': 0,
+            'otherLiabilities': 0,
+            'customerDownPayment': 0,
         },
         'equity': {
             'accounts': [],
@@ -235,8 +252,13 @@ function calcBalanco(balancete) {
             balancete[i].AccountID[0] === '6' ||
             balancete[i].AccountID[0] === '7' ||
             balancete[i].AccountID[0] === '8' ||
-            balancete[i].AccountID[0] === '9') 
+            balancete[i].AccountID[0] === '9') {
+            if (balancete[i].AccountID === "219") {
+                balanco.assets.accounts.push(balancete[i]);
+                balanco.liabilities.accounts.push(balancete[i]);
+            }
             continue;
+        }
             
         balancete[i].ClosingDebitBalance = balancete[i].OpeningDebitBalance + balancete[i].DebtMovements;
         balancete[i].ClosingCreditBalance = balancete[i].OpeningCreditBalance + balancete[i].CreditMovements;
@@ -245,17 +267,82 @@ function calcBalanco(balancete) {
             balancete[i].ClosingDebitBalance = balancete[i].ClosingDebitBalance - balancete[i].ClosingCreditBalance;
             balancete[i].ClosingCreditBalance = 0;
             balanco.assets.accounts.push(balancete[i])
-            balanco.assets.value += balancete[i].ClosingDebitBalance;
         }
         else {
             balancete[i].ClosingCreditBalance = balancete[i].ClosingCreditBalance - balancete[i].ClosingDebitBalance;
             balancete[i].ClosingDebitBalance = 0;
             balanco.liabilities.accounts.push(balancete[i]);
-            balanco.liabilities.value += balancete[i].ClosingCreditBalance;
         }
     }
-    balanco.equity.value = balanco.assets.value - balanco.liabilities.value;
+  
+    for (var i = 0; i < balanco.assets.accounts.length; i++) {
+        var account = balanco.assets.accounts[i];
+        var id = account.AccountID;
 
+        // Current Assets
+        if (id === "11" || id === "12" || id == "13") {
+            balanco.assets.curr.cashAndBankDeposits += account.ClosingDebitBalance - account.ClosingCreditBalance;
+        }
+        else if (id === "32" || id === "33" || id === "34" || id === "35" || id === "36" || id == "39") { // 32/3/4/5/6/9
+            balanco.assets.curr.inventory += account.ClosingDebitBalance;
+        }
+        else if (id === "21") {
+            balanco.assets.curr.clients += account.ClosingDebitBalance;
+        }
+        else if (id === "219") {
+            balanco.assets.curr.clients -= - account.ClosingCreditBalance;
+        }
+        else if (id === "24") {
+            if (account.ClosingDebitBalance > account.ClosingCreditBalance)
+                balanco.assets.curr.stateAndOtherPubEntAssets += account.ClosingDebitBalance;
+        }
+        else {
+            balanco.assets.curr.otherCurrAssets += 0;
+        }
+
+        // Non current assets
+        if (id === "26") {
+            balanco.assets.nonCurr.shareholders_partners += account.ClosingDebitBalance;
+        }
+        else if (id === "43") {
+            balanco.assets.nonCurr.tangibleFixedAssets += account.ClosingDebitBalance;
+        }
+        else {
+            balanco.assets.nonCurr.otherNonCurrAssets += 0;
+        }
+    }
+    balanco.assets.curr.totalCurrAssets = balanco.assets.curr.cashAndBankDeposits 
+                                                + balanco.assets.curr.inventory 
+                                                + balanco.assets.curr.clients 
+                                                + balanco.assets.curr.stateAndOtherPubEntAssets 
+                                                + balanco.assets.curr.otherCurrAssets;
+    balanco.assets.nonCurr.totalNonCurrAssets = balanco.assets.nonCurr.shareholders_partners 
+                                        + balanco.assets.nonCurr.tangibleFixedAssets 
+                                        + balanco.assets.nonCurr.otherNonCurrAssets;
+    balanco.assets.value = balanco.assets.curr.totalCurrAssets + balanco.assets.nonCurr.totalNonCurrAssets;
+
+    for (var i = 0; i < balanco.liabilities.accounts.length; i++) {
+        var account = balanco.liabilities.accounts[i];
+        var id = account.AccountID;
+
+        // liabilities
+        if (id === "22") {
+            balanco.liabilities.suppliers += account.ClosingCreditBalance;
+        }
+        else if (id === "219") {
+            balanco.liabilities.customerDownPayment += account.ClosingCreditBalance;
+        }
+        else if (id == "24") {
+            balanco.liabilities.stateAndOtherPubEntAssetsLiabilities += account.ClosingCreditBalance;
+        }
+        else {
+            balanco.liabilities.otherLiabilities += 0;
+        }
+    }
+    balanco.liabilities.value = balanco.liabilities.suppliers + balanco.liabilities.customerDownPayment + 
+                                balanco.liabilities.stateAndOtherPubEntAssetsLiabilities + balanco.liabilities.otherLiabilities;
+    balanco.equity.value = balanco.assets.value - balanco.liabilities.value;
+    console.log(balanco);
     return balanco;
 }
 

@@ -13,7 +13,7 @@ app.controller('income_statement_controller', function($scope, $http) {
     //init vars
     var today = new Date();
 
-    var url_string = window.location.href
+    var url_string = window.location.href;
     var url = new URL(url_string);
 
     $scope.chosenYear = url.searchParams.get("year");
