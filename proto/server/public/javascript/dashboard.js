@@ -42,7 +42,7 @@ app.controller('main_controller', function($scope, $http) {
     };
 
     $scope.$watch('step', function() {
-        if($scope.step == 3){                    
+        if($scope.step == 4){                    
             //Unblur container and hide spinner
             $('#loader').hide();
             $('.container').removeClass('blur');
@@ -62,6 +62,8 @@ var updateData= function($scope, $http){
     updateTotaSales($scope, $http);
     updateCustomersInfo($scope, $http);
     updateSalesByProductGroup($scope, $http);
+    updateInventoryValue($scope, $http);
+    updateGrossProfitRatio($scope, $http);
 }
 
 var updateSalesByProductGroup = function ($scope, $http) {
@@ -195,5 +197,67 @@ var updateCustomersInfo = function ($scope, $http) {
     }); 
 }
 
+var updateInventoryValue= function($scope, $http){
+    var url = 'http://localhost:49822/api/Inventory/date/' + $scope.chosenYear;
+    
+    if($scope.chosenMonth != null){
+        url += "/" + $scope.chosenMonth;
+    }
+    
+    $http.get(url).then(function (success){
+        var data = [];
+        var categories = [];
+        var value = 0;
+        for (i of success.data) {
+            var name = i.Family || "";
+            if(data[name] !=null)
+                data[name] += i.TotalValue;
+            else
+                data[name] = i.TotalValue; 
+        }
+        
+        for (i in data) {
+            categories.push({
+                name: i,
+                value: data[i] 
+            })
+            value += data[i] ;
+        }
+        $scope.inventory_value = value;
+        $scope.step++;
+    },function (error){
+        $scope.contents = [{heading:"Error",description:"Could not load json data"}];
+    });
+}
 
+var updateGrossProfitRatio= function($scope, $http){
+    var requestUrl = address + 'getBalancetes?year=' + $scope.chosenYear;
+    if ($scope.chosenMonth ) requestUrl += '&month=' + $scope.chosenMonth;
+    
+    $http.get(requestUrl).then(function (success){
+        var balancetes = success.data;
+        var netSales = 0;
+        var costOfGoodsSold = 0;
+    
+        for (var i = 0; i < balancetes.length; i++) {
+            var balancete = balancetes[i];    
+            for (var j = 0; j < balancete.length; j++) 
+                if (balancete[j].AccountID == '61') {
+                    costOfGoodsSold += balancete[j].DebtMovements;
+                }
+                else if (balancete[j].AccountID == '71') {
+                    netSales += balancete[j].CreditMovements;
+                }
+        }
 
+        if(netSales == 0){
+            $scope.gross_profit_ratio = null;
+        }else{
+            $scope.gross_profit_ratio = (netSales - costOfGoodsSold)/ netSales;
+        }
+        $scope.step++;
+
+    },function (error){
+        $scope.contents = [{heading:"Error",description:"Could not load json data"}];
+    });
+}

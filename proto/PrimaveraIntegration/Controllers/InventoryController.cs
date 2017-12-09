@@ -21,10 +21,38 @@ namespace PrimaveraIntegration.Controllers
 
         public List<Lib_Primavera.Model.Stock> GetInventory(string id)
         {
-            if(id == "outOfStock")
+            if (id == "outOfStock")
                 return Lib_Primavera.PriIntegration.getInventoryOutOfStock();
             else
-                return new List<Lib_Primavera.Model.Stock>();
+            {
+                var stock = new List<Lib_Primavera.Model.Stock>();
+                stock.Add(Lib_Primavera.PriIntegration.GetStock(id));
+                return stock;
+            }
+        }
+
+        public List<Lib_Primavera.Model.StockMovement> GetGroupedInventoryByYear(string id, int year)
+        {
+            if (id == "inMovements")
+                return Lib_Primavera.PriIntegration.ListSTKMovementInYear(year.ToString());
+            else if (id == "outMovements")
+                return Lib_Primavera.PriIntegration.ListSTKMovementOutYear(year.ToString());
+            else
+            {
+                return null;
+            }
+        }
+
+        public List<Lib_Primavera.Model.StockMovement> GetGroupedInventoryByMonth(string id, int year, int month)
+        {
+            if (id == "inMovements")
+                return Lib_Primavera.PriIntegration.ListSTKMovementInMonth(year.ToString(), month.ToString());
+            else if (id == "outMovements")
+                return Lib_Primavera.PriIntegration.ListSTKMovementOutMonth(year.ToString(), month.ToString());
+            else
+            {
+                return null;
+            }
         }
 
         // GET api/inventory   

@@ -197,10 +197,14 @@ namespace PrimaveraIntegration.Lib_Primavera
                 }
                 else
                 {
+                    string codFamilia = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "Familia");
+                    string codSubFamilia = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "SubFamilia");
+                    GcpBESubFamilia subFamilia = PriEngine.Engine.Comercial.Familias.EditaSubFamilia(codSubFamilia, codFamilia);
+
                     //objArtigo = PriEngine.Engine.Comercial.Artigos.Edita(codArtigo);
                     stock.Article = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "Artigo");
-                    stock.Family = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "Familia");
-                    stock.SubFamily = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "SubFamilia");
+                    stock.Family = codFamilia + " - " + PriEngine.Engine.Comercial.Familias.DaValorAtributo(codFamilia, "Descricao");
+                    stock.SubFamily = codSubFamilia + " - " +  subFamilia.get_Descricao();
                     stock.Description = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "Descricao");
                     stock.CurrentStock = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "StkActual");
                     stock.MinStock = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "STKMinimo");
@@ -357,6 +361,174 @@ namespace PrimaveraIntegration.Lib_Primavera
 
         }
 
+        public static List<Lib_Primavera.Model.StockMovement> ListSTKMovementInYear(string year)
+        {
+            StdBELista objList;
+            List<Model.StockMovement> listSums = new List<Model.StockMovement>();
+
+            if (PriEngine.InitializeCompany(PrimaveraIntegration.Properties.Settings.Default.Company.Trim(), PrimaveraIntegration.Properties.Settings.Default.User.Trim(), PrimaveraIntegration.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                string query = String.Format(
+                    @"SELECT 
+                    year(LinhasSTK.Data) as Ano, 
+                    month(LinhasSTK.Data) as Mes,
+                    SUM(LinhasSTK.Quantidade) as Quantidade,
+                    SUM(
+                    Case LinhasSTK.TipoDoc When 'VNC' then (1)else 1 end *
+                    round(isnull(LinhasSTK.Quantidade * LinhasSTK.FactorConv ,'0'),Arred)* round(PCM + DifPCMedio, Arred) ) as Total
+                    FROM   
+                    LinhasSTK
+                    WHERE  
+                    (year(LinhasSTK.Data) = {0})
+                    AND 
+                    LinhasSTK.TipoDoc in ('VFA','VFP', 'AIP', 'VD')
+                    AND
+                    (LinhasSTK.EntradaSaida=N'E' OR LinhasSTK.EntradaSaida=N'I') 
+                    GROUP BY year(LinhasSTK.Data), month(LinhasSTK.Data)",
+                    year);
+                objList = PriEngine.Engine.Consulta(query);
+                while (!objList.NoFim())
+                {
+                    Model.StockMovement movement = new Model.StockMovement();
+                    movement.data = new DateTime(objList.Valor("Ano"), objList.Valor("Mes"), 1);
+                    movement.valor = objList.Valor("Total");
+                    movement.quantidade = objList.Valor("Quantidade");
+                    listSums.Add(movement);
+                    objList.Seguinte();
+                }
+                return listSums;
+            }
+            else
+                return null;
+        }
+        
+        public static List<Lib_Primavera.Model.StockMovement> ListSTKMovementInMonth(string year, string month)
+        {
+            StdBELista objList;
+            List<Model.StockMovement> listSums = new List<Model.StockMovement>();
+
+            if (PriEngine.InitializeCompany(PrimaveraIntegration.Properties.Settings.Default.Company.Trim(), PrimaveraIntegration.Properties.Settings.Default.User.Trim(), PrimaveraIntegration.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                string query = String.Format(
+                    @"SELECT 
+                    year(LinhasSTK.Data) as Ano, 
+                    month(LinhasSTK.Data) as Mes,
+                    day(LinhasSTK.Data) as Dia,
+                    SUM(LinhasSTK.Quantidade) as Quantidade,
+                    SUM(
+                    Case LinhasSTK.TipoDoc When 'VNC' then (1)else 1 end *
+                    round(isnull(LinhasSTK.Quantidade * LinhasSTK.FactorConv ,'0'),Arred)* round(PCM + DifPCMedio, Arred) ) as Total
+                    FROM   
+                    LinhasSTK
+                    WHERE  
+                    (year(LinhasSTK.Data) = {0} AND month(LinhasSTK.Data) = {1})
+                    AND 
+                    LinhasSTK.TipoDoc in ('VFA','VFP', 'AIP', 'VD')
+                    AND
+                    (LinhasSTK.EntradaSaida=N'E' OR LinhasSTK.EntradaSaida=N'I') 
+                    GROUP BY year(LinhasSTK.Data), month(LinhasSTK.Data), day(LinhasSTK.Data)",
+                    year, month);
+                objList = PriEngine.Engine.Consulta(query);
+                while (!objList.NoFim())
+                {
+                    Model.StockMovement movement = new Model.StockMovement();
+                    movement.data = new DateTime(objList.Valor("Ano"),objList.Valor("Mes"),objList.Valor("Dia"));
+                    movement.valor = objList.Valor("Total");
+                    movement.quantidade = objList.Valor("Quantidade");
+                    listSums.Add(movement);
+                    objList.Seguinte();
+                }
+                return listSums;
+            }
+            else
+                return null;
+        }
+
+        public static List<Lib_Primavera.Model.StockMovement> ListSTKMovementOutYear(string year)
+        {
+            StdBELista objList;
+            List<Model.StockMovement> listSums = new List<Model.StockMovement>();
+
+            if (PriEngine.InitializeCompany(PrimaveraIntegration.Properties.Settings.Default.Company.Trim(), PrimaveraIntegration.Properties.Settings.Default.User.Trim(), PrimaveraIntegration.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                string query = String.Format(
+                    @"SELECT 
+                    year(LinhasSTK.Data) as Ano, 
+                    month(LinhasSTK.Data) as Mes,
+                    SUM(LinhasSTK.Quantidade) as Quantidade,
+                    SUM(
+                    Case LinhasSTK.TipoDoc When 'VNC' then (1)else 1 end *
+                    round(isnull(LinhasSTK.Quantidade * LinhasSTK.FactorConv ,'0'),Arred)* round(PCM + DifPCMedio, Arred) ) as Total
+                    FROM   
+                    LinhasSTK
+                    WHERE  
+                    (year(LinhasSTK.Data) = {0})
+                    AND 
+                    NOT LinhasSTK.TipoDoc in ('GR')
+                    AND
+                    (LinhasSTK.EntradaSaida=N'S' OR LinhasSTK.EntradaSaida=N'S') 
+                    GROUP BY year(LinhasSTK.Data), month(LinhasSTK.Data)",
+                    year);
+                objList = PriEngine.Engine.Consulta(query);
+
+                while (!objList.NoFim())
+                {
+                    Model.StockMovement movement = new Model.StockMovement();
+                    movement.data = new DateTime(objList.Valor("Ano"), objList.Valor("Mes"), 1);
+                    movement.valor = objList.Valor("Total");
+                    movement.quantidade = objList.Valor("Quantidade");
+                    listSums.Add(movement);
+                    objList.Seguinte();
+                }
+                return listSums;
+            }
+            else
+                return null;
+        }
+        
+        public static List<Lib_Primavera.Model.StockMovement> ListSTKMovementOutMonth(string year, string month)
+        {
+            StdBELista objList;
+            List<Model.StockMovement> listSums = new List<Model.StockMovement>();
+
+            if (PriEngine.InitializeCompany(PrimaveraIntegration.Properties.Settings.Default.Company.Trim(), PrimaveraIntegration.Properties.Settings.Default.User.Trim(), PrimaveraIntegration.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                string query = String.Format(
+                    @"SELECT 
+                    year(LinhasSTK.Data) as Ano, 
+                    month(LinhasSTK.Data) as Mes,
+                    day(LinhasSTK.Data) as Dia,
+                    SUM(LinhasSTK.Quantidade) as Quantidade,
+                    SUM(
+                    Case LinhasSTK.TipoDoc When 'VNC' then (1)else 1 end *
+                    round(isnull(LinhasSTK.Quantidade * LinhasSTK.FactorConv ,'0'),Arred)* round(PCM + DifPCMedio, Arred) ) as Total
+                    FROM   
+                    LinhasSTK
+                    WHERE  
+                    (year(LinhasSTK.Data) = {0} AND month(LinhasSTK.Data) = {1})
+                    AND 
+                    NOT LinhasSTK.TipoDoc in ('GR')
+                    AND
+                    (LinhasSTK.EntradaSaida=N'S' OR LinhasSTK.EntradaSaida=N'S') 
+                    GROUP BY year(LinhasSTK.Data), month(LinhasSTK.Data), day(LinhasSTK.Data)",
+                    year, month);
+                objList = PriEngine.Engine.Consulta(query);
+
+                while (!objList.NoFim())
+                {
+                    Model.StockMovement movement = new Model.StockMovement();
+                    movement.data = new DateTime(objList.Valor("Ano"), objList.Valor("Mes"), objList.Valor("Dia"));
+                    movement.valor = objList.Valor("Total");
+                    movement.quantidade = objList.Valor("Quantidade");
+                    listSums.Add(movement);
+                    objList.Seguinte();
+                }
+                return listSums;
+            }
+            else
+                return null;
+        }
+
         # endregion
 
 
@@ -412,6 +584,198 @@ namespace PrimaveraIntegration.Lib_Primavera
                         purchaseItem.Description = objListLin.Valor("Descricao");
                         purchaseItem.Quantity = objListLin.Valor("Quantidade");
                         purchaseItem.UnitPrice = objListLin.Valor("PrecUnit") *(-1);
+                        //purchaseItem.Value = objListLin.Valor("TotalILiquido");
+                        purchaseItem.Value = objListLin.Valor("PrecoLiquido") * (-1);
+                        purchase.Items.Add(purchaseItem);
+
+                        objListLin.Seguinte();
+                    }
+                    purchaseList.Add(purchase);
+                    objList.Seguinte();
+
+                }
+
+                return purchaseList;
+            }
+            else
+                return null;
+        }
+
+        public static List<Model.Purchase> GetAllPurchasesOfAProduct(string prodId)
+        {
+            //Initialize containers
+            StdBELista objList;
+            StdBELista objListLin;
+            List<Model.Purchase> purchaseList = new List<Model.Purchase>();
+            Model.Purchase purchase;
+            Model.PurchaseItem purchaseItem;
+
+            string query = "SELECT Id, DataDoc, DataVencimento, Entidade, Nome, NumDoc, Observacoes, TotalMerc, TipoDoc, Serie FROM CabecCompras WHERE " + validDocumentSQL + " ORDER BY DataDoc DESC";
+            
+            if (PriEngine.InitializeCompany(PrimaveraIntegration.Properties.Settings.Default.Company.Trim(), PrimaveraIntegration.Properties.Settings.Default.User.Trim(), PrimaveraIntegration.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                //Select rows from CabecCompras
+                objList = PriEngine.Engine.Consulta(query);
+
+                //For every CabecCompras
+                while (!objList.NoFim())
+                {
+                    purchase = new Model.Purchase();
+
+                    purchase.Id = objList.Valor("Id");
+                    purchase.DocumentDate = objList.Valor("DataDoc");
+                    purchase.PaymentDate = objList.Valor("DataVencimento");
+                    purchase.Entity = objList.Valor("Entidade");
+                    purchase.EntityName = objList.Valor("Nome");
+                    purchase.DocumentNumber = objList.Valor("NumDoc");
+                    purchase.Notes = objList.Valor("Observacoes");
+                    purchase.TotalValue = objList.Valor("TotalMerc");
+                    purchase.DocumentType = objList.Valor("TipoDoc");
+                    purchase.DocumentSeries = objList.Valor("Serie");
+
+                    purchase.Items = new List<Model.PurchaseItem>();
+
+                    //Select rows from LinhasCompras
+                    objListLin = PriEngine.Engine.Consulta("SELECT Id, Artigo, Descricao, Quantidade, Unidade, PrecUnit, TotalILiquido, PrecoLiquido from LinhasCompras where IdCabecCompras='" + purchase.Id + "' order By NumLinha");
+
+                    while (!objListLin.NoFim())
+                    {
+                        purchaseItem = new Model.PurchaseItem();
+                        purchaseItem.Id = objListLin.Valor("Id");
+                        purchaseItem.Product = objListLin.Valor("Artigo");
+                        purchaseItem.Description = objListLin.Valor("Descricao");
+                        purchaseItem.Quantity = objListLin.Valor("Quantidade") * (-1);
+                        purchaseItem.UnitPrice = objListLin.Valor("PrecUnit");
+                        //purchaseItem.Value = objListLin.Valor("TotalILiquido");
+                        purchaseItem.Value = objListLin.Valor("PrecoLiquido");
+
+                        if(purchaseItem.Product == prodId)
+                            purchase.Items.Add(purchaseItem);
+
+                        objListLin.Seguinte();
+                    }
+
+                    if(purchase.Items.Count() > 0)
+                        purchaseList.Add(purchase);
+                    objList.Seguinte();
+
+                }
+
+                return purchaseList;
+            }
+            else
+                return null;
+        }
+
+        public static List<Model.Purchase> GetAllSalesOfAProduct(string prodId)
+        {
+            //Initialize containers
+            StdBELista objList;
+            StdBELista objListLin;
+            List<Model.Purchase> saleList = new List<Model.Purchase>();
+            Model.Purchase sale;
+            Model.PurchaseItem saleItem;
+
+            string query = "SELECT Id, Data, Entidade, Nome, NumDoc, Observacoes, TotalMerc, TipoDoc, Serie FROM CabecDoc ORDER BY Data DESC";
+
+            if (PriEngine.InitializeCompany(PrimaveraIntegration.Properties.Settings.Default.Company.Trim(), PrimaveraIntegration.Properties.Settings.Default.User.Trim(), PrimaveraIntegration.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                //Select rows from CabecCompras
+                objList = PriEngine.Engine.Consulta(query);
+
+                //For every CabecDoc
+                while (!objList.NoFim())
+                {
+                    sale = new Model.Purchase();
+
+                    sale.Id = objList.Valor("Id");
+                    sale.DocumentDate = objList.Valor("Data");
+                    sale.Entity = objList.Valor("Entidade");
+                    sale.EntityName = objList.Valor("Nome");
+                    sale.DocumentNumber = objList.Valor("NumDoc");
+                    sale.Notes = objList.Valor("Observacoes");
+                    sale.TotalValue = objList.Valor("TotalMerc");
+                    sale.DocumentType = objList.Valor("TipoDoc");
+                    sale.DocumentSeries = objList.Valor("Serie");
+
+                    sale.Items = new List<Model.PurchaseItem>();
+
+                    //Select rows from LinhasDoc
+                    objListLin = PriEngine.Engine.Consulta("SELECT Id, Artigo, Descricao, Quantidade, Unidade, PrecUnit, TotalILiquido, PrecoLiquido from LinhasDoc where IdCabecDoc='" + sale.Id + "' order By NumLinha");
+
+                    while (!objListLin.NoFim())
+                    {
+                        saleItem = new Model.PurchaseItem();
+                        saleItem.Id = objListLin.Valor("Id");
+                        saleItem.Product = objListLin.Valor("Artigo");
+                        saleItem.Description = objListLin.Valor("Descricao");
+                        saleItem.Quantity = objListLin.Valor("Quantidade") * (-1);
+                        saleItem.UnitPrice = objListLin.Valor("PrecUnit");
+                        //saleItem.Value = objListLin.Valor("TotalILiquido");
+                        saleItem.Value = objListLin.Valor("PrecoLiquido");
+
+                        if (saleItem.Product == prodId)
+                            sale.Items.Add(saleItem);
+
+                        objListLin.Seguinte();
+                    }
+
+                    if (sale.Items.Count() > 0)
+                        saleList.Add(sale);
+                    objList.Seguinte();
+
+                }
+
+                return saleList;
+            }
+            else
+                return null;
+        }
+
+        public static List<Model.Purchase> GetNotPayedPurchases()
+        {
+            //Initialize containers
+            StdBELista objList;
+            StdBELista objListLin;
+            List<Model.Purchase> purchaseList = new List<Model.Purchase>();
+            Model.Purchase purchase;
+            Model.PurchaseItem purchaseItem;
+
+            string query = "SELECT Id, DataDoc, DataVencimento, Entidade, Nome, NumDoc, Observacoes, TotalMerc, TipoDoc, Serie From CabecCompras where " + validDocumentSQL + "and DataIntroducao > '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "' order by DataDoc";
+
+            if (PriEngine.InitializeCompany(PrimaveraIntegration.Properties.Settings.Default.Company.Trim(), PrimaveraIntegration.Properties.Settings.Default.User.Trim(), PrimaveraIntegration.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                //Select rows from CabecCompras
+                objList = PriEngine.Engine.Consulta(query);
+
+                //For every CabecCompras
+                while (!objList.NoFim())
+                {
+                    purchase = new Model.Purchase();
+
+                    purchase.Id = objList.Valor("Id");
+                    purchase.DocumentDate = objList.Valor("DataDoc");
+                    purchase.PaymentDate = objList.Valor("DataVencimento");
+                    purchase.Entity = objList.Valor("Entidade");
+                    purchase.EntityName = objList.Valor("Nome");
+                    purchase.DocumentNumber = objList.Valor("NumDoc");
+                    purchase.Notes = objList.Valor("Observacoes");
+                    purchase.TotalValue = objList.Valor("TotalMerc") * (-1);
+                    purchase.DocumentType = objList.Valor("TipoDoc");
+                    purchase.DocumentSeries = objList.Valor("Serie");
+                    purchase.Items = new List<Model.PurchaseItem>();
+
+                    //Select rows from LinhasCompras
+                    objListLin = PriEngine.Engine.Consulta("SELECT Id, Artigo, Descricao, Quantidade, Unidade, PrecUnit, TotalILiquido, PrecoLiquido from LinhasCompras where IdCabecCompras='" + purchase.Id + "' order By NumLinha");
+
+                    while (!objListLin.NoFim())
+                    {
+                        purchaseItem = new Model.PurchaseItem();
+                        purchaseItem.Id = objListLin.Valor("Id");
+                        purchaseItem.Product = objListLin.Valor("Artigo");
+                        purchaseItem.Description = objListLin.Valor("Descricao");
+                        purchaseItem.Quantity = objListLin.Valor("Quantidade");
+                        purchaseItem.UnitPrice = objListLin.Valor("PrecUnit") * (-1);
                         //purchaseItem.Value = objListLin.Valor("TotalILiquido");
                         purchaseItem.Value = objListLin.Valor("PrecoLiquido") * (-1);
                         purchase.Items.Add(purchaseItem);
@@ -1062,8 +1426,6 @@ namespace PrimaveraIntegration.Lib_Primavera
             }
         }
 
-     
-
         public static List<Model.DocVenda> Encomendas_List()
         {
             
@@ -1114,9 +1476,6 @@ namespace PrimaveraIntegration.Lib_Primavera
             }
             return listdv;
         }
-
-
-       
 
         public static Model.DocVenda Encomenda_Get(string numdoc)
         {

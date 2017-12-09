@@ -13,10 +13,7 @@
                     </ul>
                 </div>
                 <div class="btn-group">
-                    <label class="btn btn-timeFilter month-selector active" ng-class="{active: chosenMonth == null}">
-                        <input type="radio" name="options" autocomplete="off" ng-model="$chosenMonth" ng-value="null" ng-change="update()">None
-                    </label>
-                    <label ng-repeat="month in months" class="btn btn-timeFilter month-selector">
+                    <label ng-repeat="month in months" ng-class="$parent.chosenMonth == month.value ? 'active' : ''" class="btn btn-timeFilter month-selector">
                         <input type="radio" name="options" autocomplete="off" ng-model="$parent.chosenMonth" ng-value="[[month.value]]" ng-change="update()">[[month.name]]
                     </label>
                 </div>
@@ -40,9 +37,9 @@
               </div>
           </div>
 
-          <h4 class="text-center" style="color: #8a6d3b">Most urgent to buy</h4>
+          <h4 class="text-center" style="color: #8a6d3b">Most urgent to buy <a href="" class="badge" data-toggle="tooltip" data-placement="top" title="This are the products with lowest stock at the current moment">?</a></h4>
           <ul class="list-group">
-            <li ng-repeat="stock in prodOutOfStock" class="ng-cloak list-group-item list-group-item-danger">[[stock.Description]]<span class="badge">[[stock.CurrentStock]]</span></li>
+            <a ng-href="product/[[stock.Article]]"" ng-repeat="stock in prodOutOfStock" class="ng-cloak list-group-item list-group-item-danger">[[stock.Description]]<span class="badge">[[stock.CurrentStock]]</span></a>
             <li class="ng-cloak list-group-item list-group-item-success" ng-if="prodOutOfStock.length == 0">All Products are good</li>
           </ul>
           <a href="#" style="display:block; text-align:center; color: #d09b1c">More details</a>
@@ -50,11 +47,11 @@
         
         <div class="col-sm-5">
             <div id="inventory-value"></div>
-            <a ng-href="inventory_detailed?year=[[chosenYear]]&month=[[chosenMonth]]" style="display:block; text-align:center; color: #d09b1c">More details</a>
+            <a ng-href="inventory_detailed?[[getQuery()]]" style="display:block; text-align:center; color: #d09b1c">More details</a>
         </div>
 
         <div class="col-sm-10">
-            <div id="best-seller-inventory"></div>
+            <div id="inventory-movements"></div>
             <a href="#" style="display:block; text-align:center; color: #d09b1c">More details</a>
         </div>
     </div>

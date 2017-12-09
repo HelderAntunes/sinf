@@ -150,6 +150,9 @@ var updateAssetsAndLiabilitiesYear = function($scope, balancos) {
                 enableMouseTracking: true
             }
         },
+        tooltip: {
+            pointFormat: "{point.y:,.2f} €"
+        },
         series: [{
             name: 'Assets',
             data: assets
@@ -192,6 +195,9 @@ var updateAssetsAndLiabilitiesMonth = function($scope, balancos) {
             line: {
                 enableMouseTracking: true
             }
+        },
+        tooltip: {
+            pointFormat: "{point.y:,.2f} €"
         },
         series: [{
             name: 'Assets',
@@ -246,6 +252,9 @@ var updateGrossMarginMonth = function($scope, balancetes) {
                 enableMouseTracking: true
             }
         },
+        tooltip: {
+            pointFormat: "{point.y:,.2f} €"
+        },
         series: [{
             name: 'Net Sales',
             data: netSales
@@ -297,6 +306,9 @@ var updateGrossMarginYear = function($scope, balancetes) {
             line: {
                 enableMouseTracking: true
             }
+        },
+        tooltip: {
+            pointFormat: "{point.y:,.2f} €"
         },
         series: [
         {
