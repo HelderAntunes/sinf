@@ -11,6 +11,12 @@ app.filter('percentage', ['$filter', function ($filter) {
     };
 }]);
 
+app.filter('ratio', ['$filter', function ($filter) {
+    return function (input, decimals) {
+        return $filter('number')(input, decimals);
+    };
+}]);
+
 app.filter('euro', ['$filter', function ($filter) {
     return function (input) {
         return $filter('number')(input, 2) + ' €';
@@ -53,7 +59,7 @@ var updateData = function($scope, $http) {
         }
     );
 
-    var requestUrl = address + 'getBalancos?year=' + $scope.chosenYear;
+    requestUrl = address + 'getBalancos?year=' + $scope.chosenYear;
     if ($scope.chosenMonth ) requestUrl += '&month=' + $scope.chosenMonth;
     $http.get(requestUrl).then(
         function (success) {
@@ -63,6 +69,43 @@ var updateData = function($scope, $http) {
             $scope.contents = [{heading:"Error",description:"Could not load json data"}];
         }
     );
+
+    requestUrl = address + 'getDemonstracaoResultados?year=' + $scope.chosenYear;
+    if ($scope.chosenMonth ) requestUrl += '&month=' + $scope.chosenMonth;
+    $http.get(requestUrl).then(
+        function (success) {
+            var income_statement = success.data;
+
+            requestUrl = address + 'getBalanco?year=' + $scope.chosenYear;
+            if ($scope.chosenMonth ) requestUrl += '&month=' + $scope.chosenMonth;
+            $http.get(requestUrl).then(
+                function (success) {
+                    var balance_sheet = success.data;
+                    updateRatios($scope, $http, income_statement, balance_sheet);
+                },
+                function (error){
+                    $scope.contents = [{heading:"Error",description:"Could not load json data"}];
+                }
+            );
+            
+        },
+        function (error){
+            $scope.contents = [{heading:"Error",description:"Could not load json data"}];
+        }
+    );
+
+}
+
+var updateRatios = function($scope, $http, income_statement, balance_sheet) {
+    console.log(balance_sheet);
+    console.log(income_statement);  
+    $scope.returnOnSales = income_statement.netEarnings / income_statement.netSales;
+    $scope.returnOnAssets = income_statement.netEarnings / balance_sheet.assets.value;
+    $scope.returnOnEquity = income_statement.netEarnings / balance_sheet.equity.value;
+
+    $scope.currentRatio = balance_sheet.assets.curr.totalCurrAssets / balance_sheet.liabilities.totalCurrLiabilities;
+    $scope.quickRatio = (balance_sheet.assets.curr.totalCurrAssets - balance_sheet.assets.curr.inventory) / balance_sheet.liabilities.totalCurrLiabilities;
+    $scope.workingCapital = balance_sheet.assets.curr.totalCurrAssets - balance_sheet.liabilities.totalCurrLiabilities;
 }
 
 var balancetesCallback = function($scope, $http, balancetes) {

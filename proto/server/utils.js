@@ -237,6 +237,7 @@ function calcBalanco(balancete) {
             'stateAndOtherPubEntAssetsLiabilities': 0,
             'otherLiabilities': 0,
             'customerDownPayment': 0,
+            'totalCurrLiabilities': 0,
         },
         'equity': {
             'accounts': [],
@@ -341,6 +342,9 @@ function calcBalanco(balancete) {
     balanco.liabilities.value = balanco.liabilities.suppliers + balanco.liabilities.customerDownPayment + 
                                 balanco.liabilities.stateAndOtherPubEntAssetsLiabilities + balanco.liabilities.otherLiabilities;
     balanco.equity.value = balanco.assets.value - balanco.liabilities.value;
+    balanco.liabilities.totalCurrLiabilities = balanco.liabilities.suppliers + balanco.liabilities.customerDownPayment + 
+                                                balanco.liabilities.stateAndOtherPubEntAssetsLiabilities;
+    
     return balanco;
 }
 

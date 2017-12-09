@@ -66,7 +66,6 @@ var updateData = function($scope, $http){
             $scope.contents = [{heading:"Error",description:"Could not load json data"}];
         }
     );
-    
 }
 
 var balanceSheetCallback = function($scope, $http, balanceSheet) {

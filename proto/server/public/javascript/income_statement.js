@@ -69,62 +69,20 @@ var updateData = function($scope, $http){
     
 }
 
-var incomeStatementCallback = function($scope, $http, income_statement) {
-    console.log(income_statement);
-    
-    $scope.netSales = 0;
-    for (var i = 0; i < income_statement.rendimentos.length; i++) {
-        var accountID = income_statement.rendimentos[i].AccountID;
-        if (accountID === "71" || accountID === "72")
-            $scope.netSales += income_statement.rendimentos[i].CreditMovements;
-    }
-
-    $scope.costOfGoodSold = 0;
-    for (var i = 0; i < income_statement.gastos.length; i++) {
-        var accountID = income_statement.gastos[i].AccountID;
-        if (accountID === "61" || accountID === "62")
-            $scope.costOfGoodSold += income_statement.gastos[i].DebtMovements;
-    }
-
-    $scope.grossMargin = $scope.netSales - $scope.costOfGoodSold;
-
-    $scope.sellingGeneralAdmin = 0;
-    for (var i = 0; i < income_statement.gastos.length; i++) {
-        if (income_statement.gastos[i].AccountID === "63")
-            $scope.sellingGeneralAdmin += income_statement.gastos[i].DebtMovements;
-    }   
-
-    $scope.depreciation = 0;
-    for (var i = 0; i < income_statement.gastos.length; i++) {
-        if (income_statement.gastos[i].AccountID === "64")
-            $scope.depreciation += income_statement.gastos[i].DebtMovements;
-    }
-
-    $scope.interest = 0;
-    for (var i = 0; i < income_statement.gastos.length; i++) {
-        if (income_statement.gastos[i].AccountID === "69")
-            $scope.interest += income_statement.gastos[i].DebtMovements;
-    }
-
-    $scope.totalExpenses = $scope.sellingGeneralAdmin + $scope.depreciation + $scope.interest;
-
-    $scope.preTaxEarnings = $scope.grossMargin - $scope.totalExpenses;
-
-    $scope.incomeTax = 0;
-    for (var i = 0; i < income_statement.gastos.length; i++) {
-        if (income_statement.gastos[i].AccountID === "68")
-            $scope.incomeTax += income_statement.gastos[i].DebtMovements;
-    }
-
-    $scope.netEarnings = $scope.preTaxEarnings - $scope.incomeTax;
-
-    $scope.incomes = 0;
-    $scope.expenses = 0;
-    for (var i = 0; i < income_statement.gastos.length; i++) 
-        $scope.expenses += income_statement.gastos[i].DebtMovements;
-    for (var i = 0; i < income_statement.rendimentos.length; i++) 
-        $scope.incomes += income_statement.rendimentos[i].CreditMovements;
-    $scope.netIncome = $scope.incomes - $scope.expenses;
+var incomeStatementCallback = function($scope, $http, income_statement) {    
+    $scope.netSales = income_statement.netSales;
+    $scope.costOfGoodSold = income_statement.costOfGoodSold;
+    $scope.grossMargin = income_statement.grossMargin;
+    $scope.sellingGeneralAdmin = income_statement.sellingGeneralAdmin;  
+    $scope.depreciation = income_statement.depreciation;
+    $scope.interest = income_statement.interest;
+    $scope.totalExpenses = income_statement.totalExpenses;
+    $scope.preTaxEarnings = income_statement.preTaxEarnings;
+    $scope.incomeTax = income_statement.incomeTax;
+    $scope.netEarnings = income_statement.netEarnings;
+    $scope.incomes = income_statement.incomes;
+    $scope.expenses = income_statement.expenses;
+    $scope.netIncome = income_statement.netIncome;
 
     $scope.dateTable = $scope.chosenYear;
     if ($scope.chosenMonth)

@@ -236,9 +236,63 @@ app.get('/getDemonstracaoResultados', function(req, res) {
                 transactions = JSON.parse(JSON.stringify(transactions));
 
                 var balancete = utils.calcBalancete(transactions, accounts);
-                var demonstracaoResultados = utils.calcDemonstracaoResultados(balancete);
+                var dr = utils.calcDemonstracaoResultados(balancete);
 
-                res.json(demonstracaoResultados);
+                dr.netSales = 0;
+                for (var i = 0; i < dr.rendimentos.length; i++) {
+                    var accountID = dr.rendimentos[i].AccountID;
+                    if (accountID === "71" || accountID === "72")
+                        dr.netSales += dr.rendimentos[i].CreditMovements;
+                }
+
+                dr.costOfGoodSold = 0;
+                for (var i = 0; i < dr.gastos.length; i++) {
+                    var accountID = dr.gastos[i].AccountID;
+                    if (accountID === "61" || accountID === "62")
+                        dr.costOfGoodSold += dr.gastos[i].DebtMovements;
+                }
+
+                dr.grossMargin = dr.netSales - dr.costOfGoodSold;
+
+                dr.sellingGeneralAdmin = 0;
+                for (var i = 0; i < dr.gastos.length; i++) {
+                    if (dr.gastos[i].AccountID === "63")
+                        dr.sellingGeneralAdmin += dr.gastos[i].DebtMovements;
+                }   
+
+                dr.depreciation = 0;
+                for (var i = 0; i < dr.gastos.length; i++) {
+                    if (dr.gastos[i].AccountID === "64")
+                        dr.depreciation += dr.gastos[i].DebtMovements;
+                }
+
+                dr.interest = 0;
+                for (var i = 0; i < dr.gastos.length; i++) {
+                    if (dr.gastos[i].AccountID === "69")
+                        dr.interest += dr.gastos[i].DebtMovements;
+                }
+
+                dr.totalExpenses = dr.sellingGeneralAdmin + dr.depreciation + dr.interest;
+
+                dr.preTaxEarnings = dr.grossMargin - dr.totalExpenses;
+
+                dr.incomeTax = 0;
+                for (var i = 0; i < dr.gastos.length; i++) {
+                    if (dr.gastos[i].AccountID === "68")
+                        dr.incomeTax += dr.gastos[i].DebtMovements;
+                }
+
+                dr.netEarnings = dr.preTaxEarnings - dr.incomeTax;
+
+                dr.incomes = 0;
+                dr.expenses = 0;
+                for (var i = 0; i < dr.gastos.length; i++) 
+                    dr.expenses += dr.gastos[i].DebtMovements;
+                for (var i = 0; i < dr.rendimentos.length; i++) 
+                    dr.incomes += dr.rendimentos[i].CreditMovements;
+                dr.netIncome = dr.incomes - dr.expenses;
+
+                res.json(dr);
         });
     });
 });
