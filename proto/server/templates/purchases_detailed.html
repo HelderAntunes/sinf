@@ -1,5 +1,3 @@
-<div id="loader"></div>
-
 <div class="container" ng-app="purchases_detailed_app" ng-controller="purchases_detailed_controller">
     
     <div class="row">
@@ -46,7 +44,7 @@
                         <div class="col-xs-2">Unit Price</div>
                     </div>
                     <div class="article subrow" ng-repeat="article in purchase.Items">
-                        <div class="col-xs-8">[[article.Description]]</div>
+                        <a ng-href="product/[[article.Product]]" class="col-xs-8">[[article.Description]]</a>
                         <div class="col-xs-2">[[article.Quantity * -1]]</div>
                         <div class="currency col-xs-2">[[article.UnitPrice | euro]]</div>
                     </div>

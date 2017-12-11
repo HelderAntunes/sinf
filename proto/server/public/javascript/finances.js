@@ -35,24 +35,42 @@ app.controller('finances_controller', function($scope, $http) {
         updateData($scope, $http);
     };
 
-    $scope.chooseMonth = function(month){
-        $scope.chosenMonth = month;
+    $scope.update = function(){
         updateData($scope, $http);
     };
+
+    $scope.$watch('step', function() {
+        if($scope.step == 3){                    
+            //Unblur container and hide spinner
+            $('#loader').hide();
+            $('.container').removeClass('blur');
+        }
+    });
+
+    $scope.getQuery = function(){
+        var query = 'year=' + $scope.chosenYear;
+        if($scope.chosenMonth != null){
+            query+='&month=' + $scope.chosenMonth;
+        }
+
+        return query;
+    }
 
     updateData($scope, $http);
 });
 
 var updateData = function($scope, $http) {
+    $scope.step = 0
     //Blur container and show spinner
-    //$('#loader').show();
-    //$('.container').addClass('blur');
+    $('#loader').show();
+    $('.container').addClass('blur');
 
     var requestUrl = address + 'getBalancetes?year=' + $scope.chosenYear;
     if ($scope.chosenMonth ) requestUrl += '&month=' + $scope.chosenMonth;
     $http.get(requestUrl).then(
         function (success) {
             balancetesCallback($scope, $http, success.data);
+            $scope.step++;
         },
         function (error){
             $scope.contents = [{heading:"Error",description:"Could not load json data"}];
@@ -64,6 +82,7 @@ var updateData = function($scope, $http) {
     $http.get(requestUrl).then(
         function (success) {
             balancosCallback($scope, $http, success.data);
+            $scope.step++;
         },
         function (error){
             $scope.contents = [{heading:"Error",description:"Could not load json data"}];
@@ -82,6 +101,7 @@ var updateData = function($scope, $http) {
                 function (success) {
                     var balance_sheet = success.data;
                     updateRatios($scope, $http, income_statement, balance_sheet);
+                    $scope.step++;
                 },
                 function (error){
                     $scope.contents = [{heading:"Error",description:"Could not load json data"}];

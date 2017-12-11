@@ -40,9 +40,6 @@ app.controller('balance_sheet_controller', function($scope, $http) {
         updateData($scope, $http);
     };
     $scope.update = function(){
-        $('.month-selector input[type="radio"]').parent().removeClass('active');
-        $('.month-selector input[type="radio"]:checked').parent().addClass('active');
-
         updateData($scope, $http);
     };
     $scope.dateFormat = function(date){
@@ -53,14 +50,18 @@ app.controller('balance_sheet_controller', function($scope, $http) {
 
 var updateData = function($scope, $http){
     //Blur container and show spinner
-    //$('#loader').show();
-    //  $('.container').addClass('blur');
+    $('#loader').show();
+    $('.container').addClass('blur');
 
     var requestUrl = address + 'getBalanco?year=' + $scope.chosenYear;
     if ($scope.chosenMonth ) requestUrl += '&month=' + $scope.chosenMonth;
     $http.get(requestUrl).then(
         function (success) {
             balanceSheetCallback($scope, $http, success.data);
+            
+            //Unblur container and hide spinner
+            $('#loader').hide();
+            $('.container').removeClass('blur');
         },
         function (error){
             $scope.contents = [{heading:"Error",description:"Could not load json data"}];
