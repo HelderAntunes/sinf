@@ -10,8 +10,10 @@
                         <li ng-repeat="year in years"><a href="" ng-click="chooseYear(year)">[[year]]</a></li>
                     </ul>
                 </div>
-                <div class="btn-group mr-2" role="group" aria-label="Month Group">
-                  <button ng-repeat="month in months" type="button" class="btn btn-timeFilter" ng-click="chooseMonth(month.value)">[[month.name]]</button>
+                <div class="btn-group">
+                    <label ng-repeat="month in months" ng-class="$parent.chosenMonth == month.value ? 'active' : ''" class="btn btn-timeFilter month-selector">
+                        <input type="radio" name="options" autocomplete="off" ng-model="$parent.chosenMonth" ng-value="[[month.value]]" ng-change="update()">[[month.name]]
+                    </label>
                 </div>
             </div>
         </div>

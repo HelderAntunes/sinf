@@ -29,8 +29,7 @@ app.controller('sales_detailed_controller', function($scope, $http) {
         getTableData($scope, $http);
     };
 
-    $scope.chooseMonth = function(month){
-        $scope.chosenMonth = month;
+    $scope.update = function(){
         getTableData($scope, $http);
     };
 

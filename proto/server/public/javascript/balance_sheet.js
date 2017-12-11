@@ -40,9 +40,6 @@ app.controller('balance_sheet_controller', function($scope, $http) {
         updateData($scope, $http);
     };
     $scope.update = function(){
-        $('.month-selector input[type="radio"]').parent().removeClass('active');
-        $('.month-selector input[type="radio"]:checked').parent().addClass('active');
-
         updateData($scope, $http);
     };
     $scope.dateFormat = function(date){

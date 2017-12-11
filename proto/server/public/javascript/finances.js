@@ -35,8 +35,7 @@ app.controller('finances_controller', function($scope, $http) {
         updateData($scope, $http);
     };
 
-    $scope.chooseMonth = function(month){
-        $scope.chosenMonth = month;
+    $scope.update = function(){
         updateData($scope, $http);
     };
 
@@ -47,6 +46,15 @@ app.controller('finances_controller', function($scope, $http) {
             $('.container').removeClass('blur');
         }
     });
+
+    $scope.getQuery = function(){
+        var query = 'year=' + $scope.chosenYear;
+        if($scope.chosenMonth != null){
+            query+='&month=' + $scope.chosenMonth;
+        }
+
+        return query;
+    }
 
     updateData($scope, $http);
 });

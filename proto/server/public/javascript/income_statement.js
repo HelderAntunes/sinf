@@ -40,9 +40,7 @@ app.controller('income_statement_controller', function($scope, $http) {
         updateData($scope, $http);
     };
     $scope.update = function(){
-        $('.month-selector input[type="radio"]').parent().removeClass('active');
-        $('.month-selector input[type="radio"]:checked').parent().addClass('active');
-
+        console.log("Got here");
         updateData($scope, $http);
     };
     $scope.dateFormat = function(date){
