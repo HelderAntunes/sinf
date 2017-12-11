@@ -1,0 +1,60 @@
+<div id="loader"></div>
+
+<div class="container" ng-app="sales_detailed_app" ng-controller="sales_detailed_controller">
+    
+    <div class="row">
+        <div class="col-sm-12 col-md-10 col-md-offset-1">
+            <div class="btn-toolbar" role="toolbar" aria-label="Filter Toolbar">
+                <div class="btn-group dropdown" role="group" aria-label="Year group">
+                    <button class="btn btn-timeFilter dropdown-toggle" type="button" data-toggle="dropdown">[[chosenYear]]
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="year in years"><a href="" ng-click="chooseYear(year)">[[year]]</a></li>
+                    </ul>
+                </div>
+                <div class="btn-group mr-2" role="group" aria-label="Month Group">
+                  <button ng-repeat="month in months" type="button" class="btn btn-timeFilter" ng-click="chooseMonth(month.value)">[[month.name]]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <hr/>
+    
+    <div class="row">
+        <div class="col-sm-12 tabled">
+            <div class="row-fluid head h-100">
+                <div class="col-xs-8">Entity</div>
+                <div class="col-xs-4">Total value</div>
+            </div>
+              
+              <div class="ng-cloak" ng-repeat="tableData in detailedTableData">
+                <div class="row-fluid mainrow" data-toggle="collapse" ng-attr-data-target="#collapse[[$index]]">
+                    <div class="col-xs-8">[[tableData[0]+" "]]</div>
+                    <div class="col-xs-4">[[tableData[1]+" "]]</div>
+                </div>
+                <div ng-attr-id="collapse[[$index]]" class="col-xs-12 row-fluid collapse">
+                    <div class="article subrow">
+                        <div class="col-xs-6">Product</div>
+                        <div class="col-xs-2">Quantity</div>
+                        <div class="col-xs-2">Unit Price</div>
+                        <div class="col-xs-2">Total paid</div>
+
+                    </div>
+                    <div class="article subrow" ng-repeat="product in [].constructor(tableData[2]) track by $index">
+                        <div class="col-xs-6">[[tableData[3][$index][1] + " "]]</div>
+                        <div class="col-xs-2">[[tableData[3][$index][2] + " "]]</div>
+                        <div class="col-xs-2">[[tableData[3][$index][3] + " "]]</div>
+                        <div class="col-xs-2">[[tableData[3][$index][0] + " "]]</div>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+</div>
+<script src="../javascript/main.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="../javascript/sales_detailed.js"></script>
