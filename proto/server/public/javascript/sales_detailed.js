@@ -34,12 +34,12 @@ app.controller('sales_detailed_controller', function($scope, $http) {
         getTableData($scope, $http);
     };
 
+    //Blur container and show spinner
+    $('#loader').show();
+    $('.container').addClass('blur');
+
     //ultimately creates an array with only the info needed for the table
     getTableData($scope, $http);
-
-    //Unblur container and hide spinner
-    $('#loader').hide();
-    $('.container').removeClass('blur');
 
 });
 
@@ -80,6 +80,7 @@ var getCustomersAndInvoices = function($scope, $http) {
             //Match costumers with invoices
             $scope.customersAndInvoices = matchCustomersAndInvoices(customers, $scope.invoicesSorted);
             //Put all table info into one array
+            console.log($scope.customersAndInvoices);
             makeArrayWithTableData($scope);
         },
         function (error){
@@ -111,6 +112,7 @@ var makeArrayWithTableData = function($scope) {
             var pDescription = 0;
             var pQuantity = 0;
             var pUnitPrice = 0;
+            var pDate = 0;
 
             var products = invoices[i].Lines;
             numProducts += products.length;
@@ -127,10 +129,13 @@ var makeArrayWithTableData = function($scope) {
                 pTotalPrice = pUnitPrice * pQuantity; 
                 pTotalPrice = +pTotalPrice.toFixed(2);
 
+                pDate = dateFormat(invoices[i].InvoiceDate);
+
                 var newProductInfo = [pTotalPrice,
                                         pDescription,
                                         pQuantity,
-                                        pUnitPrice];
+                                        pUnitPrice,
+                                        pDate];
 
                 pInfo[pIndex] = newProductInfo;
                 pIndex++;
@@ -139,12 +144,17 @@ var makeArrayWithTableData = function($scope) {
 
 
         if(totalValue != 0){
+
+            var productsSortedByDate = sortProductsByDate(pInfo);
+
             customerUsefulArray = [companyName,
                                     totalValue, 
                                     numProducts,
-                                    pInfo];
+                                    productsSortedByDate];
 
-            $scope.detailedTableData[d]=customerUsefulArray;
+            //var sortedByDateArray = sortProductsByDate(customerUsefulArray);
+
+            $scope.detailedTableData[d] = customerUsefulArray;
             d++;
             
         }
@@ -188,6 +198,14 @@ var sortInvoicesByCustomerID = function(invoices) {
     return invoices;
 }
 
+var sortProductsByDate = function(customerUsefulArray){
+    function byDate(a,b) {
+        return a[4].localeCompare(b[4]);
+    }
+    customerUsefulArray.sort(byDate).reverse();
+    return customerUsefulArray;
+}
+
 var getArrayWithLegthOfProducts = function(numProds){
     console.log("Workaround returning " + numProds);
     return new Array[numProds];
@@ -207,3 +225,7 @@ var getMonthName = function(index) {
     var monthNames = [null, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     return monthNames[index]; 
 }
+
+var dateFormat = function(date){
+        return date.slice(0,10);
+    }
