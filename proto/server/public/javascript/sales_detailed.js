@@ -31,7 +31,6 @@ app.controller('sales_detailed_controller', function($scope, $http) {
 
     $scope.chooseMonth = function(month){
         $scope.chosenMonth = month;
-        console.log("Selected month");
         getTableData($scope, $http);
     };
 
@@ -81,8 +80,6 @@ var getCustomersAndInvoices = function($scope, $http) {
             //Match costumers with invoices
             $scope.customersAndInvoices = matchCustomersAndInvoices(customers, $scope.invoicesSorted);
             //Put all table info into one array
-            console.log("Table data: ");
-            console.log($scope.detailedTableData);
             makeArrayWithTableData($scope);
         },
         function (error){
@@ -92,13 +89,13 @@ var getCustomersAndInvoices = function($scope, $http) {
 }
 
 var makeArrayWithTableData = function($scope) {
-    
+
     $scope.detailedTableData = [];
     var d = 0;
     //= $scope.customersAndInvoices.map( function( customerWithInvoices ) {
     for(var c = 0; c < $scope.customersAndInvoices.length; c++){
         var customerWithInvoices = $scope.customersAndInvoices[c];
-        console.log(customerWithInvoices);
+        
         var customerUsefulArray = [];
         var companyName = customerWithInvoices[0].company_name;
         var totalValue = 0;
@@ -109,7 +106,7 @@ var makeArrayWithTableData = function($scope) {
         //customer invoices
         var invoices = customerWithInvoices[1];
         for(var i = 0; i < invoices.length; i++){
-            console.log("Getting products");
+            
             var pTotalPrice = 0;
             var pDescription = 0;
             var pQuantity = 0;
@@ -142,7 +139,6 @@ var makeArrayWithTableData = function($scope) {
 
 
         if(totalValue != 0){
-            console.log("Adding customer");
             customerUsefulArray = [companyName,
                                     totalValue, 
                                     numProducts,
@@ -152,11 +148,8 @@ var makeArrayWithTableData = function($scope) {
             d++;
             
         }
-       // return customerUsefulArray;
 
     }
-    //); 
-console.log($scope.detailedTableData);
     //Unblur container and hide spinner
     $('#loader').hide();
     $('.container').removeClass('blur');

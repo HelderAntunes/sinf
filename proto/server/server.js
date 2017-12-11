@@ -33,6 +33,10 @@ app.get('/sales', function (req, res) {
     sales.getSales(req, res);
 });
 
+app.get('/sales_detailed', function (req, res) {
+    sales.getSalesDetailed(req, res);
+});
+
 app.get('/finances', function (req, res) {
     finances.getFinances(req, res);
 });
@@ -121,6 +125,16 @@ app.get('/getCustomers', function(req, res) {
                             .sort(utils.compareCustomersBySalesDec);
                 res.json(customers);
         });
+    });
+});
+
+app.get('/getCustomerInfo', function(req, res) {
+    var Customer = require('./database/Customer');
+
+    Customer.find({}, function(err, customers) {
+        if (err) console.error(err);
+        customers = JSON.parse(JSON.stringify(customers));
+        res.json(customers);
     });
 });
 
