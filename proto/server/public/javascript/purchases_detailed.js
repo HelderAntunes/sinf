@@ -57,6 +57,7 @@ updateData = function($scope, $http){
     if($scope.chosenMonth != null) url += '/' + $scope.chosenMonth;
 
     $http.get(url).then(function (success){
+        console.log(success.data);
         $scope.purchases= success.data;
 
         //Unblur container and hide spinner

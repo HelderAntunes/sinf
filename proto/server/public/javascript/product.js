@@ -77,7 +77,7 @@ var updateInfo= function($scope, $http){
     });
 }
 
-var updateTransactions= function($scope, $http){
+var updatePurchases= function($scope, $http){
     var id = $('#id-input').val(); 
     var url = 'http://localhost:49822/api/Purchases/' + id + '/';
     
@@ -96,7 +96,6 @@ var updateSales= function($scope, $http){
     var url = 'http://localhost:49822/api/DocVenda/' + id + '/';
     
     $http.get(url).then(function (success){
-        console.log(success.data);
         $scope.sales = success.data
 
         $scope.step++;
@@ -117,7 +116,7 @@ var updateData= function($scope, $http){
     $('.container').addClass('blur');
     
     updateInfo($scope, $http);
-    updateTransactions($scope, $http);
+    updatePurchases($scope, $http);
     updateSales($scope, $http);
 }
 
@@ -137,7 +136,6 @@ app.controller('product_controller', function($scope, $http) {
     $scope.pager = null;
 
     $scope.$watch('step', function() {
-        console.log(pager_service);
         if($scope.step == 3){                    
             //Unblur container and hide spinner
             $('#loader').hide();
