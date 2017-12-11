@@ -15,7 +15,7 @@ app.filter('euro', ['$filter', function ($filter) {
     return function (input) {
         return $filter('number')(input, 2) + ' €';
     };
-}]);
+}]); 
 
 app.controller('sales_controller', function($scope, $http) {
     $scope.chosenYear = 2016;
@@ -41,7 +41,7 @@ var updateData = function($scope, $http) {
     //Blur container and show spinner
     $('#loader').show();
     $('.container').addClass('blur');
-
+    
     var requestUrl = address;
     if ($scope.chosenMonth) 
         requestUrl += 'getSalesByMonth?year=' + $scope.chosenYear + '&month=' + $scope.chosenMonth;
@@ -60,8 +60,8 @@ var updateData = function($scope, $http) {
 
 var updateDataCallback = function($scope, $http, data) {
     updateOverview($scope, data);
-    updateCustomers($scope, $http, data);
     updateChart($scope, data);
+    updateCustomers($scope, $http, data);
 } 
 
 var updateOverview = function($scope, data) {
@@ -170,7 +170,7 @@ var updateCustomers = function ($scope, $http) {
 
     $http.get(url).then(function (success) {
         $scope.customers = [];
-        for (var i = 0; i < success.data.length && i < 5; i++) {
+        for (var i = 0; i < success.data.length; i++) {
             if (success.data[i].sales <= 0) break;
             $scope.customers.push(success.data[i]);
         }

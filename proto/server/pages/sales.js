@@ -23,7 +23,13 @@ exports.getSales = function (req, res) {
         
             var salesTpl = fs.readFileSync('./templates/sales.html', {encoding: 'utf-8'});
             compiledTemplate = new jSmart(salesTpl);
-            var outputSales = compiledTemplate.fetch();
+            var outputSales = compiledTemplate.fetch({
+                totalSales: getTotalSales(salesInvoices),
+                period: 'year',
+                salesPerPeriod: utils.formatNumber(25),
+                costumerNames: getTopCustomersNames(customers, 5),
+                costumerSales: getTopCustomersSales(customers, 5),
+            });
             
             var footerTpl = fs.readFileSync('./templates/common/footer.html', {encoding: 'utf-8'});
             compiledTemplate = new jSmart(footerTpl);
@@ -34,6 +40,28 @@ exports.getSales = function (req, res) {
         
     });
 
+}
+
+exports.getSalesDetailed = function (req, res) {
+    res.writeHead(200, {'Content-Type': 'text/html'});
+
+    var headerTpl = fs.readFileSync('./templates/common/header.html', {encoding: 'utf-8'});
+    var compiledTemplate = new jSmart(headerTpl);
+    var outputHeader = compiledTemplate.fetch({ title: 'Sales Overview Detail'});
+
+    var salesTpl = fs.readFileSync('./templates/sales_detailed.html', {encoding: 'utf-8'});
+    compiledTemplate = new jSmart(salesTpl);
+    
+    var outputSales = compiledTemplate.fetch({
+        totalSales: 154175,
+        growth: '12.4',
+    });
+    
+    var footerTpl = fs.readFileSync('./templates/common/footer.html', {encoding: 'utf-8'});
+    compiledTemplate = new jSmart(footerTpl);
+    var outputFooter = compiledTemplate.fetch();
+    
+    res.end(outputHeader + outputSales + outputFooter);
 }
 
 function getTotalSales(salesInvoices) {
