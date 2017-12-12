@@ -182,7 +182,7 @@ var updateStockMovements= function($scope, $http){
         outMoves.forEach(function(movement) {
             var date = new Date(movement.data);
 
-            $scope.outMovements.push([Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()), movement.valor],)
+            $scope.outMovements.push([Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()), movement.valor])
         })
 
         console.log($scope.outMovements);
