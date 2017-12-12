@@ -204,7 +204,8 @@ namespace PrimaveraIntegration.Lib_Primavera
                     //objArtigo = PriEngine.Engine.Comercial.Artigos.Edita(codArtigo);
                     stock.Article = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "Artigo");
                     stock.Family = codFamilia + " - " + PriEngine.Engine.Comercial.Familias.DaValorAtributo(codFamilia, "Descricao");
-                    stock.SubFamily = codSubFamilia + " - " +  subFamilia.get_Descricao();
+                    if (subFamilia != null)
+                        stock.SubFamily = codSubFamilia + " - " +  subFamilia.get_Descricao();
                     stock.Description = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "Descricao");
                     stock.CurrentStock = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "StkActual");
                     stock.MinStock = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(codArtigo, "STKMinimo");
