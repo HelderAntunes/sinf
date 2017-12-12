@@ -18,7 +18,7 @@ var createInventoryMovementsChart= function(inMovements, outMovements, month) {
         },
         xAxis: {
             type: 'datetime',
-            dateTimeLabelFormats: { // don't display the dummy year
+            dateTimeLabelFormats: {
                 day: '%e/%b',
                 week: '%e/%b',
                 month: '%b',
