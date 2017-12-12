@@ -182,10 +182,6 @@ var updateCustomers = function ($scope, $http) {
             if (success.data[i].sales <= 0) break;
             $scope.customers.push(success.data[i]);
         }
-
-        //Unblur container and hide spinner
-        $('#loader').hide();
-        $('.container').removeClass('blur');
     }
     , function (error) {
         $scope.contents = [{heading:"Error",description:"Could not load json   data"}];
@@ -305,6 +301,9 @@ var updateSalesByProductsCharts = function ($scope, $http) {
                 data: data,
             }]
         });
+        //Unblur container and hide spinner
+        $('#loader').hide();
+        $('.container').removeClass('blur');
     }
     , function (error) {
         $scope.contents = [{heading:"Error",description:"Could not load json   data"}];
