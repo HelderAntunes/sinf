@@ -1,53 +1,65 @@
 $('#purchases-tab').addClass('active');
 
-var createGraph = function (dates, purchasesTotal) {
+var createGraph = function (purchases) {
     Highcharts.chart('total-purchases', {
-        
-                title: {
-                    text: 'Purchases'
-                },
+        chart: {
+            type: 'spline'
+        },
 
-                xAxis: {
-                    categories: dates,
+        title: {
+            text: 'Purchases'
+        },
+
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: {
+                day: '%e/%b',
+                week: '%e/%b',
+                month: '%b',
+                year: '%b'
+            },
+            title: {
+                text: 'Date'
+            }
+        },
+
+        yAxis: {
+            title: {
+                text: 'Euros €'
+            }
+        },
+
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle'
+        },
+
+        series: [{
+            name: 'Purchases',
+            data: purchases
+        }],
+
+        tooltip: {
+            pointFormat: "{point.y:,.2f} €"
+        },
+
+        responsive: {
+            rules: [{
+                condition: {
+                    maxWidth: 500
                 },
-        
-                yAxis: {
-                    title: {
-                        text: 'Euros €'
+                chartOptions: {
+                    legend: {
+                        layout: 'horizontal',
+                        align: 'center',
+                        verticalAlign: 'bottom'
                     }
-                },
-        
-                legend: {
-                    layout: 'vertical',
-                    align: 'right',
-                    verticalAlign: 'middle'
-                },
-        
-                series: [{
-                    name: 'Purchases',
-                    data: purchasesTotal
-                }],
-
-                tooltip: {
-                    pointFormat: "{point.y:,.2f} €"
-                },
-        
-                responsive: {
-                    rules: [{
-                        condition: {
-                            maxWidth: 500
-                        },
-                        chartOptions: {
-                            legend: {
-                                layout: 'horizontal',
-                                align: 'center',
-                                verticalAlign: 'bottom'
-                            }
-                        }
-                    }]
                 }
-        
-            });
+            }]
+        }
+
+    });
 }
 
 var updateSuppliers = function ($scope, $http) {
@@ -90,20 +102,18 @@ var updateGraph = function($scope, $http){
     }
 
     $http.get(url).then(function (success){
-        var dates = [];
-        var purchasesTotal = [];
+        var purchases = [];
 
         for (i in success.data) {
             var purchase = success.data[i];
             var date = new Date(purchase.DocumentDate);
 
-            dates.push(date.toLocaleDateString());
-            purchasesTotal.push(purchase.TotalValue);
+            purchases.push([Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()), purchase.TotalValue]);
         }
 
         $scope.step++;
 
-        createGraph(dates, purchasesTotal);
+        createGraph(purchases);
     },function (error){
         $scope.contents = [{heading:"Error",description:"Could not load json data"}];
     });
