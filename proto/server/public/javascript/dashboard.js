@@ -84,8 +84,8 @@ var updateSalesByProductGroup = function ($scope, $http) {
             }
             data.push({
                 name: 'Others',
-                y: total_items_selected / total_items_selled
-            })
+                y: (total_items_selled - total_items_selected) / total_items_selled
+            });
             createChart(data);
             $scope.step++;
         },
