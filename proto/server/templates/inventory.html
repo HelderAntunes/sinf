@@ -40,17 +40,11 @@
             <a ng-href="product/[[stock.Article]]" ng-repeat="stock in prodOutOfStock" class="ng-cloak list-group-item list-group-item-danger">[[stock.Description]]<span class="badge">[[stock.CurrentStock]]</span></a>
             <li class="ng-cloak list-group-item list-group-item-success" ng-if="prodOutOfStock.length == 0">All Products are good</li>
           </ul>
-          <a href="#" style="display:block; text-align:center; color: #d09b1c">More details</a>
         </div>
         
         <div class="col-sm-5">
             <div id="inventory-value"></div>
             <a ng-href="inventory_detailed?[[getQuery()]]" style="display:block; text-align:center; color: #d09b1c">More details</a>
-        </div>
-
-        <div class="col-sm-10">
-            <div id="inventory-movements"></div>
-            <a href="#" style="display:block; text-align:center; color: #d09b1c">More details</a>
         </div>
     </div>
 
