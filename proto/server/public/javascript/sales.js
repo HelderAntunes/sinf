@@ -118,6 +118,9 @@ var updateChartYear = function(data, year) {
                 text: 'Euros €'
             }
         },
+        tooltip: {
+            pointFormat: "{point.y:,.2f} €"
+        },
         plotOptions: {
             line: {
                 dataLabels: {
@@ -146,6 +149,9 @@ var updateChartMonth = function(data, year, month) {
     Highcharts.chart('sales-by-period', {
         chart: {
             type: 'line'
+        },
+        tooltip: {
+            pointFormat: "{point.y:,.2f} €"
         },
         title: {
             text: 'Sales, ' + year + ' ' + getMonthName(month)
