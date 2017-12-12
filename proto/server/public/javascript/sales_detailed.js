@@ -33,10 +33,6 @@ app.controller('sales_detailed_controller', function($scope, $http) {
         getTableData($scope, $http);
     };
 
-    //Blur container and show spinner
-    $('#loader').show();
-    $('.container').addClass('blur');
-
     //ultimately creates an array with only the info needed for the table
     getTableData($scope, $http);
 
@@ -120,24 +116,20 @@ var makeArrayWithTableData = function($scope) {
             //decimal places
             totalValue = +totalValue.toFixed(2);
 
-            for(var p = 0; p < products.length; p++){
-                pDescription = products[p].productDescprition;
-                pQuantity = products[p].quantity;
-                pUnitPrice = products[p].unitPrice;
+            for(index in products){
+                var p = products[index];
+                var product = [];
+                
+                product.code = p.productCode;
+                product.description = p.productDescprition;
+                product.quantity = p.quantity;
+                product.unitPrice = p.unitPrice;
 
-                pTotalPrice = pUnitPrice * pQuantity; 
-                pTotalPrice = +pTotalPrice.toFixed(2);
+                product.totalPrice = product.unitPrice * product.quantity;
 
-                pDate = dateFormat(invoices[i].InvoiceDate);
+                product.date = dateFormat(invoices[i].InvoiceDate);
 
-                var newProductInfo = [pTotalPrice,
-                                        pDescription,
-                                        pQuantity,
-                                        pUnitPrice,
-                                        pDate];
-
-                pInfo[pIndex] = newProductInfo;
-                pIndex++;
+                pInfo.push(product);
             }        
         }
 
@@ -199,7 +191,7 @@ var sortInvoicesByCustomerID = function(invoices) {
 
 var sortProductsByDate = function(customerUsefulArray){
     function byDate(a,b) {
-        return a[4].localeCompare(b[4]);
+        return a.date.localeCompare(b.date);
     }
     customerUsefulArray.sort(byDate).reverse();
     return customerUsefulArray;

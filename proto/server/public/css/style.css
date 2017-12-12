@@ -217,6 +217,10 @@ body{
 
 }
 
+.article > a{
+  color:#333;  
+}
+
 .currency{
     text-align: right;
 }
