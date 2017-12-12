@@ -1365,7 +1365,7 @@
 		<Product>
 			<ProductType>P</ProductType>
 			<ProductCode>C0001</ProductCode>
-			<ProductGroup>Multim�dia</ProductGroup>
+			<ProductGroup>Multimédia</ProductGroup>
 			<ProductDescription>VideoProjector EMP-S4</ProductDescription>
 			<ProductNumberCode>5601234106480</ProductNumberCode>
 		</Product>
@@ -1386,57 +1386,57 @@
 		<Product>
 			<ProductType>O</ProductType>
 			<ProductCode>Especial</ProductCode>
-			<ProductGroup>Sem fam�lia</ProductGroup>
+			<ProductGroup>Sem família</ProductGroup>
 			<ProductDescription>Linha especial</ProductDescription>
 			<ProductNumberCode>Especial</ProductNumberCode>
 		</Product>
 		<Product>
 			<ProductType>S</ProductType>
 			<ProductCode>F0003</ProductCode>
-			<ProductGroup>Servi�os</ProductGroup>
-			<ProductDescription>Servi�os de Implementa��o</ProductDescription>
+			<ProductGroup>Serviços</ProductGroup>
+			<ProductDescription>Serviços de Implementação</ProductDescription>
 			<ProductNumberCode>F0003</ProductNumberCode>
 		</Product>
 		<Product>
 			<ProductType>P</ProductType>
 			<ProductCode>GAR001</ProductCode>
-			<ProductGroup>Bebidas Alco�licas</ProductGroup>
+			<ProductGroup>Bebidas Alcoólicas</ProductGroup>
 			<ProductDescription>Grarrafa de Whisky 15 anos B&amp;A</ProductDescription>
 			<ProductNumberCode>GAR001</ProductNumberCode>
 		</Product>
 		<Product>
 			<ProductType>P</ProductType>
 			<ProductCode>GAR009</ProductCode>
-			<ProductGroup>Bebidas Alco�licas</ProductGroup>
+			<ProductGroup>Bebidas Alcoólicas</ProductGroup>
 			<ProductDescription>Garrafa Bagaceira Regional - Caves Altas</ProductDescription>
 			<ProductNumberCode>GAR009</ProductNumberCode>
 		</Product>
 		<Product>
 			<ProductType>P</ProductType>
 			<ProductCode>GAR027</ProductCode>
-			<ProductGroup>Bebidas Alco�licas</ProductGroup>
+			<ProductGroup>Bebidas Alcoólicas</ProductGroup>
 			<ProductDescription>Vinho do Porto Vintage/1994 - Gold Grapes</ProductDescription>
 			<ProductNumberCode>GAR027</ProductNumberCode>
 		</Product>
 		<Product>
 			<ProductType>P</ProductType>
 			<ProductCode>H0001</ProductCode>
-			<ProductGroup>Acess�rios</ProductGroup>
+			<ProductGroup>Acessórios</ProductGroup>
 			<ProductDescription>Cabo Paralelo</ProductDescription>
 			<ProductNumberCode>H0001</ProductNumberCode>
 		</Product>
 		<Product>
 			<ProductType>S</ProductType>
 			<ProductCode>M0001</ProductCode>
-			<ProductGroup>Sem fam�lia</ProductGroup>
-			<ProductDescription>T�cnico de Assemblagem de Hardware</ProductDescription>
+			<ProductGroup>Sem família</ProductGroup>
+			<ProductDescription>Técnico de Assemblagem de Hardware</ProductDescription>
 			<ProductNumberCode>M0001</ProductNumberCode>
 		</Product>
 		<Product>
 			<ProductType>P</ProductType>
 			<ProductCode>TAPETE</ProductCode>
-			<ProductGroup>Acess�rios</ProductGroup>
-			<ProductDescription>Tapete de Rato 2.� Gera��o</ProductDescription>
+			<ProductGroup>Acessórios</ProductGroup>
+			<ProductDescription>Tapete de Rato 2.ª Geração</ProductDescription>
 			<ProductNumberCode>TAPETE</ProductNumberCode>
 		</Product>
 		<TaxTable>
