@@ -38,7 +38,7 @@ app.controller('main_controller', function($scope, $http) {
     };
 
     $scope.$watch('step', function() {
-        if($scope.step == 4){                    
+        if($scope.step == 6){                    
             //Unblur container and hide spinner
             $('#loader').hide();
             $('.container').removeClass('blur');

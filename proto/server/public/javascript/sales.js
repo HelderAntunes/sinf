@@ -32,6 +32,15 @@ app.controller('sales_controller', function($scope, $http) {
     $scope.update = function(){
         updateData($scope, $http);
     };
+    
+    $scope.getQuery = function(){
+        var query = 'year=' + $scope.chosenYear;
+        if($scope.chosenMonth != null){
+            query+='&month=' + $scope.chosenMonth;
+        }
+
+        return query;
+    }
 
     updateData($scope, $http);
 });
@@ -165,8 +174,7 @@ var updateChartMonth = function(data, year, month) {
 }
 
 var updateCustomers = function ($scope, $http) {
-    var url = address + 'getCustomers?year=' + $scope.chosenYear;
-    if ($scope.chosenMonth ) url += '&month=' + $scope.chosenMonth;
+    var url = address + 'getCustomers?' + $scope.getQuery();
 
     $http.get(url).then(function (success) {
         $scope.customers = [];
