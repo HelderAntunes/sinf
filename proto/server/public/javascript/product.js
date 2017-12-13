@@ -93,7 +93,7 @@ var updatePurchases= function($scope, $http){
 
 var updateSales= function($scope, $http){
     var id = $('#id-input').val(); 
-    var url = 'http://localhost:49822/api/DocVenda/' + id + '/';
+    var url = 'http://localhost:8081/getSalesOfProduct?code=' + id;
     
     $http.get(url).then(function (success){
         $scope.sales = success.data

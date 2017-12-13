@@ -485,6 +485,72 @@ app.get('/getSalesByProduct', function (req, res) {
         });
 });
 
+app.get('/getSalesOfProduct', function (req, res) {
+    var code = req.query.code;
+    var sales = [];
+
+    var Sales = require('./database/Sales');
+    var Customer = require('./database/Customer');
+
+    Sales.SalesInvoices.find({
+        InvoiceType: {$in: ['FT', 'VD']},
+        }, 
+        function (err, salesInvoices) {
+            if (err) return console.error(err);
+
+            Sales.Product.find({
+                ProductCode: ""+code
+            }, function (err, products) {
+                if (err) console.error(err);
+
+                Customer.find({}, function(err, customers) {
+                    if (err) console.error(err);
+                    
+                    products = JSON.parse(JSON.stringify(products));
+                    customers = JSON.parse(JSON.stringify(customers));
+                    
+                    var customer_map = [];
+
+                    for(i in customers){
+                        customer_map[customers[i].customer_id] = customers[i].company_name
+                    }
+
+                    var product = products[0];
+
+                    for (var i = 0; i < salesInvoices.length; i++) {
+                        var found = false;
+                        var lines = salesInvoices[i].Lines;
+                        
+                        for (var j = 0; j < lines.length && !found; j++) {
+                            if (product.ProductCode == lines[j].productCode) {
+                                var new_sale = {};
+    
+                                new_sale.Id = salesInvoices[i].InvoiceNo;
+                                new_sale.DocumentDate = salesInvoices[i].InvoiceDate;
+                                new_sale.Entity = salesInvoices[i].CustomerID;
+                                new_sale.EntityName = customer_map[new_sale.Entity];
+                                new_sale.TotalValue =  salesInvoices[i].NetTotal;
+    
+                                var saleItem = {};
+                                saleItem.Product = lines[j].productCode;
+                                saleItem.Description = lines[j].productDescription;
+                                saleItem.Quantity = lines[j].quantity * (-1);
+                                saleItem.UnitPrice = lines[j].unitPrice;
+                                saleItem.Value = lines[j].creditAmount;
+    
+                                new_sale.Items = [saleItem];
+    
+                                sales.push(new_sale);
+                                break;
+                            }
+                        }
+                    }
+                    res.json(sales);
+                });
+            });
+        });
+});
+
 var server = app.listen(8081, function () {
    var port = server.address().port;
    console.log("Listening at port %s", port)

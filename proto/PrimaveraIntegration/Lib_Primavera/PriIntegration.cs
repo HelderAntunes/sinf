@@ -656,6 +656,8 @@ namespace PrimaveraIntegration.Lib_Primavera
                         objListLin.Seguinte();
                     }
 
+                    purchase.Id = objList.Valor("TipoDoc") + " " + objList.Valor("Serie") + "/" + objList.Valor("NumDoc");
+
                     if(purchase.Items.Count() > 0)
                         purchaseList.Add(purchase);
                     objList.Seguinte();

@@ -44,9 +44,7 @@
                         <thead class="thead-default">
                             <tr>
                                 <th>Date</th>
-                                <th>Type</th>
-                                <th>Series</th>
-                                <th>Number</th>
+                                <th>Identifier</th>
                                 <th>Client/Supplier</th>
                                 <th>Ammount</th>
                                 <th>Price</th>
@@ -55,9 +53,7 @@
                         <tbody>
                             <tr ng-class="transaction.TotalValue > 0 ? 'table-success' : 'table-danger'" class="ng-cloak" ng-repeat="transaction in page">
                                 <td>[[transaction.DocumentDate | date]]</td>
-                                <td>[[transaction.DocumentType]]</td>
-                                <td>[[transaction.DocumentSeries]]</td>
-                                <td>[[transaction.DocumentNumber]]</td>
+                                <td>[[transaction.Id]]</td>
                                 <td>[[transaction.EntityName]]</td>
                                 <td>[[transaction.Items[0].Quantity]] UN</td>
                                 <td class="currency">[[transaction.TotalValue | euro]]</td>
