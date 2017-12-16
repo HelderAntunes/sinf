@@ -221,6 +221,15 @@ body{
   color:#333;  
 }
 
+.product-link,
+.product-link:hover{
+    color:#333;
+}
+
+.mainrow:hover{
+    background-color: #f2e2c4;
+}
+
 .currency{
     text-align: right;
 }
